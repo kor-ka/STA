@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 import android.app.Activity;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 import java.util.*;
 
 public class ST extends Activity implements OnClickListener {
-
+	Thread listener;
 	EditText ipEt;
 	EditText portEt;
 	EditText aEt;
@@ -77,14 +78,9 @@ public class ST extends Activity implements OnClickListener {
 		public void run() {
 			try {
 
-				InetAddress ipAddress = InetAddress.getByName(ip); // �������
-																	// ������
-																	// �������
-																	// ����������
-																	// �������������
-																	// IP-�����.
+				InetAddress ipAddress = InetAddress.getByName(ip);
 				socket = new Socket(ipAddress, port);
-				// ������� ����� ��������� IP-����� � ���� �������.
+			
 				
 				send();
 				
@@ -97,10 +93,7 @@ public class ST extends Activity implements OnClickListener {
 			
 		}
 		
-		public void openSocket(){
-			
-		}
-
+		
 		public void send() {
 			
 			while (true) {
@@ -109,14 +102,11 @@ public class ST extends Activity implements OnClickListener {
 
 				//	Toast.makeText(getBaseContext(), "socket ������",Toast.LENGTH_LONG).show();
 					try {
-						// ����� ������� � �������� ������ ������, ������ �����
-						// �������� � �������� ������ ��������.
+						
 						InputStream sin = socket.getInputStream();
 						OutputStream sout = socket.getOutputStream();
 
-						// ������������ ������ � ������ ���, ���� �����
-						// ������������
-						// ��������� ���������.
+						
 						DataInputStream in = new DataInputStream(sin);
 						DataOutputStream out = new DataOutputStream(sout);
 						
@@ -136,19 +126,19 @@ public class ST extends Activity implements OnClickListener {
 								break;
 								
 							case register:
-								out.writeUTF("registerMe:"+aEt.getText().toString() + "lolParseMe"
-											 + bEt.getText().toString());
-								break;
+							
+								out.writeUTF("registerMe:"+Utils.getIPAddress(true));
+								break; 
 						}
 
 						 
 
 					
-						// �������� ��������� ������ ������ �������.
-						out.flush(); // ���������� ����� ��������� ��������
-										// ������.
-						final String line = in.readUTF(); // ���� ���� ������ ������� ������
-												// ������.
+						
+						out.flush(); 
+										
+						final String line = in.readUTF(); 
+											
 						runOnUiThread(new Runnable() {
 								public void run() {
 									Toast.makeText(getBaseContext(), line, Toast.LENGTH_SHORT).show();
@@ -180,10 +170,72 @@ public class ST extends Activity implements OnClickListener {
 		}else	if(v.getId()==R.id.bReg){
 
 			int port = Integer.parseInt(portEt.getText().toString());
-			new Thread(new SocketThread(ipEt.getText().toString(), port, register)).start();
+			ServerSocket ss;
+			try {
+				
+				ss = new ServerSocket(port);
+				Listener lstnr = new Listener(ss, port);
+				new Thread(lstnr).start();
+				new Thread(new SocketThread(ipEt.getText().toString(), port, register)).start();
+			} catch (IOException e) {
+				Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+				e.printStackTrace();
+			}
+			
 
 		}
 	}
 	
-	
+	public class Listener extends Thread {
+		protected ServerSocket listenSocket;
+		DataOutputStream out;
+		Socket socket;
+		int port;
+		public Listener(ServerSocket listenSocket, int port) {
+			this.listenSocket = listenSocket;
+			this.port = port;
+		}
+
+		public void run() {
+
+			while (true) {
+				try {
+
+					runOnUiThread(new Runnable() {
+						public void run() {
+							Toast.makeText(getBaseContext(), "waiting", Toast.LENGTH_SHORT).show();
+						}
+					});	
+					
+					socket = listenSocket.accept();
+
+					InputStream sin = socket.getInputStream();
+					OutputStream sout = socket.getOutputStream();
+
+					DataInputStream in = new DataInputStream(sin);
+					DataOutputStream out = new DataOutputStream(sout);
+
+					
+
+					final String line = in.readUTF();
+					
+					runOnUiThread(new Runnable() {
+						public void run() {
+							Toast.makeText(getBaseContext(), line, Toast.LENGTH_SHORT).show();
+						}
+					});	
+					
+				} catch (final IOException e) {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+						}
+					});	
+					e.printStackTrace();
+				}
+
+			}
+
+		}
+	}
 }
