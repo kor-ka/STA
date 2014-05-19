@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:paddingBottom="@dimen/activity_vertical_margin"
+	android:paddingLeft="@dimen/activity_horizontal_margin"
+	android:paddingRight="@dimen/activity_horizontal_margin"
+	android:paddingTop="@dimen/activity_vertical_margin"
+	tools:context=".ST">
+
+	<TableLayout
+		android:id="@+id/tableLayout1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true">
+
+		<TableRow
+			android:id="@+id/tableRow1"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1">
+
+			<TextView
+				android:id="@+id/textView1"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:hint="IP"
+				android:text="IP"/>
+
+			<EditText
+				android:id="@+id/etIp"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:hint="IP"
+				android:text="192.168.1.4">
+
+				<requestFocus/>
+
+			</EditText>
+
+		</TableRow>
+
+		<TableRow
+			android:id="@+id/tableRow2"
+			android:layout_width="wrap_content"
+			android:layout_height="0dp"
+			android:layout_weight="1">
+
+			<TextView
+				android:id="@+id/textView2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Socket"/>
+
+			<EditText
+				android:id="@+id/etSocket"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:ems="10"
+				android:hint="Socket"
+				android:text="6666"/>
+
+		</TableRow>
+
+		<TableRow
+			android:id="@+id/tableRow3"
+			android:layout_width="wrap_content"
+			android:layout_height="0dp"
+			android:layout_weight="1">
+
+			<TextView
+				android:id="@+id/textView3"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="A"/>
+
+			<EditText
+				android:id="@+id/etA"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:ems="10"
+				android:hint="A"
+				android:text="1"/>
+
+		</TableRow>
+
+		<TableRow
+			android:id="@+id/tableRow4"
+			android:layout_width="wrap_content"
+			android:layout_height="0dp"
+			android:layout_weight="1">
+
+			<TextView
+				android:id="@+id/textView4"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="B"/>
+
+			<EditText
+				android:id="@+id/etB"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:ems="10"
+				android:hint="B"
+				android:text="2"/>
+
+		</TableRow>
+
+	</TableLayout>
+
+	<LinearLayout
+		android:id="@+id/linearLayout1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentRight="true"
+		android:layout_below="@+id/tableLayout1">
+
+		<Button
+			android:id="@+id/bSend"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="Send"/>
+
+		<Button
+			android:id="@+id/bReg"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="Reg"/>
+
+	</LinearLayout>
+
+	<ListView
+		android:id="@+id/listView1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_below="@+id/linearLayout1"
+		android:layout_weight="1">
+
+	</ListView>
+
+</RelativeLayout>
+
