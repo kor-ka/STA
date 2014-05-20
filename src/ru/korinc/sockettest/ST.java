@@ -1,26 +1,27 @@
 package ru.korinc.sockettest;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
-import java.util.*;
 
 public class ST extends Activity implements OnClickListener {
 	Thread listener;
@@ -34,6 +35,9 @@ public class ST extends Activity implements OnClickListener {
 	Socket socket;
 	SocketThread st;
 	ServerSocket	ss;
+	ListView lv;
+	ArrayAdapter<String> adapter;
+	ArrayList<String> results;
 	final static int ab=0;
 	final static int register=1;
 	final static int wat=2;
@@ -49,12 +53,17 @@ public class ST extends Activity implements OnClickListener {
 		bEt = (EditText) findViewById(R.id.etB);
 		reg = (Button) findViewById(R.id.bSend);
 		send = (Button) findViewById(R.id.bReg);
+		lv = (ListView) findViewById(R.id.listView1);
 
 		reg.setOnClickListener(this);
 		send.setOnClickListener(this);
 		
-		
-		
+		results=new ArrayList<String>();
+		results.add("1");
+		results.add("2");
+		adapter = new ArrayAdapter<String>(this,
+		        android.R.layout.simple_list_item_1, results);
+		lv.setAdapter(adapter);
 	}
 
 	@Override
@@ -121,8 +130,11 @@ public class ST extends Activity implements OnClickListener {
 								runOnUiThread(new Runnable() {
 										public void run() {
 
-								aEt.setText(1+(int)(Math.random()*(100-1)+1)+"");
-								bEt.setText(1+(int)(Math.random()*(100-1)+1)+"");
+							//	aEt.setText(1+(int)(Math.random()*(100-1)+1)+"");
+							//	bEt.setText(1+(int)(Math.random()*(100-1)+1)+"");
+								
+								
+								bEt.setText(Integer.parseInt(bEt.getText().toString())+1+"");
 								
 										}
 									});		
@@ -227,7 +239,21 @@ public class ST extends Activity implements OnClickListener {
 					
 					runOnUiThread(new Runnable() {
 						public void run() {
-							Toast.makeText(getBaseContext(), line, Toast.LENGTH_SHORT).show();
+					
+							if(line.contains("results:")){
+								List<String> list =new ArrayList<String> (Arrays.asList(line.substring(9).split(":")));
+								results = (ArrayList<String>) list;
+								Toast.makeText(getBaseContext(), "incoming: "+results.size(), Toast.LENGTH_SHORT).show();
+								adapter.clear();
+								for(String s:results){
+									adapter.add(s);
+								}
+								adapter.notifyDataSetChanged();
+							}else{
+								Toast.makeText(getBaseContext(), line, Toast.LENGTH_SHORT).show();
+							}
+					
+							
 						}
 					});	
 					
