@@ -33,6 +33,7 @@ public class ST extends Activity implements OnClickListener {
 	Button send;
 	Socket socket;
 	SocketThread st;
+	ServerSocket	ss;
 	final static int ab=0;
 	final static int register=1;
 	final static int wat=2;
@@ -171,14 +172,17 @@ public class ST extends Activity implements OnClickListener {
 
 		}else	if(v.getId()==R.id.bReg){
 
-			int port = Integer.parseInt(portEt.getText().toString());
-			ServerSocket ss;
+			int port = Integer.parseInt(clientPortEt.getText().toString());
+			int serverport = Integer.parseInt(portEt.getText().toString());
 			try {
-				
-				ss = new ServerSocket(port);
-				Listener lstnr = new Listener(ss, port);
-				new Thread(lstnr).start();
-				new Thread(new SocketThread(ipEt.getText().toString(), port, register)).start();
+				if (ss == null){
+					ss = new ServerSocket(port);
+					Listener lstnr = new Listener(ss);
+					new Thread(lstnr).start();
+					clientPortEt.setEnabled(false);
+				}
+				Toast.makeText(getBaseContext(), "trying register", Toast.LENGTH_LONG).show();
+				new Thread(new SocketThread(ipEt.getText().toString(), serverport, register)).start();
 			} catch (IOException e) {
 				Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 				e.printStackTrace();
@@ -192,10 +196,10 @@ public class ST extends Activity implements OnClickListener {
 		protected ServerSocket listenSocket;
 		DataOutputStream out;
 		Socket socket;
-		int port;
-		public Listener(ServerSocket listenSocket, int port) {
+		
+		public Listener(ServerSocket listenSocket) {
 			this.listenSocket = listenSocket;
-			this.port = port;
+			
 		}
 
 		public void run() {
