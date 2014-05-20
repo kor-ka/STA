@@ -56,15 +56,37 @@
 				android:id="@+id/textView2"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Socket"/>
+				android:text="Server port"/>
 
 			<EditText
 				android:id="@+id/etSocket"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:ems="10"
-				android:hint="Socket"
+				android:hint="Server port"
 				android:text="6666"/>
+
+		</TableRow>
+		
+		<TableRow
+			android:id="@+id/tableRow5"
+			android:layout_width="wrap_content"
+			android:layout_height="0dp"
+			android:layout_weight="1">
+
+			<TextView
+				android:id="@+id/textView2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Clirnt port"/>
+
+			<EditText
+				android:id="@+id/etPort"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:ems="10"
+				android:hint="Client port"
+				android:text="4444"/>
 
 		</TableRow>
 

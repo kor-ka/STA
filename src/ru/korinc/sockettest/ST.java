@@ -26,6 +26,7 @@ public class ST extends Activity implements OnClickListener {
 	Thread listener;
 	EditText ipEt;
 	EditText portEt;
+	EditText clientPortEt;
 	EditText aEt;
 	EditText bEt;
 	Button reg;
@@ -42,6 +43,7 @@ public class ST extends Activity implements OnClickListener {
 
 		ipEt = (EditText) findViewById(R.id.etIp);
 		portEt = (EditText) findViewById(R.id.etSocket);
+		clientPortEt = (EditText) findViewById(R.id.etPort);
 		aEt = (EditText) findViewById(R.id.etA);
 		bEt = (EditText) findViewById(R.id.etB);
 		reg = (Button) findViewById(R.id.bSend);
@@ -127,7 +129,7 @@ public class ST extends Activity implements OnClickListener {
 								
 							case register:
 							
-								out.writeUTF("registerMe:"+Utils.getIPAddress(true));
+								out.writeUTF("registerMe:"+clientPortEt.getText().toString());
 								break; 
 						}
 
