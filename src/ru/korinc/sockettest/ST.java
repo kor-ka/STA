@@ -195,7 +195,7 @@ public class ST extends Activity implements OnClickListener {
 					new Thread(lstnr).start();
 					clientPortEt.setEnabled(false);
 				}
-				Toast.makeText(getBaseContext(), "trying register", Toast.LENGTH_LONG).show();
+				
 				new Thread(new SocketThread(ipEt.getText().toString(), serverport, register, 0, 0)).start();
 			} catch (IOException e) {
 				Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
