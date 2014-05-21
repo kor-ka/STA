@@ -59,8 +59,7 @@ public class ST extends Activity implements OnClickListener {
 		send.setOnClickListener(this);
 		
 		results=new ArrayList<String>();
-		results.add("1");
-		results.add("2");
+		
 		adapter = new ArrayAdapter<String>(this,
 		        android.R.layout.simple_list_item_1, results);
 		lv.setAdapter(adapter);
@@ -176,17 +175,28 @@ public class ST extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if(v.getId()==R.id.bSend){
-			
+			try{
+				
+				int a = Integer.parseInt(aEt.getText().toString());
+				int b = Integer.parseInt(bEt.getText().toString());
+				
 				int port = Integer.parseInt(portEt.getText().toString());
 				new Thread(new SocketThread(ipEt.getText().toString(), port, ab)).start();
-		
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
 			
 
 		}else	if(v.getId()==R.id.bReg){
 
-			int port = Integer.parseInt(clientPortEt.getText().toString());
-			int serverport = Integer.parseInt(portEt.getText().toString());
+			
 			try {
+				
+				int port = Integer.parseInt(clientPortEt.getText().toString());
+				int serverport = Integer.parseInt(portEt.getText().toString());
+				
 				if (ss == null){
 					ss = new ServerSocket(port);
 					Listener lstnr = new Listener(ss);
