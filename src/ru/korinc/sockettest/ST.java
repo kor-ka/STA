@@ -242,9 +242,13 @@ public class ST extends Activity implements OnClickListener {
 					runOnUiThread(new Runnable() {
 						public void run() {
 					
-							if(line.contains("results:")&&line.length()>8){
-								List<String> list =new ArrayList<String> (Arrays.asList(line.substring(9).split(":")));
-								results = (ArrayList<String>) list;
+							if(line.contains("results:")){
+								results.clear();
+								if(line.length()>8){
+									List<String> list =new ArrayList<String> (Arrays.asList(line.substring(9).split(":")));
+									results = (ArrayList<String>) list;	
+								}
+								
 								Toast.makeText(getBaseContext(), "incoming: "+results.size(), Toast.LENGTH_SHORT).show();
 								adapter.clear();
 								for(String s:results){
