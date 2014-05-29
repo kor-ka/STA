@@ -77,11 +77,15 @@ public class ST extends Activity implements OnClickListener {
 		String ip;
 		int port;
 		int mode;
+		int a;
+		int b;
 
-		public SocketThread(String ip, int port, int mode) {
+		public SocketThread(String ip, int port, int mode, int a, int b) {
 			this.ip = ip;
 			this.port = port;
 			this.mode=mode;
+			this.a=a;
+			this.b=b;
 
 		}
 
@@ -123,20 +127,8 @@ public class ST extends Activity implements OnClickListener {
 						
 						switch(mode){
 							case ab:
-								out.writeUTF("ab:"+aEt.getText().toString() + "lolParseMe"
-											 + bEt.getText().toString());
+								out.writeUTF("ab:"+a+ "lolParseMe"+b);
 											 
-								runOnUiThread(new Runnable() {
-										public void run() {
-
-							//	aEt.setText(1+(int)(Math.random()*(100-1)+1)+"");
-							//	bEt.setText(1+(int)(Math.random()*(100-1)+1)+"");
-								
-								
-								bEt.setText(Integer.parseInt(bEt.getText().toString())+1+"");
-								
-										}
-									});		
 								break;
 								
 							case register:
@@ -179,9 +171,9 @@ public class ST extends Activity implements OnClickListener {
 				
 				int a = Integer.parseInt(aEt.getText().toString());
 				int b = Integer.parseInt(bEt.getText().toString());
-				
+				bEt.setText(Integer.parseInt(bEt.getText().toString())+1+"");
 				int port = Integer.parseInt(portEt.getText().toString());
-				new Thread(new SocketThread(ipEt.getText().toString(), port, ab)).start();
+				new Thread(new SocketThread(ipEt.getText().toString(), port, ab, a, b)).start();
 				
 			}catch(Exception e){
 				e.printStackTrace();
@@ -203,8 +195,8 @@ public class ST extends Activity implements OnClickListener {
 					new Thread(lstnr).start();
 					clientPortEt.setEnabled(false);
 				}
-				Toast.makeText(getBaseContext(), "trying register", Toast.LENGTH_LONG).show();
-				new Thread(new SocketThread(ipEt.getText().toString(), serverport, register)).start();
+				
+				new Thread(new SocketThread(ipEt.getText().toString(), serverport, register, 0, 0)).start();
 			} catch (IOException e) {
 				Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 				e.printStackTrace();
@@ -251,8 +243,12 @@ public class ST extends Activity implements OnClickListener {
 						public void run() {
 					
 							if(line.contains("results:")){
-								List<String> list =new ArrayList<String> (Arrays.asList(line.substring(9).split(":")));
-								results = (ArrayList<String>) list;
+								results.clear();
+								if(line.length()>8){
+									List<String> list =new ArrayList<String> (Arrays.asList(line.substring(9).split(":")));
+									results = (ArrayList<String>) list;	
+								}
+								
 								Toast.makeText(getBaseContext(), "incoming: "+results.size(), Toast.LENGTH_SHORT).show();
 								adapter.clear();
 								for(String s:results){
