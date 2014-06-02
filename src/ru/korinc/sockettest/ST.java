@@ -14,13 +14,17 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ST extends Activity implements OnClickListener {
@@ -35,12 +39,14 @@ public class ST extends Activity implements OnClickListener {
 	Socket socket;
 	SocketThread st;
 	ServerSocket	ss;
-	ListView lv;
+	LinearLayout ll;
+	TextView tv;
 	ArrayAdapter<String> adapter;
 	ArrayList<String> results;
 	final static int ab=0;
 	final static int register=1;
 	final static int wat=2;
+	final static int click=3;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,16 +59,88 @@ public class ST extends Activity implements OnClickListener {
 		bEt = (EditText) findViewById(R.id.etB);
 		reg = (Button) findViewById(R.id.bSend);
 		send = (Button) findViewById(R.id.bReg);
-		lv = (ListView) findViewById(R.id.listView1);
+		ll = (LinearLayout) findViewById(R.id.ll);
+		tv = (TextView) findViewById(R.id.tv);
+		
 
 		reg.setOnClickListener(this);
 		send.setOnClickListener(this);
 		
 		results=new ArrayList<String>();
 		
-		adapter = new ArrayAdapter<String>(this,
-		        android.R.layout.simple_list_item_1, results);
-		lv.setAdapter(adapter);
+		OnTouchListener otl = new OnTouchListener(){
+			float oldx;
+			float oldy;
+			float movex;
+			float movey;
+			float x;
+			float y;
+			String sDown;
+			String sMove;
+			String sUp;
+			long timeDown=System.currentTimeMillis();
+			long timeUp=System.currentTimeMillis();
+			
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				x = event.getX();
+				y = event.getY();
+				
+				
+				int port;
+				int a;
+				int b;
+
+				switch (event.getAction()) {
+					case MotionEvent.ACTION_DOWN: // нажатие
+						timeDown = System.currentTimeMillis();
+						sDown = "Down: " + x + "," + y + "|" + timeDown;
+						sMove = ""; sUp = "";
+						oldx=x;
+						oldy=y;
+						
+						//Toast.makeText(getBaseContext(), "TouchDown:"+timeDown.toString(), Toast.LENGTH_SHORT).show();
+						break;
+						
+					case MotionEvent.ACTION_MOVE: // движение
+						sMove = "Move: x_" + x + "\nMove: y_" + y;
+						movex=(x-oldx);
+						movey=(y-oldy);
+						a = Math.round(movex);
+						b = Math.round(movey);
+						
+						port = Integer.parseInt(portEt.getText().toString());
+						
+						new Thread(new SocketThread(ipEt.getText().toString(), port, ab, a, b)).start();
+						oldx=x;
+						oldy=y;
+						break;
+					case MotionEvent.ACTION_UP: // отпускание
+					case MotionEvent.ACTION_CANCEL:  
+						timeUp = System.currentTimeMillis();
+						sMove = "";
+						sUp = "Up: " + x + "," + y + "|" + timeUp;
+						
+						
+						
+						
+						if((timeUp-timeDown)<200){
+							port = Integer.parseInt(portEt.getText().toString());
+							
+							new Thread(new SocketThread(ipEt.getText().toString(), port, click, 0, 0)).start();
+						}
+						
+						break;
+				}
+				tv.setText(sDown + "\n" + sMove + "\n" + sUp);
+				return true;
+			}
+
+
+		};
+		
+		ll.setOnTouchListener(otl);
 	}
 
 	@Override
@@ -115,7 +193,7 @@ public class ST extends Activity implements OnClickListener {
 
 				if (socket != null) {
 
-				//	Toast.makeText(getBaseContext(), "socket пїЅпїЅпїЅпїЅпїЅпїЅ",Toast.LENGTH_LONG).show();
+				
 					try {
 						
 						InputStream sin = socket.getInputStream();
@@ -130,6 +208,11 @@ public class ST extends Activity implements OnClickListener {
 								out.writeUTF("ab:"+a+ "lolParseMe"+b);
 											 
 								break;
+								
+							case click:
+								out.writeUTF("click:");
+											 
+								break;	
 								
 							case register:
 							
@@ -276,4 +359,7 @@ public class ST extends Activity implements OnClickListener {
 
 		}
 	}
+	
+	
+	
 }
