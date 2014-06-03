@@ -108,8 +108,15 @@ public class ST extends Activity implements OnClickListener {
 						sMove = ""; sUp = "";
 						oldx=x;
 						oldy=y;
+						if (movex<0) {
+							movex=movex*-1;
+						}
 						
-						if(timeDown - timeDownOld < 500){
+						if (movey<0) {
+							movey=movey*-1;
+						}
+						if(timeDown - timeDownOld < 500 && (movex<1 & movey<1) ){
+							//Toast.makeText(getBaseContext(), movex+"|"+movey, Toast.LENGTH_LONG).show();
 							isDouble = true;
 							//send dnd down
 							port = Integer.parseInt(portEt.getText().toString());
@@ -140,11 +147,16 @@ public class ST extends Activity implements OnClickListener {
 						sMove = "";
 						sUp = "Up: " + x + "," + y + "|" + timeUp;
 						
+						if (movex<0) {
+							movex=movex*-1;
+						}
 						
-						if((timeUp-timeDown)<200 && (movex<10 & movey<10) && !isDouble){
+						if (movey<0) {
+							movey=movey*-1;
+						}
+						if((timeUp-timeDown)<100 && (movex<1 & movey<1) && !isDouble){
 							port = Integer.parseInt(portEt.getText().toString());							
 							new Thread(new SocketThread(ipEt.getText().toString(), port, click, 0, 0)).start();
-							
 							
 						}
 						
