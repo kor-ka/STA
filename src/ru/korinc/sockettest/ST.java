@@ -13,8 +13,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,7 +36,7 @@ public class ST extends Activity implements OnClickListener {
 	EditText clientPortEt;
 	EditText aEt;
 	EditText bEt;
-	Button reg;
+	Button scan;
 	Button send;
 	Socket socket;
 	SocketThread st;
@@ -57,13 +59,13 @@ public class ST extends Activity implements OnClickListener {
 		clientPortEt = (EditText) findViewById(R.id.etPort);
 		aEt = (EditText) findViewById(R.id.etA);
 		bEt = (EditText) findViewById(R.id.etB);
-		reg = (Button) findViewById(R.id.bSend);
-		send = (Button) findViewById(R.id.bReg);
+		scan = (Button) findViewById(R.id.bSend);
+		send = (Button) findViewById(R.id.bScan);
 		ll = (LinearLayout) findViewById(R.id.ll);
 		tv = (TextView) findViewById(R.id.tv);
 		
 
-		reg.setOnClickListener(this);
+		scan.setOnClickListener(this);
 		send.setOnClickListener(this);
 		
 		results=new ArrayList<String>();
@@ -264,30 +266,43 @@ public class ST extends Activity implements OnClickListener {
 			
 			
 
-		}else	if(v.getId()==R.id.bReg){
+		}else	if(v.getId()==R.id.bScan){
 
 			
-			try {
-				
-				int port = Integer.parseInt(clientPortEt.getText().toString());
-				int serverport = Integer.parseInt(portEt.getText().toString());
-				
-				if (ss == null){
-					ss = new ServerSocket(port);
-					Listener lstnr = new Listener(ss);
-					new Thread(lstnr).start();
-					clientPortEt.setEnabled(false);
-				}
-				
-				new Thread(new SocketThread(ipEt.getText().toString(), serverport, register, 0, 0)).start();
-			} catch (IOException e) {
-				Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-				e.printStackTrace();
-			}
+			boolean installed  =   appInstalledOrNot("com.google.zxing.client.android");
+			if(installed){
+			Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+    			intent.setPackage("com.google.zxing.client.android");
+				intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+    			
+    			
+			startActivityForResult(intent, 0);
+			}else{String url = "https://play.google.com/store/apps/details?id=com.google.zxing.client.android";
+				Intent i = new Intent(Intent.ACTION_VIEW);
+				i.setData(Uri.parse(url));
+				startActivity(i);}
 			
 
 		}
 	}
+	
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		if (requestCode == 0) {
+    		if (resultCode == RESULT_OK) {
+        			String contents = intent.getStringExtra("SCAN_RESULT");
+        			String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+        			String[] adressParts = contents.split(":");
+        			String IP = adressParts[0];
+        			String port = adressParts[1];
+        			
+        			ipEt.setText(IP);
+        			portEt.setText(port);
+    		}else{
+    			
+    		}
+		} 
+}
+
 	
 	public class Listener extends Thread {
 		protected ServerSocket listenSocket;
@@ -360,6 +375,25 @@ public class ST extends Activity implements OnClickListener {
 		}
 	}
 	
+	
+	//Utils
+	//check is app installed
+		private boolean appInstalledOrNot(String uri)
+		{
+			PackageManager pm = getPackageManager();
+			boolean app_installed = false;
+			try
+			{
+				pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+				app_installed = true;
+			}
+			catch (PackageManager.NameNotFoundException e)
+			{
+				app_installed = false;
+			}
+			return app_installed ;
+	    }
+
 	
 	
 }

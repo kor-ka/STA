@@ -25,7 +25,7 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f080014;
-        public static final int bReg=0x7f080011;
+        public static final int bScan=0x7f080011;
         public static final int bSend=0x7f080010;
         public static final int etA=0x7f08000b;
         public static final int etB=0x7f08000e;
