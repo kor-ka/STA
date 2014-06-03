@@ -59,14 +59,16 @@ public class ST extends Activity implements OnClickListener {
 		clientPortEt = (EditText) findViewById(R.id.etPort);
 		aEt = (EditText) findViewById(R.id.etA);
 		bEt = (EditText) findViewById(R.id.etB);
-		scan = (Button) findViewById(R.id.bSend);
-		send = (Button) findViewById(R.id.bScan);
+		scan = (Button) findViewById(R.id.bScan);
+		send = (Button) findViewById(R.id.bSend);
 		ll = (LinearLayout) findViewById(R.id.ll);
 		tv = (TextView) findViewById(R.id.tv);
 		
 
 		scan.setOnClickListener(this);
 		send.setOnClickListener(this);
+		
+		scan.performClick();
 		
 		results=new ArrayList<String>();
 		
@@ -229,14 +231,9 @@ public class ST extends Activity implements OnClickListener {
 						out.flush(); 
 										
 						final String line = in.readUTF(); 
-											
-						runOnUiThread(new Runnable() {
-								public void run() {
-									Toast.makeText(getBaseContext(), line, Toast.LENGTH_SHORT).show();
-								}
-							});						
+										
 						socket.close();
-						socket = null;
+					//	socket = null;
 					//	Toast.makeText(getBaseContext(), line + "",	Toast.LENGTH_LONG).show();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
