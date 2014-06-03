@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class ST extends Activity implements OnClickListener {
 	EditText bEt;
 	Button scan;
 	Button send;
-	Socket socket;
+	
 	SocketThread st;
 	ServerSocket	ss;
 	LinearLayout ll;
@@ -161,6 +162,7 @@ public class ST extends Activity implements OnClickListener {
 		int mode;
 		int a;
 		int b;
+		Socket socket;
 
 		public SocketThread(String ip, int port, int mode, int a, int b) {
 			this.ip = ip;
@@ -176,8 +178,8 @@ public class ST extends Activity implements OnClickListener {
 			try {
 
 				InetAddress ipAddress = InetAddress.getByName(ip);
-				socket = new Socket(ipAddress, port);
-			
+				socket = new Socket();
+				socket.connect(new InetSocketAddress(ipAddress, port), 10000);
 				
 				send();
 				
@@ -186,6 +188,7 @@ public class ST extends Activity implements OnClickListener {
 			//			Toast.LENGTH_LONG).show();// TODO Auto-generated catch
 													// block
 				e.printStackTrace();
+				
 			}
 			
 		}
@@ -240,6 +243,7 @@ public class ST extends Activity implements OnClickListener {
 						e.printStackTrace();
 					}
 					break;
+					 
 				}
 			}
 		}
