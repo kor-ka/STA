@@ -19,6 +19,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,6 +51,8 @@ public class ST extends Activity implements OnClickListener {
 	final static int register=1;
 	final static int wat=2;
 	final static int click=3;
+	final static int dndDown=4;
+	final static int dndUp=5;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -83,9 +86,10 @@ public class ST extends Activity implements OnClickListener {
 			String sDown;
 			String sMove;
 			String sUp;
+			long timeDownOld=System.currentTimeMillis();
 			long timeDown=System.currentTimeMillis();
 			long timeUp=System.currentTimeMillis();
-			
+			boolean isDouble = false;
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -104,6 +108,15 @@ public class ST extends Activity implements OnClickListener {
 						sMove = ""; sUp = "";
 						oldx=x;
 						oldy=y;
+						
+						if(timeDown - timeDownOld < 500){
+							isDouble = true;
+							//send dnd down
+							port = Integer.parseInt(portEt.getText().toString());
+							new Thread(new SocketThread(ipEt.getText().toString(), port, dndDown, 0, 0)).start();
+						}
+						
+						timeDownOld = timeDown;
 						
 						//Toast.makeText(getBaseContext(), "TouchDown:"+timeDown.toString(), Toast.LENGTH_SHORT).show();
 						break;
@@ -128,12 +141,19 @@ public class ST extends Activity implements OnClickListener {
 						sUp = "Up: " + x + "," + y + "|" + timeUp;
 						
 						
-						
-						
-						if((timeUp-timeDown)<200){
-							port = Integer.parseInt(portEt.getText().toString());
-							
+						if((timeUp-timeDown)<200 && (movex<10 & movey<10) && !isDouble){
+							port = Integer.parseInt(portEt.getText().toString());							
 							new Thread(new SocketThread(ipEt.getText().toString(), port, click, 0, 0)).start();
+							
+							
+						}
+						
+						if(isDouble){
+							//send dnd up
+							port = Integer.parseInt(portEt.getText().toString());		
+							new Thread(new SocketThread(ipEt.getText().toString(), port, dndUp, 0, 0)).start();
+							
+							isDouble = false;
 						}
 						
 						break;
@@ -153,6 +173,12 @@ public class ST extends Activity implements OnClickListener {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.st, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		scan.performClick();
+		return super.onOptionsItemSelected(item);
 	}
 
 	class SocketThread implements Runnable {
@@ -218,6 +244,16 @@ public class ST extends Activity implements OnClickListener {
 								
 							case click:
 								out.writeUTF("click:");
+											 
+								break;	
+								
+							case dndDown:
+								out.writeUTF("dndDown:");
+											 
+								break;	
+								
+							case dndUp:
+								out.writeUTF("dndUp:");
 											 
 								break;	
 								
