@@ -81,6 +81,10 @@ public class ST extends Activity implements OnClickListener {
 			float oldy;
 			float movex;
 			float movey;
+			float fullmovex;
+			float fullmovey;
+			float downx;
+			float downy;
 			float x;
 			float y;
 			String sDown;
@@ -102,12 +106,14 @@ public class ST extends Activity implements OnClickListener {
 				int b;
 
 				switch (event.getAction()) {
-					case MotionEvent.ACTION_DOWN: // нажатие
+					case MotionEvent.ACTION_DOWN: // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 						timeDown = System.currentTimeMillis();
 						sDown = "Down: " + x + "," + y + "|" + timeDown;
 						sMove = ""; sUp = "";
 						oldx=x;
 						oldy=y;
+						downx=x;
+						downy=y;
 						if (movex<0) {
 							movex=movex*-1;
 						}
@@ -115,7 +121,7 @@ public class ST extends Activity implements OnClickListener {
 						if (movey<0) {
 							movey=movey*-1;
 						}
-						if(timeDown - timeDownOld < 500 && (movex<1 & movey<1) ){
+						if(timeDown - timeDownOld < 500 && (fullmovex<10 & fullmovey<10) ){
 							//Toast.makeText(getBaseContext(), movex+"|"+movey, Toast.LENGTH_LONG).show();
 							isDouble = true;
 							//send dnd down
@@ -128,7 +134,7 @@ public class ST extends Activity implements OnClickListener {
 						//Toast.makeText(getBaseContext(), "TouchDown:"+timeDown.toString(), Toast.LENGTH_SHORT).show();
 						break;
 						
-					case MotionEvent.ACTION_MOVE: // движение
+					case MotionEvent.ACTION_MOVE: // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 						sMove = "Move: x_" + x + "\nMove: y_" + y;
 						movex=(x-oldx);
 						movey=(y-oldy);
@@ -141,20 +147,21 @@ public class ST extends Activity implements OnClickListener {
 						oldx=x;
 						oldy=y;
 						break;
-					case MotionEvent.ACTION_UP: // отпускание
+					case MotionEvent.ACTION_UP: // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 					case MotionEvent.ACTION_CANCEL:  
 						timeUp = System.currentTimeMillis();
 						sMove = "";
 						sUp = "Up: " + x + "," + y + "|" + timeUp;
-						
-						if (movex<0) {
-							movex=movex*-1;
+						fullmovex=x-downx;
+						fullmovey=y-downy;
+						if (fullmovex<0) {
+							fullmovex=fullmovex*-1;
 						}
 						
-						if (movey<0) {
-							movey=movey*-1;
+						if (fullmovey<0) {
+							fullmovey=fullmovey*-1;
 						}
-						if((timeUp-timeDown)<100 && (movex<1 & movey<1) && !isDouble){
+						if((timeUp-timeDown)<100 && (fullmovex<10 & fullmovey<10) && !isDouble){
 							port = Integer.parseInt(portEt.getText().toString());							
 							new Thread(new SocketThread(ipEt.getText().toString(), port, click, 0, 0)).start();
 							
