@@ -30,6 +30,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.View.*;
 
 public class ST extends Activity implements OnClickListener {
 	Thread listener;
@@ -40,6 +41,10 @@ public class ST extends Activity implements OnClickListener {
 	EditText bEt;
 	Button scan;
 	Button send;
+	
+	float fullmovex;
+	float fullmovey;
+	boolean isDouble = false;
 	
 	SocketThread st;
 	ServerSocket	ss;
@@ -53,6 +58,7 @@ public class ST extends Activity implements OnClickListener {
 	final static int click=3;
 	final static int dndDown=4;
 	final static int dndUp=5;
+	final static int rclick=6;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,6 +74,26 @@ public class ST extends Activity implements OnClickListener {
 		ll = (LinearLayout) findViewById(R.id.ll);
 		tv = (TextView) findViewById(R.id.tv);
 		
+		
+		ll.setLongClickable(true);
+		ll.setClickable(true);
+		ll.setOnLongClickListener(new View.OnLongClickListener(){
+
+				@Override
+				public boolean onLongClick(View p1)
+				{
+					
+					if(!isDouble && (fullmovey<5 & fullmovex<5)){
+					//	Toast.makeText(getBaseContext(), "long", Toast.LENGTH_SHORT).show();
+						int port = Integer.parseInt(portEt.getText().toString());
+						new Thread(new SocketThread(ipEt.getText().toString(), port, rclick, 0, 0)).start();
+					}
+					return true;
+				}
+				
+			
+		});
+		
 
 		scan.setOnClickListener(this);
 		send.setOnClickListener(this);
@@ -81,8 +107,7 @@ public class ST extends Activity implements OnClickListener {
 			float oldy;
 			float movex;
 			float movey;
-			float fullmovex;
-			float fullmovey;
+		
 			float downx;
 			float downy;
 			float x;
@@ -93,7 +118,7 @@ public class ST extends Activity implements OnClickListener {
 			long timeDownOld=System.currentTimeMillis();
 			long timeDown=System.currentTimeMillis();
 			long timeUp=System.currentTimeMillis();
-			boolean isDouble = false;
+		
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -106,7 +131,7 @@ public class ST extends Activity implements OnClickListener {
 				int b;
 
 				switch (event.getAction()) {
-					case MotionEvent.ACTION_DOWN: // �������
+					case MotionEvent.ACTION_DOWN: 
 						timeDown = System.currentTimeMillis();
 						sDown = "Down: " + x + "," + y + "|" + timeDown;
 						sMove = ""; sUp = "";
@@ -134,10 +159,20 @@ public class ST extends Activity implements OnClickListener {
 						//Toast.makeText(getBaseContext(), "TouchDown:"+timeDown.toString(), Toast.LENGTH_SHORT).show();
 						break;
 						
-					case MotionEvent.ACTION_MOVE: // ��������
+					case MotionEvent.ACTION_MOVE: 
 						sMove = "Move: x_" + x + "\nMove: y_" + y;
 						movex=(x-oldx);
 						movey=(y-oldy);
+						fullmovex=x-downx;
+						fullmovey=y-downy;
+						if (fullmovex<0) {
+							fullmovex=fullmovex*-1;
+						}
+
+						if (fullmovey<0) {
+							fullmovey=fullmovey*-1;
+						}
+						
 						a = Math.round(movex);
 						b = Math.round(movey);
 						
@@ -147,7 +182,7 @@ public class ST extends Activity implements OnClickListener {
 						oldx=x;
 						oldy=y;
 						break;
-					case MotionEvent.ACTION_UP: // ����������
+					case MotionEvent.ACTION_UP: 
 					case MotionEvent.ACTION_CANCEL:  
 						timeUp = System.currentTimeMillis();
 						sMove = "";
@@ -178,7 +213,7 @@ public class ST extends Activity implements OnClickListener {
 						break;
 				}
 				tv.setText(sDown + "\n" + sMove + "\n" + sUp);
-				return true;
+				return false;
 			}
 
 
@@ -186,6 +221,9 @@ public class ST extends Activity implements OnClickListener {
 		
 		ll.setOnTouchListener(otl);
 	}
+	
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -265,6 +303,11 @@ public class ST extends Activity implements OnClickListener {
 								out.writeUTF("click:");
 											 
 								break;	
+								
+							case rclick:
+								out.writeUTF("rclick:");
+
+								break;
 								
 							case dndDown:
 								out.writeUTF("dndDown:");
