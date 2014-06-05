@@ -127,7 +127,7 @@ public class ST extends Activity implements OnClickListener {
 			String sDown;
 			String sMove;
 			String sUp;
-			long timeDownOld=System.currentTimeMillis();
+			
 			long timeDown=System.currentTimeMillis();
 			long timeUp=System.currentTimeMillis();
 		
@@ -152,18 +152,6 @@ public class ST extends Activity implements OnClickListener {
 						downx=x;
 						downy=y;
 						
-						if(timeDown - timeDownOld < 500 && (fullmovex<10 & fullmovey<10) ){
-							//Toast.makeText(getBaseContext(), movex+"|"+movey, Toast.LENGTH_LONG).show();
-							isDouble = true;
-							//send dnd down
-							port = Integer.parseInt(portEt.getText().toString());
-							//new Thread(new SocketThread(ipEt.getText().toString(), port, dndDown, 0, 0)).start();
-							
-						}
-						
-						timeDownOld = timeDown;
-						
-						//Toast.makeText(getBaseContext(), "TouchDown:"+timeDown.toString(), Toast.LENGTH_SHORT).show();
 						break;
 						
 					case MotionEvent.ACTION_MOVE: 
@@ -199,6 +187,8 @@ public class ST extends Activity implements OnClickListener {
 						sUp = "Up: " + x + "," + y + "|" + timeUp;
 						fullmovex=x-downx;
 						fullmovey=y-downy;
+						
+						//Make module
 						if (fullmovex<0) {
 							fullmovex=fullmovex*-1;
 						}
@@ -206,12 +196,15 @@ public class ST extends Activity implements OnClickListener {
 						if (fullmovey<0) {
 							fullmovey=fullmovey*-1;
 						}
-						if((timeUp-timeDown)<100 && (fullmovex<20 & fullmovey<20) && !isDouble){
+						
+						//Click
+						if((timeUp-timeDown)<200 && (fullmovex<30 & fullmovey<30) && !isDouble){
 							port = Integer.parseInt(portEt.getText().toString());							
 							new Thread(new SocketThread(ipEt.getText().toString(), port, click, 0, 0)).start();
 							
 						}
 						
+						//Long click relise
 						if((timeUp-timeDown)<100 && (fullmovex<20 & fullmovey<20) && isDouble){
 							//send dnd up
 							port = Integer.parseInt(portEt.getText().toString());		
