@@ -14,23 +14,28 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View.*;
 
 public class ST extends Activity implements OnClickListener {
 	Thread listener;
@@ -39,13 +44,14 @@ public class ST extends Activity implements OnClickListener {
 	EditText clientPortEt;
 	EditText aEt;
 	EditText bEt;
+	EditText keyboardEt;
 	Button scan;
 	Button send;
 	
 	float fullmovex;
 	float fullmovey;
 	boolean isDouble = false;
-	
+	KeyCharacterMap mKeyCharacterMap = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD);
 	SocketThread st;
 	ServerSocket	ss;
 	LinearLayout ll;
@@ -59,6 +65,7 @@ public class ST extends Activity implements OnClickListener {
 	final static int dndDown=4;
 	final static int dndUp=5;
 	final static int rclick=6;
+	final static int keyboard=7;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,11 +76,43 @@ public class ST extends Activity implements OnClickListener {
 		clientPortEt = (EditText) findViewById(R.id.etPort);
 		aEt = (EditText) findViewById(R.id.etA);
 		bEt = (EditText) findViewById(R.id.etB);
+		keyboardEt = (EditText) findViewById(R.id.etKeyboard);
 		scan = (Button) findViewById(R.id.bScan);
 		send = (Button) findViewById(R.id.bSend);
 		ll = (LinearLayout) findViewById(R.id.ll);
 		tv = (TextView) findViewById(R.id.tv);
-		
+		keyboardEt.setText("11");
+		keyboardEt.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if(s.length()>0 && keyboardEt.getText().toString().length()>2){
+					char pressed = s.charAt(0);
+					
+					int port = Integer.parseInt(portEt.getText().toString());		
+					new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, Character.toString(pressed))).start();
+					keyboardEt.setText("11");
+				} else if(keyboardEt.getText().toString().equals("1")){
+					int port = Integer.parseInt(portEt.getText().toString());		
+					new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "bksps")).start();
+					keyboardEt.setText("11");
+				}
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+			
+				
+			}
+		});
 		
 		ll.setLongClickable(true);
 		ll.setClickable(true);
@@ -237,10 +276,22 @@ public class ST extends Activity implements OnClickListener {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		scan.performClick();
+		switch (item.getItemId()) {
+		case R.id.action_scan:
+			scan.performClick();
+			break;
+
+		case R.id.keyboard:
+			InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
+			InputMethodManager.HIDE_IMPLICIT_ONLY);
+			break;
+		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 
+	
 	class SocketThread implements Runnable {
 
 		String ip;
@@ -248,6 +299,7 @@ public class ST extends Activity implements OnClickListener {
 		int mode;
 		int a;
 		int b;
+		String chr;
 		Socket socket;
 
 		public SocketThread(String ip, int port, int mode, int a, int b) {
@@ -256,6 +308,14 @@ public class ST extends Activity implements OnClickListener {
 			this.mode=mode;
 			this.a=a;
 			this.b=b;
+
+		}
+		
+		public SocketThread(String ip, int port, int mode, String chr) {
+			this.ip = ip;
+			this.port = port;
+			this.mode=mode;
+			this.chr = chr;
 
 		}
 
@@ -325,6 +385,11 @@ public class ST extends Activity implements OnClickListener {
 							case register:
 							
 								out.writeUTF("registerMe:"+clientPortEt.getText().toString());
+								break; 
+								
+							case keyboard:
+								
+								out.writeUTF("keyboard:"+chr);
 								break; 
 						}
 
