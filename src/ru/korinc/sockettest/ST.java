@@ -88,7 +88,7 @@ public class ST extends Activity implements OnClickListener {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if(s.length()>0 && keyboardEt.getText().toString().length()>2){
-					char pressed = s.charAt(0);
+					char pressed = s.charAt(2);
 					
 					int port = Integer.parseInt(portEt.getText().toString());		
 					new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, Character.toString(pressed))).start();
@@ -393,7 +393,7 @@ public class ST extends Activity implements OnClickListener {
 								
 							case keyboard:
 								
-								out.writeUTF("keyboard:"+chr);
+								out.writeUTF("keyboard::"+chr);
 								break; 
 						}
 
