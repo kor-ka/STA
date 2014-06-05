@@ -82,6 +82,7 @@ public class ST extends Activity implements OnClickListener {
 		ll = (LinearLayout) findViewById(R.id.ll);
 		tv = (TextView) findViewById(R.id.tv);
 		keyboardEt.setText("11");
+		keyboardEt.setSelection(keyboardEt.getText().length());
 		keyboardEt.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -92,10 +93,13 @@ public class ST extends Activity implements OnClickListener {
 					int port = Integer.parseInt(portEt.getText().toString());		
 					new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, Character.toString(pressed))).start();
 					keyboardEt.setText("11");
+					keyboardEt.setSelection(keyboardEt.getText().length());
 				} else if(keyboardEt.getText().toString().equals("1")){
+					
 					int port = Integer.parseInt(portEt.getText().toString());		
 					new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "bksps")).start();
 					keyboardEt.setText("11");
+					keyboardEt.setSelection(keyboardEt.getText().length());
 				}
 				
 			}

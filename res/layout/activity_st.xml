@@ -139,13 +139,7 @@
 				android:inputType="numberDecimal"
 				android:digits="0123456789-"/>
 
-			<EditText
-			    android:id="@+id/etKeyboard"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:ems="10" >
-				 <requestFocus />
-				</EditText>
+		
 
 		</TableRow>
 
@@ -172,6 +166,13 @@
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:text="Scan"/>
+		<EditText
+			android:id="@+id/etKeyboard"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:ems="10" >
+			<requestFocus />
+		</EditText>
 
 	</LinearLayout>
 
@@ -183,7 +184,7 @@
 	    android:layout_alignParentRight="true"
 	    android:layout_alignParentTop="true"
 	    android:background="#747474"
-	    android:orientation="horizontal" >
+	    android:orientation="vertical" >
 
 		<TextView
 			android:layout_height="wrap_content"
@@ -192,6 +193,8 @@
 			android:layout_above="@id/ll"
 			android:id="@+id/tv"
 			android:textColor="#FFFFFF"/>
+		
+		
 
 	</LinearLayout>
 
