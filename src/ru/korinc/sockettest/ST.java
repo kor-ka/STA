@@ -79,16 +79,28 @@ public class ST extends Activity implements OnClickListener {
 		ll.setClickable(true);
 		ll.setOnLongClickListener(new View.OnLongClickListener(){
 
+			
+		long timeLongDownOld=System.currentTimeMillis();
+		long timeLongDown=System.currentTimeMillis();
 				@Override
 				public boolean onLongClick(View p1)
 				{
 					
-					if(!isDouble && (fullmovey<5 & fullmovex<5)){
+					if(fullmovey<5 & fullmovex<5){
 					//	Toast.makeText(getBaseContext(), "long", Toast.LENGTH_SHORT).show();
 						int port = Integer.parseInt(portEt.getText().toString());
-						new Thread(new SocketThread(ipEt.getText().toString(), port, rclick, 0, 0)).start();
+						
+						new Thread(new SocketThread(ipEt.getText().toString(), port, dndDown, 0, 0)).start();
+						isDouble = true;
+						timeLongDown=System.currentTimeMillis();
+						if(timeLongDown-timeLongDownOld<1000){
+							new Thread(new SocketThread(ipEt.getText().toString(), port, rclick, 0, 0)).start();
+						}
+						timeLongDownOld=System.currentTimeMillis();
+						return true;
 					}
-					return true;
+					
+					return false;
 				}
 				
 			
@@ -107,7 +119,7 @@ public class ST extends Activity implements OnClickListener {
 			float oldy;
 			float movex;
 			float movey;
-		
+			
 			float downx;
 			float downy;
 			float x;
@@ -139,19 +151,14 @@ public class ST extends Activity implements OnClickListener {
 						oldy=y;
 						downx=x;
 						downy=y;
-						if (movex<0) {
-							movex=movex*-1;
-						}
 						
-						if (movey<0) {
-							movey=movey*-1;
-						}
 						if(timeDown - timeDownOld < 500 && (fullmovex<10 & fullmovey<10) ){
 							//Toast.makeText(getBaseContext(), movex+"|"+movey, Toast.LENGTH_LONG).show();
 							isDouble = true;
 							//send dnd down
 							port = Integer.parseInt(portEt.getText().toString());
-							new Thread(new SocketThread(ipEt.getText().toString(), port, dndDown, 0, 0)).start();
+							//new Thread(new SocketThread(ipEt.getText().toString(), port, dndDown, 0, 0)).start();
+							
 						}
 						
 						timeDownOld = timeDown;
@@ -163,15 +170,18 @@ public class ST extends Activity implements OnClickListener {
 						sMove = "Move: x_" + x + "\nMove: y_" + y;
 						movex=(x-oldx);
 						movey=(y-oldy);
+						
+						// Need for control long click
 						fullmovex=x-downx;
 						fullmovey=y-downy;
 						if (fullmovex<0) {
 							fullmovex=fullmovex*-1;
 						}
-
+						
 						if (fullmovey<0) {
 							fullmovey=fullmovey*-1;
 						}
+						//
 						
 						a = Math.round(movex);
 						b = Math.round(movey);
@@ -196,13 +206,13 @@ public class ST extends Activity implements OnClickListener {
 						if (fullmovey<0) {
 							fullmovey=fullmovey*-1;
 						}
-						if((timeUp-timeDown)<100 && (fullmovex<10 & fullmovey<10) && !isDouble){
+						if((timeUp-timeDown)<100 && (fullmovex<20 & fullmovey<20) && !isDouble){
 							port = Integer.parseInt(portEt.getText().toString());							
 							new Thread(new SocketThread(ipEt.getText().toString(), port, click, 0, 0)).start();
 							
 						}
 						
-						if(isDouble){
+						if((timeUp-timeDown)<100 && (fullmovex<20 & fullmovey<20) && isDouble){
 							//send dnd up
 							port = Integer.parseInt(portEt.getText().toString());		
 							new Thread(new SocketThread(ipEt.getText().toString(), port, dndUp, 0, 0)).start();
