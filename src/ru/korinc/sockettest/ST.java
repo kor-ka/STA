@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -22,13 +23,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyCharacterMap;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -69,6 +70,19 @@ public class ST extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		 try {
+	            ViewConfiguration config = ViewConfiguration.get(this);
+	            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+	            if(menuKeyField != null) {
+	                menuKeyField.setAccessible(true);
+	                menuKeyField.setBoolean(config, false);
+	            }
+	        } catch (Exception ex) {
+	            // Ignore
+	        }
+	        
+		
 		setContentView(R.layout.activity_st);
 
 		ipEt = (EditText) findViewById(R.id.etIp);
@@ -280,6 +294,9 @@ public class ST extends Activity implements OnClickListener {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		int port = Integer.parseInt(portEt.getText().toString());	
+		
 		switch (item.getItemId()) {
 		case R.id.action_scan:
 			scan.performClick();
@@ -290,7 +307,15 @@ public class ST extends Activity implements OnClickListener {
 			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
 			InputMethodManager.HIDE_IMPLICIT_ONLY);
 			break;
-		}
+		
+		
+	case R.id.contextMenu:
+			
+		new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "contextMenu")).start();
+		break;
+		
+	
+	}
 		
 		return super.onOptionsItemSelected(item);
 	}

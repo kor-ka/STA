@@ -24,16 +24,17 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_scan=0x7f080015;
+        public static final int action_scan=0x7f080016;
         public static final int bScan=0x7f080011;
         public static final int bSend=0x7f080010;
+        public static final int contextMenu=0x7f080017;
         public static final int etA=0x7f08000b;
         public static final int etB=0x7f08000e;
         public static final int etIp=0x7f080003;
         public static final int etKeyboard=0x7f080012;
         public static final int etPort=0x7f080008;
         public static final int etSocket=0x7f080006;
-        public static final int keyboard=0x7f080016;
+        public static final int keyboard=0x7f080015;
         public static final int linearLayout1=0x7f08000f;
         public static final int ll=0x7f080013;
         public static final int tableLayout1=0x7f080000;
