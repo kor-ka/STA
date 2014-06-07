@@ -45,14 +45,19 @@ public class MappingList extends Activity implements OnClickListener{
 		addToMap = (Button) findViewById(R.id.buttonAddToMap);
 		addToMap.setOnClickListener(this);
 		
-		keys  = shp.getStringSet("map", null);
+		keys  = shp.getStringSet("map", new HashSet<String>());
+		if (keys.isEmpty()){
+			keys.add("хром");
+			ed.putString("хром", "chrome");
+			ed.putStringSet("map", keys);
+			ed.commit();
+		}
+		
 		map = new ArrayList<String>() ;
 		if(keys != null){
 			for (String key:keys) {
 				map.add(key+" = "+shp.getString(key, "null"));
 			}
-		}else{
-			map.add("Add something");
 		}
 		
 		
