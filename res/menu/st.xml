@@ -30,6 +30,11 @@
         android:showAsAction="ifRoom"
         android:title="Context Menu"/>
     
+    <item
+        android:id="@+id/arrows"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="Arrows"/>
     
     
 </menu>

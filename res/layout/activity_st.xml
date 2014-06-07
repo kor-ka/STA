@@ -193,8 +193,65 @@
 			android:layout_above="@id/ll"
 			android:id="@+id/tv"
 			android:textColor="#FFFFFF"/>
+		<Button
+		    android:id="@+id/buttonEsc"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		     android:layout_weight="0.5"
+		    android:text="Esc" 
+		    android:visibility="gone"/>
+		<Button
+		    android:id="@+id/buttonUp"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		     android:layout_weight="1"
+		    android:text="↑"
+		    android:visibility="gone"/>"
+
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content" 
+		     android:layout_weight="2"
+		    android:orientation="horizontal"
+		    >
+
+		    
+
+		        <Button
+		            android:id="@+id/buttonLeft"
+		            android:layout_width="0dp"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1"
+		            android:text="←"
+		            android:visibility="gone" />
+
+		        <Button
+		            android:id="@+id/buttonRight"
+		            android:layout_width="0dp"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1"
+		            android:text="→"
+		            android:visibility="gone" />
+
+		 
+		    
+		</LinearLayout>
+
+		<Button
+		    android:id="@+id/buttonDown"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		     android:layout_weight="1"
+		    android:text="↓" 
+		    android:visibility="gone"/>
 		
-		
+		<Button
+		    android:id="@+id/buttonEnter"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		     android:layout_weight="0.5"
+		    android:text="Enter" 
+		    android:visibility="gone"/>
 
 	</LinearLayout>
 

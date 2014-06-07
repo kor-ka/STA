@@ -24,11 +24,18 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_scan=0x7f08001c;
+        public static final int action_scan=0x7f080022;
+        public static final int arrows=0x7f080024;
         public static final int bScan=0x7f080015;
         public static final int bSend=0x7f080014;
         public static final int buttonAddToMap=0x7f080002;
-        public static final int contextMenu=0x7f08001d;
+        public static final int buttonDown=0x7f08001d;
+        public static final int buttonEnter=0x7f08001e;
+        public static final int buttonEsc=0x7f080019;
+        public static final int buttonLeft=0x7f08001b;
+        public static final int buttonRight=0x7f08001c;
+        public static final int buttonUp=0x7f08001a;
+        public static final int contextMenu=0x7f080023;
         public static final int editKey=0x7f080000;
         public static final int editTextValue=0x7f080001;
         public static final int etA=0x7f08000f;
@@ -37,12 +44,12 @@ public final class R {
         public static final int etKeyboard=0x7f080016;
         public static final int etPort=0x7f08000c;
         public static final int etSocket=0x7f08000a;
-        public static final int keyboard=0x7f080019;
-        public static final int launchApp=0x7f08001a;
+        public static final int keyboard=0x7f08001f;
+        public static final int launchApp=0x7f080020;
         public static final int linearLayout1=0x7f080013;
         public static final int listViewMap=0x7f080003;
         public static final int ll=0x7f080017;
-        public static final int map=0x7f08001b;
+        public static final int map=0x7f080021;
         public static final int tableLayout1=0x7f080004;
         public static final int tableRow1=0x7f080005;
         public static final int tableRow2=0x7f080008;

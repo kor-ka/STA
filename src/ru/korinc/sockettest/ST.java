@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -56,7 +57,14 @@ public class ST extends Activity implements OnClickListener {
 	EditText keyboardEt;
 	Button scan;
 	Button send;
+	Button up;
+	Button down;
+	Button left;
+	Button right;
+	Button esc;
+	Button enter;
 	SharedPreferences shp;
+	Editor ed;
 	float fullmovex;
 	float fullmovey;
 	boolean isDouble = false;
@@ -93,7 +101,7 @@ public class ST extends Activity implements OnClickListener {
 	        }
 	        
 		shp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		 
+		ed = shp.edit();
 		setContentView(R.layout.activity_st);
 
 		ipEt = (EditText) findViewById(R.id.etIp);
@@ -104,8 +112,17 @@ public class ST extends Activity implements OnClickListener {
 		keyboardEt = (EditText) findViewById(R.id.etKeyboard);
 		scan = (Button) findViewById(R.id.bScan);
 		send = (Button) findViewById(R.id.bSend);
+		up = (Button) findViewById(R.id.buttonUp);
+		down = (Button) findViewById(R.id.buttonDown);
+		left = (Button) findViewById(R.id.buttonLeft);
+		right = (Button) findViewById(R.id.buttonRight);
+		esc = (Button) findViewById(R.id.buttonEsc);
+		enter = (Button) findViewById(R.id.buttonEnter);
 		ll = (LinearLayout) findViewById(R.id.ll);
 		tv = (TextView) findViewById(R.id.tv);
+		
+		ipEt.setText(shp.getString("ip", ""));
+		portEt.setText(shp.getString("port", "1234"));
 						
 		keyboardEt.setText("11");
 		keyboardEt.setSelection(keyboardEt.getText().length());
@@ -179,7 +196,12 @@ public class ST extends Activity implements OnClickListener {
 		scan.setOnClickListener(this);
 		send.setOnClickListener(this);
 		
-		scan.performClick();
+		up.setOnClickListener(this);
+		down.setOnClickListener(this);
+		left.setOnClickListener(this);
+		right.setOnClickListener(this);
+		esc.setOnClickListener(this);
+		enter.setOnClickListener(this);
 		
 		results=new ArrayList<String>();
 		
@@ -317,6 +339,28 @@ public class ST extends Activity implements OnClickListener {
 		case R.id.map:
 			Intent intent = new Intent(this, MappingList.class);
 			startActivity(intent);
+			break;
+			
+		case R.id.arrows:
+			switch (up.getVisibility()) {
+			case View.VISIBLE:
+				up.setVisibility(View.GONE);
+				down.setVisibility(View.GONE);
+				left.setVisibility(View.GONE);
+				right.setVisibility(View.GONE);
+				esc.setVisibility(View.GONE);
+				enter.setVisibility(View.GONE);
+				break;
+
+			case View.GONE:
+				up.setVisibility(View.VISIBLE);
+				down.setVisibility(View.VISIBLE);
+				left.setVisibility(View.VISIBLE);
+				right.setVisibility(View.VISIBLE);
+				esc.setVisibility(View.VISIBLE);
+				enter.setVisibility(View.VISIBLE);
+				break;
+			}
 			break;
 
 
@@ -477,23 +521,23 @@ public class ST extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		if(v.getId()==R.id.bSend){
-			try{
+		int port = Integer.parseInt(portEt.getText().toString());
+		switch (v.getId()) {
+		case R.id.bSend:
+				try{
 				
 				int a = Integer.parseInt(aEt.getText().toString());
 				int b = Integer.parseInt(bEt.getText().toString());
 				bEt.setText(Integer.parseInt(bEt.getText().toString())+1+"");
-				int port = Integer.parseInt(portEt.getText().toString());
+				
 				new Thread(new SocketThread(ipEt.getText().toString(), port, ab, a, b)).start();
 				
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-			
-			
+			break;
 
-		}else	if(v.getId()==R.id.bScan){
-
+		case R.id.bScan:
 			
 			boolean installed  =   appInstalledOrNot("com.google.zxing.client.android");
 			if(installed){
@@ -508,8 +552,40 @@ public class ST extends Activity implements OnClickListener {
 				i.setData(Uri.parse(url));
 				startActivity(i);}
 			
-
+			break;
+			
+		case R.id.buttonUp:
+					
+			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "up")).start();
+			break;
+			
+		case R.id.buttonDown:
+					
+			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "down")).start();
+			break;
+			
+		case R.id.buttonLeft:
+					
+			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "left")).start();
+			break;
+			
+		case R.id.buttonRight:
+					
+			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "right")).start();
+			break;
+			
+		case R.id.buttonEsc:
+					
+			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "esc")).start();
+			break;
+			
+		case R.id.buttonEnter:
+					
+			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "enter")).start();
+			break;	
+			
 		}
+		
 	}
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -613,6 +689,29 @@ public class ST extends Activity implements OnClickListener {
 			}
 
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if(up.getVisibility()==View.GONE){
+			super.onBackPressed();
+		} else{
+			up.setVisibility(View.GONE);
+			down.setVisibility(View.GONE);
+			left.setVisibility(View.GONE);
+			right.setVisibility(View.GONE);
+			esc.setVisibility(View.GONE);
+			enter.setVisibility(View.GONE);
+		}
+		
+	}
+	
+	@Override
+	protected void onDestroy() {
+		ed.putString("ip", ipEt.getText().toString());
+		ed.putString("port", portEt.getText().toString());
+		ed.commit();
+		super.onDestroy();
 	}
 	
 	
