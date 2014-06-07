@@ -12,15 +12,23 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.speech.RecognizerIntent;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyCharacterMap;
 import android.view.Menu;
@@ -48,7 +56,7 @@ public class ST extends Activity implements OnClickListener {
 	EditText keyboardEt;
 	Button scan;
 	Button send;
-	
+	SharedPreferences shp;
 	float fullmovex;
 	float fullmovey;
 	boolean isDouble = false;
@@ -67,6 +75,8 @@ public class ST extends Activity implements OnClickListener {
 	final static int dndUp=5;
 	final static int rclick=6;
 	final static int keyboard=7;
+	final static int launch=8;
+	private static final int REQUEST_CODE = 1234;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,7 +92,8 @@ public class ST extends Activity implements OnClickListener {
 	            // Ignore
 	        }
 	        
-		
+		shp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		 
 		setContentView(R.layout.activity_st);
 
 		ipEt = (EditText) findViewById(R.id.etIp);
@@ -95,6 +106,7 @@ public class ST extends Activity implements OnClickListener {
 		send = (Button) findViewById(R.id.bSend);
 		ll = (LinearLayout) findViewById(R.id.ll);
 		tv = (TextView) findViewById(R.id.tv);
+						
 		keyboardEt.setText("11");
 		keyboardEt.setSelection(keyboardEt.getText().length());
 		keyboardEt.addTextChangedListener(new TextWatcher() {
@@ -301,6 +313,12 @@ public class ST extends Activity implements OnClickListener {
 		case R.id.action_scan:
 			scan.performClick();
 			break;
+			
+		case R.id.map:
+			Intent intent = new Intent(this, MappingList.class);
+			startActivity(intent);
+			break;
+
 
 		case R.id.keyboard:
 			InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -308,7 +326,11 @@ public class ST extends Activity implements OnClickListener {
 			InputMethodManager.HIDE_IMPLICIT_ONLY);
 			break;
 		
-		
+		case R.id.launchApp:
+			startVoiceRecognitionActivity();
+			
+			break;
+			
 	case R.id.contextMenu:
 			
 		new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "contextMenu")).start();
@@ -319,6 +341,8 @@ public class ST extends Activity implements OnClickListener {
 		
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
 
 	
 	class SocketThread implements Runnable {
@@ -419,7 +443,13 @@ public class ST extends Activity implements OnClickListener {
 							case keyboard:
 								
 								out.writeUTF("keyboard::"+chr);
-								break; 
+								break;
+								
+							case launch:
+								
+								out.writeUTF("launch:"+chr);
+								break; 	
+								
 						}
 
 						 
@@ -483,6 +513,20 @@ public class ST extends Activity implements OnClickListener {
 	}
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		 if (requestCode == REQUEST_CODE && resultCode == RESULT_OK)
+		    {		
+			 ArrayList<String> matches = intent.getStringArrayListExtra(
+	                    RecognizerIntent.EXTRA_RESULTS);
+	           
+			  String m_Text =matches.get(0);
+			
+			  m_Text = shp.getString(m_Text, m_Text);
+			  
+		        int port = Integer.parseInt(portEt.getText().toString());
+		        new Thread(new SocketThread(ipEt.getText().toString(), port, launch, m_Text)).start();
+		    }
+		    
+		   
 		if (requestCode == 0) {
     		if (resultCode == RESULT_OK) {
         			String contents = intent.getStringExtra("SCAN_RESULT");
@@ -590,6 +634,13 @@ public class ST extends Activity implements OnClickListener {
 			return app_installed ;
 	    }
 
-	
+		private void startVoiceRecognitionActivity()
+		{
+		    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+		    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+		            RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
+		    intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "What app to launch?");
+		    startActivityForResult(intent, REQUEST_CODE);
+		}
 	
 }

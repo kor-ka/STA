@@ -6,6 +6,17 @@
         android:showAsAction="ifRoom"
         android:title="Keyboard"
         />
+    <item
+        android:id="@+id/launchApp"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="Launch app"/>
+    
+    <item
+        android:id="@+id/map"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="Map"/>
     
     <item
         android:id="@+id/action_scan"
@@ -18,5 +29,7 @@
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:title="Context Menu"/>
+    
+    
     
 </menu>
