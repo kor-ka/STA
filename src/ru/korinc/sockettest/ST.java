@@ -125,24 +125,29 @@ public class ST extends Activity implements OnClickListener {
 		ipEt.setText(shp.getString("ip", ""));
 		portEt.setText(shp.getString("port", "1234"));
 						
-		keyboardEt.setText("11");
+		keyboardEt.setText("<>");
 		keyboardEt.setSelection(keyboardEt.getText().length());
 		keyboardEt.addTextChangedListener(new TextWatcher() {
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if(s.length()>0 && keyboardEt.getText().toString().length()>2){
-					String pressed = s.subSequence(2,s.length()).toString();
+					String pressed = s.toString().replace("<>","");
+			//		int spaces = pressed.length() - pressed.replaceAll(" ", "").length();
 					
-					int port = Integer.parseInt(portEt.getText().toString());		
-					new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, pressed)).start();
-					keyboardEt.setText("11");
+					int port = Integer.parseInt(portEt.getText().toString());	
+					if(s.length()==pressed.length()|(s.length()==3&&pressed.length()==1)){
+						
+						new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, pressed)).start();
+					}
+					
+					keyboardEt.setText("<>");
 					keyboardEt.setSelection(keyboardEt.getText().length());
-				} else if(keyboardEt.getText().toString().equals("1")){
+				} else if(keyboardEt.getText().toString().equals("<")){
 					
 					int port = Integer.parseInt(portEt.getText().toString());		
 					new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "bksps")).start();
-					keyboardEt.setText("11");
+					keyboardEt.setText("<>");
 					keyboardEt.setSelection(keyboardEt.getText().length());
 				}
 				
