@@ -132,10 +132,10 @@ public class ST extends Activity implements OnClickListener {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if(s.length()>0 && keyboardEt.getText().toString().length()>2){
-					char pressed = s.charAt(2);
+					String pressed = s.subSequence(2,s.length()).toString();
 					
 					int port = Integer.parseInt(portEt.getText().toString());		
-					new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, Character.toString(pressed))).start();
+					new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, pressed)).start();
 					keyboardEt.setText("11");
 					keyboardEt.setSelection(keyboardEt.getText().length());
 				} else if(keyboardEt.getText().toString().equals("1")){

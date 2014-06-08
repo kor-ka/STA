@@ -47,8 +47,8 @@ public class MappingList extends Activity implements OnClickListener{
 		
 		keys  = shp.getStringSet("map", new HashSet<String>());
 		if (keys.isEmpty()){
-			keys.add("хром");
-			ed.putString("хром", "chrome");
+			keys.add("С…СЂРѕРј");
+			ed.putString("С…СЂРѕРј", "chrome");
 			ed.putStringSet("map", keys);
 			ed.commit();
 		}
@@ -63,14 +63,14 @@ public class MappingList extends Activity implements OnClickListener{
 		
 		
 		lv= (ListView) findViewById(R.id.listViewMap);
-		// создаем адаптер
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	  adapter = new ArrayAdapter<String>(this,
 	        android.R.layout.simple_list_item_1, map);
 	  
-	    // присваиваем адаптер списку
+	    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	    lv.setAdapter(adapter);
 	    
-	  //Присваиваем онклик
+	  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		  lv.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 					String[] keyAndValue = map.get(position).split(" = ");
