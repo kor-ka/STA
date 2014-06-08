@@ -4,7 +4,6 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	
 	tools:context=".ST">
 
 	<TableLayout
@@ -139,8 +138,6 @@
 				android:inputType="numberDecimal"
 				android:digits="0123456789-"/>
 
-		
-
 		</TableRow>
 
 	</TableLayout>
@@ -166,92 +163,98 @@
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:text="Scan"/>
+
 		<EditText
 			android:id="@+id/etKeyboard"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:ems="10" 
-			android:inputType="textNoSuggestions|textMultiLine"  >
-			<requestFocus />
+			android:ems="10"
+			android:inputType="textNoSuggestions|textMultiLine">
+
+			<requestFocus/>
+
 		</EditText>
 
 	</LinearLayout>
+
 	<LinearLayout
-	    android:id="@+id/ll"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:layout_alignLeft="@+id/tableLayout1"
-	    android:layout_alignParentRight="true"
-	    android:layout_alignParentTop="true"
-	    android:background="#747474"
-	    android:orientation="vertical" >
+		android:id="@+id/ll"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_alignLeft="@+id/tableLayout1"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		android:background="#747474"
+		android:orientation="vertical">
 
 		<TextView
 			android:layout_height="wrap_content"
-			
 			android:layout_width="wrap_content"
 			android:layout_above="@id/ll"
 			android:id="@+id/tv"
 			android:textColor="#FFFFFF"/>
+
 		<Button
-		    android:id="@+id/buttonEsc"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		     android:layout_weight="0.5"
-		    android:text="Esc" 
-		    android:visibility="gone"/>
-		<Button
-		    android:id="@+id/buttonUp"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		     android:layout_weight="1"
-		    android:text="↑"
-		    android:visibility="gone"/>"
+			android:id="@+id/buttonEsc"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.5"
+			android:text="Esc"
+			android:visibility="gone"
+			android:textColor="#FFFFFF"/>
+
+		<ImageButton
+			android:id="@+id/buttonUp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="↑"
+			android:visibility="gone"
+			android:src="@drawable/navigation_collapse"/>
 
 		<LinearLayout
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content" 
-		     android:layout_weight="2"
-		    android:orientation="horizontal"
-		    >
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="2"
+			android:orientation="horizontal">
 
-		    
+			<ImageButton
+				android:id="@+id/buttonLeft"
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="←"
+				android:visibility="gone"
+				android:src="@drawable/navigation_previous_item"/>
 
-		        <Button
-		            android:id="@+id/buttonLeft"
-		            android:layout_width="0dp"
-		            android:layout_height="fill_parent"
-		            android:layout_weight="1"
-		            android:text="←"
-		            android:visibility="gone" />
+			<ImageButton
+				android:id="@+id/buttonRight"
+				android:layout_width="0dp"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:text="→"
+				android:visibility="gone"
+				android:src="@drawable/navigation_next_item"/>
 
-		        <Button
-		            android:id="@+id/buttonRight"
-		            android:layout_width="0dp"
-		            android:layout_height="fill_parent"
-		            android:layout_weight="1"
-		            android:text="→"
-		            android:visibility="gone" />
-
-		 
-		    
 		</LinearLayout>
 
+		<ImageButton
+			android:id="@+id/buttonDown"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="↓"
+			android:visibility="gone"
+			android:src="@drawable/navigation_expand"/>
+
 		<Button
-		    android:id="@+id/buttonDown"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		     android:layout_weight="1"
-		    android:text="↓" 
-		    android:visibility="gone"/>
-		
-		<Button
-		    android:id="@+id/buttonEnter"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		     android:layout_weight="0.5"
-		    android:text="Enter" 
-		    android:visibility="gone"/>
+			android:id="@+id/buttonEnter"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.5"
+			android:text="Enter"
+			android:visibility="gone"
+			android:textColor="#FFFFFF"/>
 
 	</LinearLayout>
 

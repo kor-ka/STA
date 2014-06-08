@@ -5,6 +5,7 @@
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:title="Keyboard"
+		android:icon="@drawable/hardware_keyboard"
         />
     <item
         android:id="@+id/launchApp"

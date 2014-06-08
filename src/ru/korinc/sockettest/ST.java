@@ -46,6 +46,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.*;
 
 public class ST extends Activity implements OnClickListener {
 	Thread listener;
@@ -57,10 +58,10 @@ public class ST extends Activity implements OnClickListener {
 	EditText keyboardEt;
 	Button scan;
 	Button send;
-	Button up;
-	Button down;
-	Button left;
-	Button right;
+	ImageButton up;
+	ImageButton down;
+	ImageButton left;
+	ImageButton right;
 	Button esc;
 	Button enter;
 	SharedPreferences shp;
@@ -112,10 +113,10 @@ public class ST extends Activity implements OnClickListener {
 		keyboardEt = (EditText) findViewById(R.id.etKeyboard);
 		scan = (Button) findViewById(R.id.bScan);
 		send = (Button) findViewById(R.id.bSend);
-		up = (Button) findViewById(R.id.buttonUp);
-		down = (Button) findViewById(R.id.buttonDown);
-		left = (Button) findViewById(R.id.buttonLeft);
-		right = (Button) findViewById(R.id.buttonRight);
+		up = (ImageButton) findViewById(R.id.buttonUp);
+		down = (ImageButton) findViewById(R.id.buttonDown);
+		left = (ImageButton) findViewById(R.id.buttonLeft);
+		right = (ImageButton) findViewById(R.id.buttonRight);
 		esc = (Button) findViewById(R.id.buttonEsc);
 		enter = (Button) findViewById(R.id.buttonEnter);
 		ll = (LinearLayout) findViewById(R.id.ll);
