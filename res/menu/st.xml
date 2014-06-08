@@ -7,6 +7,22 @@
         android:title="Keyboard"
 		android:icon="@drawable/hardware_keyboard"
         />
+	
+	<item
+        android:id="@+id/voiceInput"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="Voice input"
+		android:icon="@drawable/ic_action_device_access_mic"
+	/>
+	
+	<item
+        android:id="@+id/enterAfterVoiceInput"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="Enter after voice input"
+		android:checkable="true"/>
+
     <item
         android:id="@+id/launchApp"
         android:orderInCategory="100"

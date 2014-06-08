@@ -86,6 +86,7 @@ public class ST extends Activity implements OnClickListener {
 	final static int keyboard=7;
 	final static int launch=8;
 	private static final int REQUEST_CODE = 1234;
+	private static final int REQUEST_CODE_VOICE_INPUT = 12345;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -329,6 +330,11 @@ public class ST extends Activity implements OnClickListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.st, menu);
+		
+		if(shp.getBoolean("enterOnVoiceInput",true)){
+			menu.getItem(2).setChecked(true);
+		}
+		
 		return true;
 	}
 	
@@ -340,6 +346,15 @@ public class ST extends Activity implements OnClickListener {
 		switch (item.getItemId()) {
 		case R.id.action_scan:
 			scan.performClick();
+			break;
+		case R.id.enterAfterVoiceInput:
+				if(shp.getBoolean("enterOnVoiceInput",true)){
+					item.setChecked(false);
+				}else{
+					item.setChecked(true);
+				}
+				ed.putBoolean("enterOnVoiceInput", item.isChecked());
+				ed.commit();
 			break;
 			
 		case R.id.map:
@@ -377,8 +392,13 @@ public class ST extends Activity implements OnClickListener {
 			break;
 		
 		case R.id.launchApp:
-			startVoiceRecognitionActivity();
+			startVoiceRecognitionActivity(REQUEST_CODE);
 			
+			break;
+			
+		case R.id.voiceInput:
+			startVoiceRecognitionActivity(REQUEST_CODE_VOICE_INPUT);
+
 			break;
 			
 	case R.id.contextMenu:
@@ -608,6 +628,23 @@ public class ST extends Activity implements OnClickListener {
 		        new Thread(new SocketThread(ipEt.getText().toString(), port, launch, m_Text)).start();
 		    }
 		    
+		if (requestCode == REQUEST_CODE_VOICE_INPUT && resultCode == RESULT_OK)
+		{		
+			ArrayList<String> matches = intent.getStringArrayListExtra(
+				RecognizerIntent.EXTRA_RESULTS);
+
+			String m_Text =matches.get(0);
+
+			m_Text = shp.getString(m_Text, m_Text);
+
+			int port = Integer.parseInt(portEt.getText().toString());
+			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, m_Text)).start();
+			if(shp.getBoolean("enterOnVoiceInput",true)){
+				new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "\n")).start();
+			}
+			
+		}
+		
 		   
 		if (requestCode == 0) {
     		if (resultCode == RESULT_OK) {
@@ -739,13 +776,22 @@ public class ST extends Activity implements OnClickListener {
 			return app_installed ;
 	    }
 
-		private void startVoiceRecognitionActivity()
+		private void startVoiceRecognitionActivity(int requesrCode)
 		{
 		    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
 		            RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
-		    intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "What app to launch?");
-		    startActivityForResult(intent, REQUEST_CODE);
+				switch(requesrCode){
+					case REQUEST_CODE:
+						intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "What app to launch?");
+					break;
+					
+					case REQUEST_CODE_VOICE_INPUT:
+						intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak...");
+						break;
+				}
+		    
+		    startActivityForResult(intent, requesrCode);
 		}
 	
 }
