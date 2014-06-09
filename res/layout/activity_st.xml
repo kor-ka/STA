@@ -195,20 +195,45 @@
 			android:textColor="#FFFFFF"
 			android:visibility="gone"/>
 
-		<Button
-			android:id="@+id/buttonEsc"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="0.5"
-			android:text="Esc"
-			android:visibility="gone"
-			android:textColor="#FFFFFF"/>
+		<LinearLayout
+		   android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="0.5">
+			
+		    <Button
+			    android:id="@+id/buttonB1"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_weight="1"
+			    android:text="B1"
+			    android:textColor="#FFFFFF"
+			    android:visibility="visible" />
+
+			<Button
+			    android:id="@+id/buttonEsc"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_weight="1"
+			    android:text="Esc"
+			    android:textColor="#FFFFFF"
+			    android:visibility="gone" />
+			
+			<Button
+			    android:id="@+id/buttonB2"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_weight="1"
+			    android:text="B2"
+			    android:textColor="#FFFFFF"
+			    android:visibility="visible" />
+
+		</LinearLayout>
 
 		<ImageButton
 			android:id="@+id/buttonUp"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_weight="1"
+			android:layout_weight="3"
 			android:text="↑"
 			android:visibility="gone"
 			android:src="@drawable/navigation_collapse"/>
@@ -216,7 +241,7 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_weight="2"
+			android:layout_weight="8"
 			android:orientation="horizontal">
 
 			<ImageButton
@@ -243,19 +268,43 @@
 			android:id="@+id/buttonDown"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_weight="1"
+			android:layout_weight="3"
 			android:text="↓"
 			android:visibility="gone"
 			android:src="@drawable/navigation_expand"/>
 
-		<Button
-			android:id="@+id/buttonEnter"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="0.5"
-			android:text="Enter"
-			android:visibility="gone"
-			android:textColor="#FFFFFF"/>
+		
+		<LinearLayout
+		   android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="0.5">
+			
+		    <Button
+				android:id="@+id/buttonB3"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:text="B3"
+				android:visibility="visible"
+				android:textColor="#FFFFFF"/>
+		    
+			<Button
+				android:id="@+id/buttonEnter"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:text="Enter"
+				android:visibility="gone"
+				android:textColor="#FFFFFF"/>
+			<Button
+				android:id="@+id/buttonB4"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:text="B4"
+				android:visibility="visible"
+				android:textColor="#FFFFFF"/>
+			</LinearLayout>
 
 	</LinearLayout>
 

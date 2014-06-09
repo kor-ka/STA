@@ -47,8 +47,8 @@ public class MappingList extends Activity implements OnClickListener{
 		
 		keys  = shp.getStringSet("map", new HashSet<String>());
 		if (keys.isEmpty()){
-			keys.add("С…СЂРѕРј");
-			ed.putString("С…СЂРѕРј", "chrome");
+			keys.add("хром");
+			ed.putString("хром", "chrome");
 			ed.putStringSet("map", keys);
 			ed.commit();
 		}

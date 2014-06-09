@@ -37,15 +37,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.*;
 
 public class ST extends Activity implements OnClickListener {
@@ -58,6 +53,10 @@ public class ST extends Activity implements OnClickListener {
 	EditText keyboardEt;
 	Button scan;
 	Button send;
+	Button b1;
+	Button b2;
+	Button b3;
+	Button b4;
 	ImageButton up;
 	ImageButton down;
 	ImageButton left;
@@ -87,6 +86,16 @@ public class ST extends Activity implements OnClickListener {
 	final static int launch=8;
 	private static final int REQUEST_CODE = 1234;
 	private static final int REQUEST_CODE_VOICE_INPUT = 12345;
+	private static final int REQUEST_CODE_B1 = 12346;
+	private static final int REQUEST_CODE_B2 = 12347;
+	private static final int REQUEST_CODE_B3 = 12348;
+	private static final int REQUEST_CODE_B4 = 12349;
+	private static final String FN_SAVE_B1 = "fnB1";
+	private static final String FN_SAVE_B2 = "fnB2";
+	private static final String FN_SAVE_B3 = "fnB3";
+	private static final String FN_SAVE_B4 = "fnB4";
+	
+	FnButton fnb;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -112,16 +121,28 @@ public class ST extends Activity implements OnClickListener {
 		aEt = (EditText) findViewById(R.id.etA);
 		bEt = (EditText) findViewById(R.id.etB);
 		keyboardEt = (EditText) findViewById(R.id.etKeyboard);
+		
 		scan = (Button) findViewById(R.id.bScan);
 		send = (Button) findViewById(R.id.bSend);
+		
+		b1 = (Button) findViewById(R.id.buttonB1);
+		b2 = (Button) findViewById(R.id.buttonB2);
+		b3 = (Button) findViewById(R.id.buttonB3);
+		b4 = (Button) findViewById(R.id.buttonB4);
+		
 		up = (ImageButton) findViewById(R.id.buttonUp);
 		down = (ImageButton) findViewById(R.id.buttonDown);
 		left = (ImageButton) findViewById(R.id.buttonLeft);
 		right = (ImageButton) findViewById(R.id.buttonRight);
+		
 		esc = (Button) findViewById(R.id.buttonEsc);
 		enter = (Button) findViewById(R.id.buttonEnter);
+		
 		ll = (LinearLayout) findViewById(R.id.ll);
+		
 		tv = (TextView) findViewById(R.id.tv);
+		
+		fnb = new FnButton(this);
 		
 		ipEt.setText(shp.getString("ip", ""));
 		portEt.setText(shp.getString("port", "1234"));
@@ -199,7 +220,48 @@ public class ST extends Activity implements OnClickListener {
 			
 		});
 		
-
+		
+		OnLongClickListener olclFn = new OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View v) {
+				int reqToSend=0;
+				switch (v.getId()) {
+				case R.id.buttonB1:
+					reqToSend = REQUEST_CODE_B1;
+					break;					
+				
+				case R.id.buttonB2:
+					reqToSend = REQUEST_CODE_B2;
+					break;					
+				
+				case R.id.buttonB3:
+					reqToSend = REQUEST_CODE_B3;
+					break;					
+				
+				case R.id.buttonB4:
+					reqToSend = REQUEST_CODE_B4;
+					break;					
+			}
+				Intent intent = new Intent(getBaseContext(), FnSelect.class);
+				startActivityForResult(intent, reqToSend);
+				return false;
+			}
+		};
+		
+		b1.setOnClickListener(this);
+		b1.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION)));
+		b1.setOnLongClickListener(olclFn);
+		b2.setOnClickListener(this);
+		b2.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B2, fnb.NO_FUNCTION)));
+		b2.setOnLongClickListener(olclFn);
+		b3.setOnClickListener(this);
+		b3.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B3, fnb.NO_FUNCTION)));
+		b3.setOnLongClickListener(olclFn);
+		b4.setOnClickListener(this);
+		b4.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION)));
+		b4.setOnLongClickListener(olclFn);
+		
 		scan.setOnClickListener(this);
 		send.setOnClickListener(this);
 		
@@ -611,6 +673,46 @@ public class ST extends Activity implements OnClickListener {
 			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "enter")).start();
 			break;	
 			
+		case R.id.buttonB1:
+			int bindedFunction1 = shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION);
+			if(bindedFunction1 == fnb.NO_FUNCTION){
+				Intent intentB1 = new Intent(this, FnSelect.class);
+				startActivityForResult(intentB1, REQUEST_CODE_B1);
+			}else{
+				fnb.press(bindedFunction1);
+			}
+			break;
+		
+		case R.id.buttonB2:
+			int bindedFunction2 = shp.getInt(FN_SAVE_B2, fnb.NO_FUNCTION);
+			if(bindedFunction2 == fnb.NO_FUNCTION){
+				Intent intentB2 = new Intent(this, FnSelect.class);
+				startActivityForResult(intentB2, REQUEST_CODE_B2);
+			}else{
+				fnb.press(bindedFunction2);
+			}
+			break;
+		
+		case R.id.buttonB3:
+			int bindedFunction3 = shp.getInt(FN_SAVE_B3, fnb.NO_FUNCTION);
+			if(bindedFunction3 == fnb.NO_FUNCTION){
+				Intent intentB3 = new Intent(this, FnSelect.class);
+				startActivityForResult(intentB3, REQUEST_CODE_B3);
+			}else{
+				fnb.press(bindedFunction3);
+			}
+			break;
+			
+		case R.id.buttonB4:
+			int bindedFunction4 = shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION);
+			if(bindedFunction4 == fnb.NO_FUNCTION){
+				Intent intentB4 = new Intent(this, FnSelect.class);
+				startActivityForResult(intentB4, REQUEST_CODE_B4);
+			}else{
+				fnb.press(bindedFunction4);
+			}
+			break;
+			
 		}
 		
 	}
@@ -646,7 +748,7 @@ public class ST extends Activity implements OnClickListener {
 			
 		}
 		
-		   
+				   
 		if (requestCode == 0) {
     		if (resultCode == RESULT_OK) {
         			String contents = intent.getStringExtra("SCAN_RESULT");
@@ -657,10 +759,41 @@ public class ST extends Activity implements OnClickListener {
         			
         			ipEt.setText(IP);
         			portEt.setText(port);
+        			
+        			ed.putString("ip", IP);
+        			ed.putString("port", port);
+        			ed.commit();
     		}else{
     			
     		}
-		} 
+		}
+		
+		if(resultCode==RESULT_OK)
+		switch (requestCode) {
+		case REQUEST_CODE_B1:
+			ed.putInt(FN_SAVE_B1, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
+			ed.commit();
+			b1.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
+			break;
+			
+		case REQUEST_CODE_B2:
+			ed.putInt(FN_SAVE_B2, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
+			ed.commit();
+			b2.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
+			break;
+			
+		case REQUEST_CODE_B3:
+			ed.putInt(FN_SAVE_B3, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
+			ed.commit();
+			b3.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
+			break;
+			
+		case REQUEST_CODE_B4:
+			ed.putInt(FN_SAVE_B4, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
+			ed.commit();
+			b4.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
+			break;
+		}
 }
 
 	
