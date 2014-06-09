@@ -33,6 +33,13 @@
 					android:checkable="true"/>
 				
 				<item
+					android:id="@+id/showFnButtons"
+					android:orderInCategory="100"
+					android:showAsAction="ifRoom"
+					android:title="Show Fn buttons"
+					android:checkable="true"/>
+				
+				<item
 					android:id="@+id/map"
 					android:orderInCategory="100"
 					android:showAsAction="ifRoom"

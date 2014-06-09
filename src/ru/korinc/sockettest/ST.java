@@ -84,8 +84,8 @@ public class ST extends Activity implements OnClickListener {
 	final static int rclick=6;
 	final static int keyboard=7;
 	final static int launch=8;
-	private static final int REQUEST_CODE = 1234;
-	private static final int REQUEST_CODE_VOICE_INPUT = 12345;
+	public static final int REQUEST_CODE_LAUNCH_APP = 1234;
+	public static final int REQUEST_CODE_VOICE_INPUT = 12345;
 	private static final int REQUEST_CODE_B1 = 12346;
 	private static final int REQUEST_CODE_B2 = 12347;
 	private static final int REQUEST_CODE_B3 = 12348;
@@ -261,6 +261,19 @@ public class ST extends Activity implements OnClickListener {
 		b4.setOnClickListener(this);
 		b4.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION)));
 		b4.setOnLongClickListener(olclFn);
+		if(shp.getBoolean("showFnButtons",true)){
+			b1.setVisibility(View.VISIBLE);
+			b2.setVisibility(View.VISIBLE);
+			b3.setVisibility(View.VISIBLE);
+			b4.setVisibility(View.VISIBLE);
+			
+		}else{
+			b1.setVisibility(View.GONE);
+			b2.setVisibility(View.GONE);
+			b3.setVisibility(View.GONE);
+			b4.setVisibility(View.GONE);
+			
+		}
 		
 		scan.setOnClickListener(this);
 		send.setOnClickListener(this);
@@ -398,6 +411,11 @@ public class ST extends Activity implements OnClickListener {
 			settings.getItem(0).setChecked(true);
 		}
 		
+		if(shp.getBoolean("showFnButtons",true)){
+			Menu settings= menu.getItem(2).getSubMenu();
+			settings.getItem(1).setChecked(true);
+		}
+		
 		return true;
 	}
 	
@@ -419,6 +437,24 @@ public class ST extends Activity implements OnClickListener {
 				ed.putBoolean("enterOnVoiceInput", item.isChecked());
 				ed.commit();
 			break;
+			
+		case R.id.showFnButtons:
+			if(shp.getBoolean("showFnButtons",true)){
+				item.setChecked(false);
+				b1.setVisibility(View.GONE);
+				b2.setVisibility(View.GONE);
+				b3.setVisibility(View.GONE);
+				b4.setVisibility(View.GONE);
+			}else{
+				item.setChecked(true);
+				b1.setVisibility(View.VISIBLE);
+				b2.setVisibility(View.VISIBLE);
+				b3.setVisibility(View.VISIBLE);
+				b4.setVisibility(View.VISIBLE);
+			}
+			ed.putBoolean("showFnButtons", item.isChecked());
+			ed.commit();
+		break;
 			
 		case R.id.map:
 			Intent intent = new Intent(this, MappingList.class);
@@ -455,7 +491,7 @@ public class ST extends Activity implements OnClickListener {
 			break;
 		
 		case R.id.launchApp:
-			startVoiceRecognitionActivity(REQUEST_CODE);
+			startVoiceRecognitionActivity(REQUEST_CODE_LAUNCH_APP);
 			
 			break;
 			
@@ -718,7 +754,7 @@ public class ST extends Activity implements OnClickListener {
 	}
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		 if (requestCode == REQUEST_CODE && resultCode == RESULT_OK)
+		 if (requestCode == REQUEST_CODE_LAUNCH_APP && resultCode == RESULT_OK)
 		    {		
 			 ArrayList<String> matches = intent.getStringArrayListExtra(
 	                    RecognizerIntent.EXTRA_RESULTS);
@@ -910,13 +946,13 @@ public class ST extends Activity implements OnClickListener {
 			return app_installed ;
 	    }
 
-		private void startVoiceRecognitionActivity(int requesrCode)
+		public void startVoiceRecognitionActivity(int requesrCode)
 		{
 		    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
 		            RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
 				switch(requesrCode){
-					case REQUEST_CODE:
+					case REQUEST_CODE_LAUNCH_APP:
 						intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "What app to launch?");
 					break;
 					
