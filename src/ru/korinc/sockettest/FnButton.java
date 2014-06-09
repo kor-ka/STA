@@ -13,6 +13,8 @@ public class FnButton {
 	
 	Context ctx;	
 	ST st;
+	
+	//int values MUST be ordered!
 	public final static int NO_FUNCTION=0;
 	public final static int FN_SCAN=1;	
 	public final static int FN_ENTER=2;
@@ -33,9 +35,9 @@ public class FnButton {
 	public final static int FN_F7=17;
 	public final static int FN_F8=18;
 	public final static int FN_F9=19;
-	public final static int FN_F10=110;
-	public final static int FN_F11=111;
-	public final static int FN_F12=112;
+	public final static int FN_F10=20;
+	public final static int FN_F11=21;
+	public final static int FN_F12=22;
 	public static HashMap<Integer, String> fnMap;
 	
 	public  FnButton(ST st) {
