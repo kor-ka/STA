@@ -64,12 +64,7 @@
         android:showAsAction="ifRoom"
         android:title="Scan"/>
     
-    <item
-        android:id="@+id/contextMenu"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
-        android:title="Context Menu"/>
-    
+  
     <item
         android:id="@+id/arrows"
         android:orderInCategory="100"

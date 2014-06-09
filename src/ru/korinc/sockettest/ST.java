@@ -27,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract.CommonDataKinds.Event;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.InputType;
@@ -278,10 +279,76 @@ public class ST extends Activity implements OnClickListener {
 		scan.setOnClickListener(this);
 		send.setOnClickListener(this);
 		
-		up.setOnClickListener(this);
-		down.setOnClickListener(this);
-		left.setOnClickListener(this);
-		right.setOnClickListener(this);
+		OnTouchListener otlArrows = new OnTouchListener() {
+			long timeDown=System.currentTimeMillis();
+			int i=1;
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				int port = Integer.parseInt(portEt.getText().toString());
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					timeDown = System.currentTimeMillis();
+					switch (v.getId()) {
+					case R.id.buttonUp:
+						
+						new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "up")).start();
+						break;
+						
+					case R.id.buttonDown:
+								
+						new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "down")).start();
+						break;
+						
+					case R.id.buttonLeft:
+								
+						new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "left")).start();
+						break;
+						
+					case R.id.buttonRight:
+								
+						new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "right")).start();
+						break;
+						
+					}
+				}
+				
+				if(System.currentTimeMillis()-timeDown>500 && i==1){
+					
+						i=2;
+					
+					switch (v.getId()) {
+					case R.id.buttonUp:
+						
+						new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "up")).start();
+						break;
+						
+					case R.id.buttonDown:
+								
+						new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "down")).start();
+						break;
+						
+					case R.id.buttonLeft:
+								
+						new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "left")).start();
+						break;
+						
+					case R.id.buttonRight:
+								
+						new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "right")).start();
+						break;
+						
+					}
+				}else{
+					i=1;
+				}
+				return false;
+			}
+		};
+		
+		up.setOnTouchListener(otlArrows);
+		down.setOnTouchListener(otlArrows);
+		left.setOnTouchListener(otlArrows);
+		right.setOnTouchListener(otlArrows);
 		esc.setOnClickListener(this);
 		enter.setOnClickListener(this);
 		
@@ -500,11 +567,7 @@ public class ST extends Activity implements OnClickListener {
 
 			break;
 			
-	case R.id.contextMenu:
-			
-		new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "contextMenu")).start();
-		break;
-		
+	
 	
 	}
 		
@@ -679,26 +742,7 @@ public class ST extends Activity implements OnClickListener {
 			
 			break;
 			
-		case R.id.buttonUp:
-					
-			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "up")).start();
-			break;
-			
-		case R.id.buttonDown:
-					
-			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "down")).start();
-			break;
-			
-		case R.id.buttonLeft:
-					
-			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "left")).start();
-			break;
-			
-		case R.id.buttonRight:
-					
-			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "right")).start();
-			break;
-			
+		
 		case R.id.buttonEsc:
 					
 			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "esc")).start();

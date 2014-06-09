@@ -1,17 +1,18 @@
 package ru.korinc.sockettest;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class FnSelect extends Activity {
 	ListView lv;
@@ -26,8 +27,9 @@ public class FnSelect extends Activity {
 		fnb = new FnButton();
 		
 		fns = new ArrayList<String>() ;
-		for(int i=0; i<fnb.fnMap.size(); i++ ){
-			fns.add(fnb.fnMap.get(i));
+		
+		for (Map.Entry<Integer, String> entry : fnb.fnMap.entrySet()) { 
+			fns.add(entry.getValue());
 		}
 		
 		lv= (ListView) findViewById(R.id.listViewFnSelect);

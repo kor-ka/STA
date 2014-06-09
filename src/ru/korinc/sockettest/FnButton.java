@@ -1,6 +1,7 @@
 package ru.korinc.sockettest;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import ru.korinc.sockettest.ST.SocketThread;
 
@@ -14,7 +15,7 @@ public class FnButton {
 	Context ctx;	
 	ST st;
 	
-	//int values MUST be ordered!
+	//int values MUST be ordered! //should fix it by iterating map in FnSelect!!
 	public final static int NO_FUNCTION=0;
 	public final static int FN_SCAN=1;	
 	public final static int FN_ENTER=2;
@@ -38,6 +39,7 @@ public class FnButton {
 	public final static int FN_F10=20;
 	public final static int FN_F11=21;
 	public final static int FN_F12=22;
+	public final static int FN_CONTEXT_MENU=23;
 	public static HashMap<Integer, String> fnMap;
 	
 	public  FnButton(ST st) {
@@ -52,7 +54,7 @@ public class FnButton {
 	}
 	
 	 public void initiateMap(){
-		 fnMap = new HashMap<Integer, String>();
+		 fnMap = new LinkedHashMap<Integer, String>();
 			fnMap.put(NO_FUNCTION, "No function");
 			fnMap.put(FN_SCAN, "Scan");
 			fnMap.put(FN_LAUNCH_APP, "Launch app");
@@ -64,6 +66,7 @@ public class FnButton {
 			fnMap.put(FN_ESC, "Escape");
 			fnMap.put(FN_CTRL_Z, "Ctr+Z");
 			fnMap.put(FN_CTRL_Y, "Ctrl+Y");
+			fnMap.put(FN_CONTEXT_MENU, "Context menu");
 			fnMap.put(FN_F1, "F1");
 			fnMap.put(FN_F2, "F2");
 			fnMap.put(FN_F3, "F3");
@@ -147,6 +150,10 @@ public class FnButton {
 				
 			case FN_CTRL_Y:
 				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "ctrly")).start();
+				break;
+				
+			case FN_CONTEXT_MENU:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "contextMenu")).start();
 				break;
 				
 			case FN_F1:

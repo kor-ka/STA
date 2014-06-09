@@ -33,7 +33,7 @@ public final class R {
     public static final class id {
         public static final int action_scan=0x7f08002c;
         public static final int action_settings=0x7f080024;
-        public static final int arrows=0x7f08002e;
+        public static final int arrows=0x7f08002d;
         public static final int bScan=0x7f080017;
         public static final int bSend=0x7f080016;
         public static final int buttonAddToMap=0x7f080003;
@@ -47,7 +47,6 @@ public final class R {
         public static final int buttonLeft=0x7f08001e;
         public static final int buttonRight=0x7f08001f;
         public static final int buttonUp=0x7f08001d;
-        public static final int contextMenu=0x7f08002d;
         public static final int editKey=0x7f080001;
         public static final int editTextValue=0x7f080002;
         public static final int enterAfterVoiceInput=0x7f080028;
