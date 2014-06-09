@@ -15,13 +15,34 @@
         android:title="Voice input"
 		android:icon="@drawable/ic_action_device_access_mic"
 	/>
-	
+
 	<item
-        android:id="@+id/enterAfterVoiceInput"
+        android:id="@+id/settings"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:title="Enter after voice input"
-		android:checkable="true"/>
+        android:title="Settings"
+		android:icon="@drawable/hardware_keyboard"
+	>
+		<menu>
+			<group>
+				<item
+					android:id="@+id/enterAfterVoiceInput"
+					android:orderInCategory="100"
+					android:showAsAction="ifRoom"
+					android:title="Enter after voice input"
+					android:checkable="true"/>
+				
+				<item
+					android:id="@+id/map"
+					android:orderInCategory="100"
+					android:showAsAction="ifRoom"
+					android:title="Launch app map"/>
+				
+			</group>
+		</menu>
+	</item>
+	
+	
 
     <item
         android:id="@+id/launchApp"
@@ -29,12 +50,7 @@
         android:showAsAction="ifRoom"
         android:title="Launch app"/>
     
-    <item
-        android:id="@+id/map"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
-        android:title="Map"/>
-    
+   
     <item
         android:id="@+id/action_scan"
         android:orderInCategory="100"

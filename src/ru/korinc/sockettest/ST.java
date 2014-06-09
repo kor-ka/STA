@@ -332,7 +332,8 @@ public class ST extends Activity implements OnClickListener {
 		getMenuInflater().inflate(R.menu.st, menu);
 		
 		if(shp.getBoolean("enterOnVoiceInput",true)){
-			menu.getItem(2).setChecked(true);
+			Menu settings= menu.getItem(2).getSubMenu();
+			settings.getItem(0).setChecked(true);
 		}
 		
 		return true;
