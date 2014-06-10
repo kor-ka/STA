@@ -40,6 +40,25 @@ public class FnButton {
 	public final static int FN_F11=21;
 	public final static int FN_F12=22;
 	public final static int FN_CONTEXT_MENU=23;
+	public final static int FN_CTRL_C=24; 
+	public final static int FN_CTRL_V=25; 
+	public final static int FN_CTRL_X=26; 
+	public final static int FN_CTRL_A=27; 
+	public final static int FN_CTRL_ALT_DEL=28; //
+	public final static int FN_CTRL_SHIFT_Z=29; 
+	public final static int FN_CTRL_S=30; //
+	public final static int FN_ALT_ENTER=31; //
+	public final static int FN_CAPS=32; //
+	public final static int FN_ALT_TAB=33; //
+	public final static int FN_WIN=34; //
+	public final static int FN_NUM=35; //
+	public final static int FN_DEL=36; //
+	public final static int FN_INS=37; //
+	public final static int FN_HOME=38; //
+	public final static int FN_END=39; //
+	public final static int FN_PAGE_UP=40; //
+	public final static int FN_PAGE_DWN=41; //
+	public final static int FN_CTRL_P=42; 
 	public static HashMap<Integer, String> fnMap;
 	
 	public  FnButton(ST st) {
@@ -64,8 +83,14 @@ public class FnButton {
 			fnMap.put(FN_ENTER, "Enter");
 			fnMap.put(FN_BKSPC, "Backspace");
 			fnMap.put(FN_ESC, "Escape");
-			fnMap.put(FN_CTRL_Z, "Ctr+Z");
+			fnMap.put(FN_CTRL_Z, "Ctrl+Z");
+			fnMap.put(FN_CTRL_SHIFT_Z, "Ctrl+Shift+Z");
 			fnMap.put(FN_CTRL_Y, "Ctrl+Y");
+			fnMap.put(FN_CTRL_C, "Ctrl+C");
+			fnMap.put(FN_CTRL_V, "Ctrl+V");
+			fnMap.put(FN_CTRL_A, "Ctrl+A");
+			fnMap.put(FN_CTRL_X, "Ctrl+X");
+			fnMap.put(FN_CTRL_P, "Ctrl+P");	
 			fnMap.put(FN_CONTEXT_MENU, "Context menu");
 			fnMap.put(FN_F1, "F1");
 			fnMap.put(FN_F2, "F2");
@@ -147,11 +172,35 @@ public class FnButton {
 			case FN_CTRL_Z:
 				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "ctrlz")).start();
 				break;
+			
+			case FN_CTRL_SHIFT_Z:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "ctrl_shift_z")).start();
+				break;	
 				
 			case FN_CTRL_Y:
 				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "ctrly")).start();
 				break;
 				
+			case FN_CTRL_C:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "ctrlc")).start();
+				break;
+				
+			case FN_CTRL_V:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "ctrlv")).start();
+				break;
+			
+			case FN_CTRL_A:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "ctrla")).start();
+				break;	
+			
+			case FN_CTRL_X:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "ctrlx")).start();
+				break;		
+				
+			case FN_CTRL_P:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "ctrlp")).start();
+				break;	
+								
 			case FN_CONTEXT_MENU:
 				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "contextMenu")).start();
 				break;
