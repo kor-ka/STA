@@ -42,7 +42,16 @@ public class FnSelect extends Activity {
 	   lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 				Intent intent = new Intent();
-				intent.putExtra("FnResult", position);
+				int fnKey=1;
+				int i= 0;
+				for (Map.Entry<Integer, String> entry : fnb.fnMap.entrySet()) { 
+					
+					if (i==position) {
+						fnKey=entry.getKey();
+					}
+					i++;
+				}
+				intent.putExtra("FnResult",fnKey);
 				setResult(RESULT_OK, intent);
 				
 				finish();
