@@ -44,20 +44,20 @@ public class FnButton {
 	public final static int FN_CTRL_V=25; 
 	public final static int FN_CTRL_X=26; 
 	public final static int FN_CTRL_A=27; 
-	public final static int FN_CTRL_ALT_DEL=28; //
+	public final static int FN_CTRL_ALT_DEL=28; 
 	public final static int FN_CTRL_SHIFT_Z=29; 
-	public final static int FN_CTRL_S=30; //
-	public final static int FN_ALT_ENTER=31; //
-	public final static int FN_CAPS=32; //
-	public final static int FN_ALT_TAB=33; //
-	public final static int FN_WIN=34; //
-	public final static int FN_NUM=35; //
-	public final static int FN_DEL=36; //
-	public final static int FN_INS=37; //
-	public final static int FN_HOME=38; //
-	public final static int FN_END=39; //
-	public final static int FN_PAGE_UP=40; //
-	public final static int FN_PAGE_DWN=41; //
+	public final static int FN_CTRL_S=30; 
+	public final static int FN_ALT_ENTER=31; 
+	public final static int FN_CAPS=32; 
+	public final static int FN_ALT_TAB=33; 
+	public final static int FN_WIN=34; 
+	public final static int FN_NUM=35; 
+	public final static int FN_DEL=36; 
+	public final static int FN_INS=37; 
+	public final static int FN_HOME=38; 
+	public final static int FN_END=39; 
+	public final static int FN_PAGE_UP=40; 
+	public final static int FN_PAGE_DWN=41; 
 	public final static int FN_CTRL_P=42; 
 	public static HashMap<Integer, String> fnMap;
 	
@@ -83,6 +83,15 @@ public class FnButton {
 			fnMap.put(FN_ENTER, "Enter");
 			fnMap.put(FN_BKSPC, "Backspace");
 			fnMap.put(FN_ESC, "Escape");
+			fnMap.put(FN_CAPS, "Caps Lock"); //
+			fnMap.put(FN_NUM, "Num Lock"); //
+			fnMap.put(FN_WIN, "Win"); //
+			fnMap.put(FN_DEL, "Del"); //
+			fnMap.put(FN_INS, "Insert"); //
+			fnMap.put(FN_HOME, "Home"); //
+			fnMap.put(FN_END, "End"); //
+			fnMap.put(FN_PAGE_UP, "Page Up"); //
+			fnMap.put(FN_PAGE_DWN, "Page Down"); //
 			fnMap.put(FN_CTRL_Z, "Ctrl+Z");
 			fnMap.put(FN_CTRL_SHIFT_Z, "Ctrl+Shift+Z");
 			fnMap.put(FN_CTRL_Y, "Ctrl+Y");
@@ -90,7 +99,11 @@ public class FnButton {
 			fnMap.put(FN_CTRL_V, "Ctrl+V");
 			fnMap.put(FN_CTRL_A, "Ctrl+A");
 			fnMap.put(FN_CTRL_X, "Ctrl+X");
+			fnMap.put(FN_CTRL_S, "Ctrl+S");	//
 			fnMap.put(FN_CTRL_P, "Ctrl+P");	
+			fnMap.put(FN_CTRL_ALT_DEL, "Ctrl+Alt+Del");	//
+			fnMap.put(FN_ALT_ENTER, "Alt+Enter");	//
+			fnMap.put(FN_ALT_TAB, "Alt+Tab");	//
 			fnMap.put(FN_CONTEXT_MENU, "Context menu");
 			fnMap.put(FN_F1, "F1");
 			fnMap.put(FN_F2, "F2");
@@ -197,10 +210,64 @@ public class FnButton {
 				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "ctrlx")).start();
 				break;		
 				
+			case FN_CAPS:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "Caps Lock")).start();
+				break;	
+				
+			case FN_NUM:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "Num Lock")).start();
+				break;	
+				
+			case FN_WIN:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "Win")).start();
+				break;	
+				
+			case FN_DEL:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "Del")).start();
+				break;	
+				
+			case FN_INS:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "Insert")).start();
+				break;	
+				
+			case FN_HOME:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "Home")).start();
+				break;	
+				
+			case FN_END:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "End")).start();
+				break;	
+				
+			case FN_PAGE_UP:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "Page Up")).start();
+				break;	
+				
+			case FN_PAGE_DWN:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "Page Down")).start();
+				break;	
+				
+			case FN_CTRL_S:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "Ctrl+S")).start();
+				break;	
+				
+			case FN_CTRL_ALT_DEL:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "Ctrl+Alt+Del")).start();
+				break;	
+				
+			case FN_ALT_ENTER:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "Alt+Enter")).start();
+				break;	
+				
+			case FN_ALT_TAB:
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "Alt+Tab")).start();
+				break;	
+				
 			case FN_CTRL_P:
 				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "ctrlp")).start();
 				break;	
-								
+				
+				
+				
 			case FN_CONTEXT_MENU:
 				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.keyboard, "contextMenu")).start();
 				break;
