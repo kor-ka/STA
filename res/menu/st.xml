@@ -21,7 +21,7 @@
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:title="Settings"
-		android:icon="@drawable/hardware_keyboard"
+		android:icon="@drawable/action_settings"
 	>
 		<menu>
 			<group>

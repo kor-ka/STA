@@ -155,8 +155,6 @@ public class FnButton {
 					st.down.setVisibility(View.GONE);
 					st.left.setVisibility(View.GONE);
 					st.right.setVisibility(View.GONE);
-					st.esc.setVisibility(View.GONE);
-					st.enter.setVisibility(View.GONE);
 					break;
 
 				case View.GONE:
@@ -164,8 +162,6 @@ public class FnButton {
 					st.down.setVisibility(View.VISIBLE);
 					st.left.setVisibility(View.VISIBLE);
 					st.right.setVisibility(View.VISIBLE);
-					st.esc.setVisibility(View.VISIBLE);
-					st.enter.setVisibility(View.VISIBLE);
 					break;
 				}
 				break;

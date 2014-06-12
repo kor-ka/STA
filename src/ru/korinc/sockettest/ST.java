@@ -58,12 +58,13 @@ public class ST extends Activity implements OnClickListener {
 	Button b2;
 	Button b3;
 	Button b4;
+	Button b5;
+	Button b6;
 	ImageButton up;
 	ImageButton down;
 	ImageButton left;
 	ImageButton right;
-	Button esc;
-	Button enter;
+	
 	SharedPreferences shp;
 	Editor ed;
 	float fullmovex;
@@ -91,10 +92,14 @@ public class ST extends Activity implements OnClickListener {
 	private static final int REQUEST_CODE_B2 = 12347;
 	private static final int REQUEST_CODE_B3 = 12348;
 	private static final int REQUEST_CODE_B4 = 12349;
+	private static final int REQUEST_CODE_B5 = 12350;
+	private static final int REQUEST_CODE_B6 = 12351;
 	private static final String FN_SAVE_B1 = "fnB1";
 	private static final String FN_SAVE_B2 = "fnB2";
 	private static final String FN_SAVE_B3 = "fnB3";
 	private static final String FN_SAVE_B4 = "fnB4";
+	private static final String FN_SAVE_B5 = "fnB5";
+	private static final String FN_SAVE_B6 = "fnB6";
 	
 	FnButton fnb;
 	@Override
@@ -130,14 +135,15 @@ public class ST extends Activity implements OnClickListener {
 		b2 = (Button) findViewById(R.id.buttonB2);
 		b3 = (Button) findViewById(R.id.buttonB3);
 		b4 = (Button) findViewById(R.id.buttonB4);
+		b5 = (Button) findViewById(R.id.button5);
+		b6 = (Button) findViewById(R.id.button6);
 		
 		up = (ImageButton) findViewById(R.id.buttonUp);
 		down = (ImageButton) findViewById(R.id.buttonDown);
 		left = (ImageButton) findViewById(R.id.buttonLeft);
 		right = (ImageButton) findViewById(R.id.buttonRight);
 		
-		esc = (Button) findViewById(R.id.buttonEsc);
-		enter = (Button) findViewById(R.id.buttonEnter);
+		
 		
 		ll = (LinearLayout) findViewById(R.id.ll);
 		
@@ -242,7 +248,15 @@ public class ST extends Activity implements OnClickListener {
 				
 				case R.id.buttonB4:
 					reqToSend = REQUEST_CODE_B4;
-					break;					
+					break;	
+					
+				case R.id.button5:
+					reqToSend = REQUEST_CODE_B5;
+					break;	
+					
+				case R.id.button6:
+					reqToSend = REQUEST_CODE_B6;
+					break;	
 			}
 				Intent intent = new Intent(getBaseContext(), FnSelect.class);
 				startActivityForResult(intent, reqToSend);
@@ -262,17 +276,27 @@ public class ST extends Activity implements OnClickListener {
 		b4.setOnClickListener(this);
 		b4.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION)));
 		b4.setOnLongClickListener(olclFn);
+		b5.setOnClickListener(this);
+		b5.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B5, fnb.NO_FUNCTION)));
+		b5.setOnLongClickListener(olclFn);
+		b6.setOnClickListener(this);
+		b6.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION)));
+		b6.setOnLongClickListener(olclFn);
 		if(shp.getBoolean("showFnButtons",true)){
 			b1.setVisibility(View.VISIBLE);
 			b2.setVisibility(View.VISIBLE);
 			b3.setVisibility(View.VISIBLE);
 			b4.setVisibility(View.VISIBLE);
+			b5.setVisibility(View.VISIBLE);
+			b6.setVisibility(View.VISIBLE);
 			
 		}else{
 			b1.setVisibility(View.GONE);
 			b2.setVisibility(View.GONE);
 			b3.setVisibility(View.GONE);
 			b4.setVisibility(View.GONE);
+			b5.setVisibility(View.GONE);
+			b6.setVisibility(View.GONE);
 			
 		}
 		
@@ -349,8 +373,7 @@ public class ST extends Activity implements OnClickListener {
 		down.setOnTouchListener(otlArrows);
 		left.setOnTouchListener(otlArrows);
 		right.setOnTouchListener(otlArrows);
-		esc.setOnClickListener(this);
-		enter.setOnClickListener(this);
+		
 		
 		results=new ArrayList<String>();
 		
@@ -512,12 +535,16 @@ public class ST extends Activity implements OnClickListener {
 				b2.setVisibility(View.GONE);
 				b3.setVisibility(View.GONE);
 				b4.setVisibility(View.GONE);
+				b5.setVisibility(View.GONE);
+				b6.setVisibility(View.GONE);
 			}else{
 				item.setChecked(true);
 				b1.setVisibility(View.VISIBLE);
 				b2.setVisibility(View.VISIBLE);
 				b3.setVisibility(View.VISIBLE);
 				b4.setVisibility(View.VISIBLE);
+				b5.setVisibility(View.VISIBLE);
+				b6.setVisibility(View.VISIBLE);
 			}
 			ed.putBoolean("showFnButtons", item.isChecked());
 			ed.commit();
@@ -534,18 +561,14 @@ public class ST extends Activity implements OnClickListener {
 				up.setVisibility(View.GONE);
 				down.setVisibility(View.GONE);
 				left.setVisibility(View.GONE);
-				right.setVisibility(View.GONE);
-				esc.setVisibility(View.GONE);
-				enter.setVisibility(View.GONE);
+				right.setVisibility(View.GONE);				
 				break;
 
 			case View.GONE:
 				up.setVisibility(View.VISIBLE);
 				down.setVisibility(View.VISIBLE);
 				left.setVisibility(View.VISIBLE);
-				right.setVisibility(View.VISIBLE);
-				esc.setVisibility(View.VISIBLE);
-				enter.setVisibility(View.VISIBLE);
+				right.setVisibility(View.VISIBLE);				
 				break;
 			}
 			break;
@@ -743,16 +766,7 @@ public class ST extends Activity implements OnClickListener {
 			break;
 			
 		
-		case R.id.buttonEsc:
-					
-			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "esc")).start();
-			break;
-			
-		case R.id.buttonEnter:
-					
-			new Thread(new SocketThread(ipEt.getText().toString(), port, keyboard, "enter")).start();
-			break;	
-			
+		
 		case R.id.buttonB1:
 			int bindedFunction1 = shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION);
 			if(bindedFunction1 == fnb.NO_FUNCTION){
@@ -792,6 +806,27 @@ public class ST extends Activity implements OnClickListener {
 				fnb.press(bindedFunction4);
 			}
 			break;
+			
+		case R.id.button5:
+			int bindedFunction5 = shp.getInt(FN_SAVE_B5, fnb.NO_FUNCTION);
+			if(bindedFunction5 == fnb.NO_FUNCTION){
+				Intent intentB5 = new Intent(this, FnSelect.class);
+				startActivityForResult(intentB5, REQUEST_CODE_B5);
+			}else{
+				fnb.press(bindedFunction5);
+			}
+			break;
+			
+		case R.id.button6:
+			int bindedFunction6 = shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION);
+			if(bindedFunction6 == fnb.NO_FUNCTION){
+				Intent intentB6 = new Intent(this, FnSelect.class);
+				startActivityForResult(intentB6, REQUEST_CODE_B6);
+			}else{
+				fnb.press(bindedFunction6);
+			}
+			break;	
+			
 			
 		}
 		
@@ -872,6 +907,18 @@ public class ST extends Activity implements OnClickListener {
 			ed.putInt(FN_SAVE_B4, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
 			ed.commit();
 			b4.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
+			break;
+			
+		case REQUEST_CODE_B5:
+			ed.putInt(FN_SAVE_B5, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
+			ed.commit();
+			b5.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
+			break;
+			
+		case REQUEST_CODE_B6:
+			ed.putInt(FN_SAVE_B6, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
+			ed.commit();
+			b6.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
 			break;
 		}
 }
@@ -957,8 +1004,6 @@ public class ST extends Activity implements OnClickListener {
 			down.setVisibility(View.GONE);
 			left.setVisibility(View.GONE);
 			right.setVisibility(View.GONE);
-			esc.setVisibility(View.GONE);
-			enter.setVisibility(View.GONE);
 		}
 		
 	}

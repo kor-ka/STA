@@ -36,14 +36,14 @@ public final class R {
         public static final int arrows=0x7f08002d;
         public static final int bScan=0x7f080017;
         public static final int bSend=0x7f080016;
+        public static final int button5=0x7f08001b;
+        public static final int button6=0x7f080022;
         public static final int buttonAddToMap=0x7f080003;
         public static final int buttonB1=0x7f08001a;
         public static final int buttonB2=0x7f08001c;
         public static final int buttonB3=0x7f080021;
         public static final int buttonB4=0x7f080023;
         public static final int buttonDown=0x7f080020;
-        public static final int buttonEnter=0x7f080022;
-        public static final int buttonEsc=0x7f08001b;
         public static final int buttonLeft=0x7f08001e;
         public static final int buttonRight=0x7f08001f;
         public static final int buttonUp=0x7f08001d;
