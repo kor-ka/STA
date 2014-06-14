@@ -67,7 +67,7 @@ public class ST extends Activity implements OnClickListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		
 		getMenuInflater().inflate(R.menu.st, menu);
 		return true;
 	}
@@ -100,9 +100,7 @@ public class ST extends Activity implements OnClickListener {
 				send();
 				
 			} catch (IOException e) {
-			//	Toast.makeText(getBaseContext(), e.getMessage(),
-			//			Toast.LENGTH_LONG).show();// TODO Auto-generated catch
-													// block
+			
 				e.printStackTrace();
 			}
 			
@@ -115,7 +113,7 @@ public class ST extends Activity implements OnClickListener {
 
 				if (socket != null) {
 
-				//	Toast.makeText(getBaseContext(), "socket ������",Toast.LENGTH_LONG).show();
+		
 					try {
 						
 						InputStream sin = socket.getInputStream();
@@ -127,7 +125,7 @@ public class ST extends Activity implements OnClickListener {
 						
 						switch(mode){
 							case ab:
-								out.writeUTF("ab:"+a+ "lolParseMe"+b);
+								out.writeUTF("ab:"+a+ ":"+b);
 											 
 								break;
 								
@@ -152,9 +150,9 @@ public class ST extends Activity implements OnClickListener {
 							});						
 						socket.close();
 						socket = null;
-					//	Toast.makeText(getBaseContext(), line + "",	Toast.LENGTH_LONG).show();
+			
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+			
 						e.printStackTrace();
 					}
 					break;
