@@ -100,6 +100,12 @@ public class ST extends Activity implements OnClickListener {
 	private static final String FN_SAVE_B4 = "fnB4";
 	private static final String FN_SAVE_B5 = "fnB5";
 	private static final String FN_SAVE_B6 = "fnB6";
+	private static final String FN_SAVE_ARGS_B1 = "fnB1args";
+	private static final String FN_SAVE_ARGS_B2 = "fnB2args";
+	private static final String FN_SAVE_ARGS_B3 = "fnB3args";
+	private static final String FN_SAVE_ARGS_B4 = "fnB4args";
+	private static final String FN_SAVE_ARGS_B5 = "fnB5args";
+	private static final String FN_SAVE_ARGS_B6 = "fnB6args";
 	
 	FnButton fnb;
 	@Override
@@ -265,7 +271,7 @@ public class ST extends Activity implements OnClickListener {
 		};
 		
 		b1.setOnClickListener(this);
-		b1.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION)));
+		b1.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION)));		
 		b1.setOnLongClickListener(olclFn);
 		b2.setOnClickListener(this);
 		b2.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B2, fnb.NO_FUNCTION)));
@@ -282,6 +288,26 @@ public class ST extends Activity implements OnClickListener {
 		b6.setOnClickListener(this);
 		b6.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION)));
 		b6.setOnLongClickListener(olclFn);
+		
+		if(shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION)==fnb.FN_CUSTOM){
+			b1.setText(shp.getString(FN_SAVE_ARGS_B1, ""));
+		}
+		if(shp.getInt(FN_SAVE_B2, fnb.NO_FUNCTION)==fnb.FN_CUSTOM){
+			b2.setText(shp.getString(FN_SAVE_ARGS_B2, ""));
+		}
+		if(shp.getInt(FN_SAVE_B3, fnb.NO_FUNCTION)==fnb.FN_CUSTOM){
+			b3.setText(shp.getString(FN_SAVE_ARGS_B3, ""));
+		}
+		if(shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION)==fnb.FN_CUSTOM){
+			b4.setText(shp.getString(FN_SAVE_ARGS_B4, ""));
+		}
+		if(shp.getInt(FN_SAVE_B5, fnb.NO_FUNCTION)==fnb.FN_CUSTOM){
+			b5.setText(shp.getString(FN_SAVE_ARGS_B5, ""));
+		}
+		if(shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION)==fnb.FN_CUSTOM){
+			b6.setText(shp.getString(FN_SAVE_ARGS_B6, ""));
+		}
+		
 		if(shp.getBoolean("showFnButtons",true)){
 			b1.setVisibility(View.VISIBLE);
 			b2.setVisibility(View.VISIBLE);
@@ -770,60 +796,60 @@ public class ST extends Activity implements OnClickListener {
 		case R.id.buttonB1:
 			int bindedFunction1 = shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION);
 			if(bindedFunction1 == fnb.NO_FUNCTION){
-				Intent intentB1 = new Intent(this, FnSelect.class);
+				Intent intentB1 = new Intent(this, FnBind.class);
 				startActivityForResult(intentB1, REQUEST_CODE_B1);
 			}else{
-				fnb.press(bindedFunction1);
+				fnb.press(bindedFunction1, shp.getString(FN_SAVE_ARGS_B1, "Nope"));
 			}
 			break;
 		
 		case R.id.buttonB2:
 			int bindedFunction2 = shp.getInt(FN_SAVE_B2, fnb.NO_FUNCTION);
 			if(bindedFunction2 == fnb.NO_FUNCTION){
-				Intent intentB2 = new Intent(this, FnSelect.class);
+				Intent intentB2 = new Intent(this, FnBind.class);
 				startActivityForResult(intentB2, REQUEST_CODE_B2);
 			}else{
-				fnb.press(bindedFunction2);
+				fnb.press(bindedFunction2, shp.getString(FN_SAVE_ARGS_B2, "Nope"));
 			}
 			break;
 		
 		case R.id.buttonB3:
 			int bindedFunction3 = shp.getInt(FN_SAVE_B3, fnb.NO_FUNCTION);
 			if(bindedFunction3 == fnb.NO_FUNCTION){
-				Intent intentB3 = new Intent(this, FnSelect.class);
+				Intent intentB3 = new Intent(this, FnBind.class);
 				startActivityForResult(intentB3, REQUEST_CODE_B3);
 			}else{
-				fnb.press(bindedFunction3);
+				fnb.press(bindedFunction3, shp.getString(FN_SAVE_ARGS_B3, "Nope"));
 			}
 			break;
 			
 		case R.id.buttonB4:
 			int bindedFunction4 = shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION);
 			if(bindedFunction4 == fnb.NO_FUNCTION){
-				Intent intentB4 = new Intent(this, FnSelect.class);
+				Intent intentB4 = new Intent(this, FnBind.class);
 				startActivityForResult(intentB4, REQUEST_CODE_B4);
 			}else{
-				fnb.press(bindedFunction4);
+				fnb.press(bindedFunction4, shp.getString(FN_SAVE_ARGS_B4, "Nope"));
 			}
 			break;
 			
 		case R.id.button5:
 			int bindedFunction5 = shp.getInt(FN_SAVE_B5, fnb.NO_FUNCTION);
 			if(bindedFunction5 == fnb.NO_FUNCTION){
-				Intent intentB5 = new Intent(this, FnSelect.class);
+				Intent intentB5 = new Intent(this, FnBind.class);
 				startActivityForResult(intentB5, REQUEST_CODE_B5);
 			}else{
-				fnb.press(bindedFunction5);
+				fnb.press(bindedFunction5, shp.getString(FN_SAVE_ARGS_B5, "Nope"));
 			}
 			break;
 			
 		case R.id.button6:
 			int bindedFunction6 = shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION);
 			if(bindedFunction6 == fnb.NO_FUNCTION){
-				Intent intentB6 = new Intent(this, FnSelect.class);
+				Intent intentB6 = new Intent(this, FnBind.class);
 				startActivityForResult(intentB6, REQUEST_CODE_B6);
 			}else{
-				fnb.press(bindedFunction6);
+				fnb.press(bindedFunction6, shp.getString(FN_SAVE_ARGS_B6, "Nope"));
 			}
 			break;	
 			
@@ -887,38 +913,62 @@ public class ST extends Activity implements OnClickListener {
 		switch (requestCode) {
 		case REQUEST_CODE_B1:
 			ed.putInt(FN_SAVE_B1, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
+			ed.putString(FN_SAVE_ARGS_B1, intent.getStringExtra("FnResultArgs"));
 			ed.commit();
 			b1.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
+			if(!intent.getStringExtra("FnResultArgs").equals("")){
+				b1.setText(intent.getStringExtra("FnResultArgs"));
+			}
 			break;
 			
 		case REQUEST_CODE_B2:
 			ed.putInt(FN_SAVE_B2, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
+			ed.putString(FN_SAVE_ARGS_B2, intent.getStringExtra("FnResultArgs"));
 			ed.commit();
 			b2.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
+			if(!intent.getStringExtra("FnResultArgs").equals("")){
+				b2.setText(intent.getStringExtra("FnResultArgs"));
+			}
 			break;
 			
 		case REQUEST_CODE_B3:
 			ed.putInt(FN_SAVE_B3, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
+			ed.putString(FN_SAVE_ARGS_B3, intent.getStringExtra("FnResultArgs"));
 			ed.commit();
 			b3.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
+			if(!intent.getStringExtra("FnResultArgs").equals("")){
+				b3.setText(intent.getStringExtra("FnResultArgs"));
+			}
 			break;
 			
 		case REQUEST_CODE_B4:
 			ed.putInt(FN_SAVE_B4, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
+			ed.putString(FN_SAVE_ARGS_B4, intent.getStringExtra("FnResultArgs"));
 			ed.commit();
 			b4.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
+			if(!intent.getStringExtra("FnResultArgs").equals("")){
+				b4.setText(intent.getStringExtra("FnResultArgs"));
+			}
 			break;
 			
 		case REQUEST_CODE_B5:
 			ed.putInt(FN_SAVE_B5, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
+			ed.putString(FN_SAVE_ARGS_B5, intent.getStringExtra("FnResultArgs"));
 			ed.commit();
 			b5.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
+			if(!intent.getStringExtra("FnResultArgs").equals("")){
+				b5.setText(intent.getStringExtra("FnResultArgs"));
+			}
 			break;
 			
 		case REQUEST_CODE_B6:
 			ed.putInt(FN_SAVE_B6, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
+			ed.putString(FN_SAVE_ARGS_B6, intent.getStringExtra("FnResultArgs"));
 			ed.commit();
 			b6.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
+			if(!intent.getStringExtra("FnResultArgs").equals("")){
+				b6.setText(intent.getStringExtra("FnResultArgs"));
+			}
 			break;
 		}
 }

@@ -15,7 +15,8 @@ public class FnButton {
 	Context ctx;	
 	ST st;
 	
-	//int values MUST be ordered! //should fix it by iterating map in FnSelect!!
+	
+	public final static int FN_CUSTOM=-1;
 	public final static int NO_FUNCTION=0;
 	public final static int FN_SCAN=1;	
 	public final static int FN_ENTER=2;
@@ -119,11 +120,16 @@ public class FnButton {
 			fnMap.put(FN_F12, "F12");
 	 }
 	
- public void press(int function){
+ public void press(int function, String args){
 	 
 	 int port = Integer.parseInt(st.portEt.getText().toString());
 	 if(st!=null){
 		 switch (function) {
+		 
+		 	case FN_CUSTOM:
+		 		Toast.makeText(ctx, "args:" + args, Toast.LENGTH_SHORT).show();
+		 		break;
+		 
 			case NO_FUNCTION:
 				 Toast.makeText(ctx, "no function", Toast.LENGTH_SHORT).show();
 				break;

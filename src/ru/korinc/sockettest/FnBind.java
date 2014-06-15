@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -69,7 +70,7 @@ public class FnBind extends FragmentActivity implements OnClickListener
 
         @Override
         public android.support.v4.app.Fragment getItem(int position) {
-        	FnListFragment fr = null;
+        	ListFragment fr = null;
         	
 			switch (position) {
 				case 0:
@@ -78,7 +79,7 @@ public class FnBind extends FragmentActivity implements OnClickListener
 					return fr ;
 
 				case 1:
-					fr = new FnListFragment();	
+					fr = new FnCreateCustomFragment();	
 					
 					return fr ;
 
