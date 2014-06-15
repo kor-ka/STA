@@ -258,7 +258,7 @@ public class ST extends Activity implements OnClickListener {
 					reqToSend = REQUEST_CODE_B6;
 					break;	
 			}
-				Intent intent = new Intent(getBaseContext(), FnSelect.class);
+				Intent intent = new Intent(getBaseContext(), FnBind.class);
 				startActivityForResult(intent, reqToSend);
 				return false;
 			}

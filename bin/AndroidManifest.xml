@@ -38,6 +38,11 @@
             android:label="@string/title_activity_fn_select"
              android:theme="@android:style/Theme.Holo.Dialog" >
         </activity>
+        <activity
+            android:name="ru.korinc.sockettest.FnBind"
+            android:label="@string/title_activity_fn_select"
+             android:theme="@android:style/Theme.Holo.Dialog" >
+        </activity>
     </application>
 
 </manifest>
