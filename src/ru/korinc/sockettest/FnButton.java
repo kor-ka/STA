@@ -15,7 +15,7 @@ public class FnButton {
 	Context ctx;	
 	ST st;
 	
-	
+	public final static int FN_COMMAND_LINE=-2;
 	public final static int FN_CUSTOM=-1;
 	public final static int NO_FUNCTION=0;
 	public final static int FN_SCAN=1;	
@@ -125,6 +125,10 @@ public class FnButton {
 	 int port = Integer.parseInt(st.portEt.getText().toString());
 	 if(st!=null){
 		 switch (function) {
+		 
+		 case FN_COMMAND_LINE:
+		 		new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.commandLine, args)).start();
+		 		break;
 		 
 		 	case FN_CUSTOM:
 		 		new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.shortcut, args)).start();

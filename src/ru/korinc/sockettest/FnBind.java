@@ -31,7 +31,7 @@ public class FnBind extends FragmentActivity implements OnClickListener
 
 	
 	Intent inputintent;
-	private static final int NUM_PAGES = 2;
+	private static final int NUM_PAGES = 3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +83,10 @@ public class FnBind extends FragmentActivity implements OnClickListener
 					
 					return fr ;
 
-
+				case 2:
+					fr = new FnCommandLineFragment();	
+					
+					return fr ;
 
 			}
 			return new FnListFragment();			
@@ -104,9 +107,12 @@ public class FnBind extends FragmentActivity implements OnClickListener
 					break;
 
 				case 1:
-					title = "Create new one";
+					title = "Create shortcut";
 					break;
 
+				case 2:
+					title = "Create command line command";
+					break;
 				
 				default:
 					title = "Oops";
