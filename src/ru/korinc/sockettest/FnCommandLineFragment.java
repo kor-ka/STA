@@ -61,6 +61,8 @@ public class FnCommandLineFragment extends ListFragment {
 		
 		commands  = shp.getStringSet("FnCommands", new HashSet<String>());
 		if (commands.isEmpty()){
+			commands.add("start chrome");
+			commands.add("start notepad");
 			commands.add("shutdown -i");			
 			ed.putStringSet("FnCommands", commands);
 			ed.commit();

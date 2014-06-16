@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import ru.korinc.sockettest.ST.SocketThread;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ public class FnButton {
 	Context ctx;	
 	ST st;
 	
+	public final static int FN_FIRE_FN=-3;
 	public final static int FN_COMMAND_LINE=-2;
 	public final static int FN_CUSTOM=-1;
 	public final static int NO_FUNCTION=0;
@@ -76,6 +78,7 @@ public class FnButton {
 	 public void initiateMap(){
 		 fnMap = new LinkedHashMap<Integer, String>();
 			fnMap.put(NO_FUNCTION, "No function");
+			fnMap.put(FN_FIRE_FN, "Fire Fn");
 			fnMap.put(FN_SCAN, "Scan");
 			fnMap.put(FN_LAUNCH_APP, "Launch app");
 			fnMap.put(FN_ARROWS, "Arrows");
@@ -130,6 +133,11 @@ public class FnButton {
 		 		new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.commandLine, args)).start();
 		 		break;
 		 
+		 case FN_FIRE_FN:
+			 	Intent intent = new Intent(st, FnBind.class);
+				st.startActivityForResult(intent, st.REQUEST_CODE_FIRE_FN);		 		
+		 		break;
+		 		
 		 	case FN_CUSTOM:
 		 		new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.shortcut, args)).start();
 		 		break;

@@ -57,7 +57,12 @@
         android:showAsAction="ifRoom"
         android:title="Launch app"/>
     
-   
+    <item
+        android:id="@+id/fireFN"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="Fire Fn"/>
+       
     <item
         android:id="@+id/action_scan"
         android:orderInCategory="100"

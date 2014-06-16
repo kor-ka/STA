@@ -96,6 +96,7 @@ public class ST extends Activity implements OnClickListener {
 	private static final int REQUEST_CODE_B4 = 12349;
 	private static final int REQUEST_CODE_B5 = 12350;
 	private static final int REQUEST_CODE_B6 = 12351;
+	public static final int REQUEST_CODE_FIRE_FN = 12352;
 	private static final String FN_SAVE_B1 = "fnB1";
 	private static final String FN_SAVE_B2 = "fnB2";
 	private static final String FN_SAVE_B3 = "fnB3";
@@ -583,6 +584,10 @@ public class ST extends Activity implements OnClickListener {
 			startActivity(intent);
 			break;
 			
+		case R.id.fireFN:
+			fnb.press(FnButton.FN_FIRE_FN, "");
+			break;
+			
 		case R.id.arrows:
 			switch (up.getVisibility()) {
 			case View.VISIBLE:
@@ -923,6 +928,11 @@ public class ST extends Activity implements OnClickListener {
 		
 		if(resultCode==RESULT_OK)
 		switch (requestCode) {
+		
+		case REQUEST_CODE_FIRE_FN:
+			fnb.press(intent.getIntExtra("FnResult", fnb.NO_FUNCTION), intent.getStringExtra("FnResultArgs"));
+			break;
+		
 		case REQUEST_CODE_B1:
 			ed.putInt(FN_SAVE_B1, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
 			ed.putString(FN_SAVE_ARGS_B1, intent.getStringExtra("FnResultArgs"));

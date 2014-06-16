@@ -48,7 +48,7 @@ public class FnBind extends FragmentActivity implements OnClickListener
 			pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
 			
 			mPager.setAdapter(pagerAdapter);		
-			mPager.setCurrentItem(0);
+			mPager.setCurrentItem(1);
 		
 	}
 
@@ -74,13 +74,13 @@ public class FnBind extends FragmentActivity implements OnClickListener
         	
 			switch (position) {
 				case 0:
-					fr = new FnListFragment();	
+					fr = new FnCreateCustomFragment();	
 					
 					return fr ;
 
 				case 1:
-					fr = new FnCreateCustomFragment();	
 					
+					fr = new FnListFragment();	
 					return fr ;
 
 				case 2:
@@ -103,11 +103,11 @@ public class FnBind extends FragmentActivity implements OnClickListener
         	String title = "Oops";
 			switch (position) {
 				case 0:
-					title = "Choose existing fn";
+					title = "Create shortcut";
 					break;
 
-				case 1:
-					title = "Create shortcut";
+				case 1:					
+					title = "Choose existing fn";
 					break;
 
 				case 2:

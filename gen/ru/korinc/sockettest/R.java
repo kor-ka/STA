@@ -31,9 +31,9 @@ public final class R {
         public static final int navigation_previous_item=0x7f020007;
     }
     public static final class id {
-        public static final int action_scan=0x7f080034;
+        public static final int action_scan=0x7f080035;
         public static final int action_settings=0x7f08002c;
-        public static final int arrows=0x7f080035;
+        public static final int arrows=0x7f080036;
         public static final int bScan=0x7f080017;
         public static final int bSend=0x7f080016;
         public static final int button5=0x7f08001b;
@@ -56,6 +56,7 @@ public final class R {
         public static final int etKeyboard=0x7f08000e;
         public static final int etPort=0x7f08000d;
         public static final int etSocket=0x7f08000b;
+        public static final int fireFN=0x7f080034;
         public static final int fnCommandLineBtnOk=0x7f080025;
         public static final int fnCustomBtnOk=0x7f080029;
         public static final int fnCustomDelElement=0x7f080027;
