@@ -291,22 +291,22 @@ public class ST extends Activity implements OnClickListener {
 		b6.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION)));
 		b6.setOnLongClickListener(olclFn);
 		
-		if(shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION)==fnb.FN_CUSTOM){
+		if(shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION)==fnb.FN_CUSTOM||shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION)==fnb.FN_COMMAND_LINE){
 			b1.setText(shp.getString(FN_SAVE_ARGS_B1, ""));
 		}
-		if(shp.getInt(FN_SAVE_B2, fnb.NO_FUNCTION)==fnb.FN_CUSTOM){
+		if(shp.getInt(FN_SAVE_B2, fnb.NO_FUNCTION)==fnb.FN_CUSTOM||shp.getInt(FN_SAVE_B2, fnb.NO_FUNCTION)==fnb.FN_COMMAND_LINE){
 			b2.setText(shp.getString(FN_SAVE_ARGS_B2, ""));
 		}
-		if(shp.getInt(FN_SAVE_B3, fnb.NO_FUNCTION)==fnb.FN_CUSTOM){
+		if(shp.getInt(FN_SAVE_B3, fnb.NO_FUNCTION)==fnb.FN_CUSTOM||shp.getInt(FN_SAVE_B3, fnb.NO_FUNCTION)==fnb.FN_COMMAND_LINE){
 			b3.setText(shp.getString(FN_SAVE_ARGS_B3, ""));
 		}
-		if(shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION)==fnb.FN_CUSTOM){
+		if(shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION)==fnb.FN_CUSTOM||shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION)==fnb.FN_COMMAND_LINE){
 			b4.setText(shp.getString(FN_SAVE_ARGS_B4, ""));
 		}
-		if(shp.getInt(FN_SAVE_B5, fnb.NO_FUNCTION)==fnb.FN_CUSTOM){
+		if(shp.getInt(FN_SAVE_B5, fnb.NO_FUNCTION)==fnb.FN_CUSTOM||shp.getInt(FN_SAVE_B5, fnb.NO_FUNCTION)==fnb.FN_COMMAND_LINE){
 			b5.setText(shp.getString(FN_SAVE_ARGS_B5, ""));
 		}
-		if(shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION)==fnb.FN_CUSTOM){
+		if(shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION)==fnb.FN_CUSTOM||shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION)==fnb.FN_COMMAND_LINE){
 			b6.setText(shp.getString(FN_SAVE_ARGS_B6, ""));
 		}
 		
