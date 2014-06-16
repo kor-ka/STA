@@ -127,7 +127,7 @@ public class FnButton {
 		 switch (function) {
 		 
 		 	case FN_CUSTOM:
-		 		Toast.makeText(ctx, "args:" + args, Toast.LENGTH_SHORT).show();
+		 		new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.shortcut, args)).start();
 		 		break;
 		 
 			case NO_FUNCTION:

@@ -43,14 +43,43 @@ public class FnCreateCustomFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		fnb = new FnButton();
-		
 		fns = new ArrayList<String>() ;
 		
-		for (Map.Entry<Integer, String> entry : fnb.fnMap.entrySet()) { 
-			fns.add(entry.getValue());
+		fns.add("Ctrl");
+		fns.add("Alt");
+		fns.add("Shift");
+		fns.add("Tab");
+		fns.add("Win");
+		fns.add("Del");
+		fns.add("Ins");
+		fns.add("Home");
+		fns.add("End");
+		fns.add("Page Up");
+		fns.add("Page Down");
+		fns.add("Esc");
+		fns.add("Enter");
+		fns.add("Space");
+		fns.add("Backspace");
+		fns.add("+");
+		fns.add("-");		
+		fns.add("Up arrow");
+		fns.add("Down arrow");
+		fns.add("Left arrow");
+		fns.add("Right arrow");
+		
+				
+		for (int i = 0; i < 13; i++) {
+			fns.add("F"+i);
 		}
 		
+		for (int i = 0; i < 11; i++) {
+			fns.add(i+"");
+		}
+		char letter = 'A';
+		for(int i=0; i<26; i++){
+			fns.add(letter+"");
+			letter++;
+		}
 		
 	  adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, fns);
 	  

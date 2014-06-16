@@ -86,6 +86,7 @@ public class ST extends Activity implements OnClickListener {
 	final static int rclick=6;
 	final static int keyboard=7;
 	final static int launch=8;
+	final static int shortcut=9;
 	public static final int REQUEST_CODE_LAUNCH_APP = 1234;
 	public static final int REQUEST_CODE_VOICE_INPUT = 12345;
 	private static final int REQUEST_CODE_B1 = 12346;
@@ -725,6 +726,11 @@ public class ST extends Activity implements OnClickListener {
 								
 								out.writeUTF("keyboard::"+chr);
 								break;
+								
+							case shortcut:
+								
+								out.writeUTF("shortcut::"+chr);
+								break;	
 								
 							case launch:
 								
