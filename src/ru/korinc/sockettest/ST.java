@@ -729,7 +729,13 @@ public class ST extends Activity implements OnClickListener {
 								break; 
 								
 							case keyboard:
-								
+								if(chr.equals("\n")){
+									try {
+										Thread.sleep(100);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
+								}
 								out.writeUTF("keyboard::"+chr);
 								break;
 								

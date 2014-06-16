@@ -2,9 +2,12 @@ package ru.korinc.sockettest;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,6 +46,7 @@ public class FnCommandLineFragment extends ListFragment {
 	SharedPreferences shp;
 	Editor ed;
 	Set<String> commands;
+	private static final String FN_COMMANDS_KEY="FnCommands"; 
 	
 	 @Override
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,15 +60,18 @@ public class FnCommandLineFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 		
 		fns = new ArrayList<String>() ;
-		shp = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+		shp = getActivity().getSharedPreferences(FN_COMMANDS_KEY,0);
 		ed = shp.edit();
 		
-		commands  = shp.getStringSet("FnCommands", new HashSet<String>());
+		commands  = shp.getStringSet(FN_COMMANDS_KEY, new LinkedHashSet<String>());
 		if (commands.isEmpty()){
 			commands.add("start chrome");
+			commands.add("start chrome \"google.ru/saerch?q=lol\"");
 			commands.add("start notepad");
-			commands.add("shutdown -i");			
-			ed.putStringSet("FnCommands", commands);
+			commands.add("shutdown -s");		
+			commands.add("shutdown -r");	
+			commands.add("shutdown -l");
+			ed.putStringSet(FN_COMMANDS_KEY, commands);
 			ed.commit();
 		}
 		
@@ -86,7 +93,8 @@ public class FnCommandLineFragment extends ListFragment {
 			switch (v.getId()) {
 			case R.id.fnCommandLineBtnOk:
 				commands.add(et.getText().toString());
-				ed.putStringSet("FnCommands", commands);
+				ed.clear();
+				ed.putStringSet(FN_COMMANDS_KEY, commands);
 				ed.commit();
 				Intent intent = new Intent();
 				intent.putExtra("FnResult",fnb.FN_COMMAND_LINE);
@@ -113,7 +121,8 @@ public class FnCommandLineFragment extends ListFragment {
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View v,	int position, long id) {
 			commands.remove(fns.get(position));
-			ed.putStringSet("FnCommands", commands);
+			ed.clear();
+			ed.putStringSet(FN_COMMANDS_KEY, commands);
 			ed.commit();
 			fns.remove(position);			
 			adapter.notifyDataSetChanged();
