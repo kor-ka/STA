@@ -190,8 +190,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5" >
-
+            
         </android.support.v4.view.ViewPager>
+        
+        <com.viewpagerindicator.CirclePageIndicator
+		        android:id="@+id/indicatorTop"
+		        android:padding="10dip"
+		       android:layout_height="0dp"
+            android:layout_weight="0.5"
+		        android:layout_width="fill_parent" />
 
         <ImageButton
             android:id="@+id/buttonUp"
@@ -235,14 +242,31 @@
             android:src="@drawable/navigation_expand"
             android:text="↓"
             android:visibility="gone" />
-
-         <android.support.v4.view.ViewPager
-            android:id="@+id/pagerBot"
-            android:layout_width="match_parent"
+        
+		<RelativeLayout android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5" >
-
-        </android.support.v4.view.ViewPager>
+		      <android.support.v4.view.ViewPager
+            android:id="@+id/pagerBot"
+             
+             android:layout_height="wrap_content"
+		        android:layout_width="fill_parent" />
+         
+           <com.viewpagerindicator.CirclePageIndicator
+		        android:id="@+id/indicatorBot"
+		        android:padding="10dip"
+		       android:layout_height="10dp"
+           
+		        android:layout_width="fill_parent" 
+		        android:layout_above="@id/pagerBot"/>
+       
+		    
+		</RelativeLayout>
+       
+         
+       
+        
+        
     </LinearLayout>
 
 </RelativeLayout>

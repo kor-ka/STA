@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.viewpagerindicator.CirclePageIndicator;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -411,6 +413,13 @@ public class ST extends FragmentActivity implements OnClickListener {
 		botPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), "bot");		
 		botPager.setAdapter(botPagerAdapter);		
 		botPager.setCurrentItem(1);
+		
+		//Bind the title indicator to the adapter
+		CirclePageIndicator topTitleIndicator = (CirclePageIndicator)findViewById(R.id.indicatorTop);
+		topTitleIndicator.setViewPager(topPager);
+		
+		CirclePageIndicator botTitleIndicator = (CirclePageIndicator)findViewById(R.id.indicatorBot);
+		botTitleIndicator.setViewPager(botPager);
 		
 		if(shp.getBoolean("showFnButtons",true)){
 			topPager.setVisibility(View.VISIBLE);
