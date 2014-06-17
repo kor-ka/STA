@@ -112,7 +112,7 @@ int id fnCustomBtnOk 0x7f04002f
 int id fnCustomDelElement 0x7f04002d
 int id fnCustomSelectTV 0x7f04002e
 int id fn_custom_command_et 0x7f04002a
-int id indicatorBot 0x7f040026
+int id indicatorBot 0x7f040025
 int id indicatorTop 0x7f040020
 int id keyboard 0x7f040033
 int id launchApp 0x7f040039
@@ -123,7 +123,7 @@ int id ll 0x7f04001d
 int id map 0x7f040038
 int id none 0x7f040000
 int id pager 0x7f040030
-int id pagerBot 0x7f040025
+int id pagerBot 0x7f040026
 int id pagerTabStrip 0x7f040031
 int id pagerTop 0x7f04001f
 int id rl 0x7f04002c

@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.LinePageIndicator;
 
 import android.content.Context;
 import android.content.Intent;

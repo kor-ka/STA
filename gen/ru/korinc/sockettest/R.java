@@ -394,7 +394,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int fnCustomDelElement=0x7f04002d;
         public static final int fnCustomSelectTV=0x7f04002e;
         public static final int fn_custom_command_et=0x7f04002a;
-        public static final int indicatorBot=0x7f040026;
+        public static final int indicatorBot=0x7f040025;
         public static final int indicatorTop=0x7f040020;
         public static final int keyboard=0x7f040033;
         public static final int launchApp=0x7f040039;
@@ -405,7 +405,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int map=0x7f040038;
         public static final int none=0x7f040000;
         public static final int pager=0x7f040030;
-        public static final int pagerBot=0x7f040025;
+        public static final int pagerBot=0x7f040026;
         public static final int pagerTabStrip=0x7f040031;
         public static final int pagerTop=0x7f04001f;
         public static final int rl=0x7f04002c;

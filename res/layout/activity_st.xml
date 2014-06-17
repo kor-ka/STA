@@ -185,20 +185,26 @@
             android:textColor="#FFFFFF"
             android:visibility="gone" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pagerTop"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5" >
-            
-        </android.support.v4.view.ViewPager>
-        
-        <com.viewpagerindicator.CirclePageIndicator
-		        android:id="@+id/indicatorTop"
-		        android:padding="10dip"
-		       android:layout_height="0dp"
-            android:layout_weight="0.5"
-		        android:layout_width="fill_parent" />
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <android.support.v4.view.ViewPager
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/pagerTop"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" >
+            </android.support.v4.view.ViewPager>
+
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicatorTop"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                 android:padding="1dip" />
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/buttonUp"
@@ -212,7 +218,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8"
+            android:layout_weight="5"
             android:orientation="horizontal" >
 
             <ImageButton
@@ -242,31 +248,25 @@
             android:src="@drawable/navigation_expand"
             android:text="↓"
             android:visibility="gone" />
-        
-		<RelativeLayout android:layout_width="match_parent"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5" >
-		      <android.support.v4.view.ViewPager
-            android:id="@+id/pagerBot"
-             
-             android:layout_height="wrap_content"
-		        android:layout_width="fill_parent" />
-         
-           <com.viewpagerindicator.CirclePageIndicator
-		        android:id="@+id/indicatorBot"
-		        android:padding="10dip"
-		       android:layout_height="10dp"
-           
-		        android:layout_width="fill_parent" 
-		        android:layout_above="@id/pagerBot"/>
-       
-		    
-		</RelativeLayout>
-       
-         
-       
-        
-        
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicatorBot"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                 android:padding="1dip" />
+
+            <android.support.v4.view.ViewPager
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/pagerBot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>
