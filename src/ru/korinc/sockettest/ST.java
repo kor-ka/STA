@@ -12,14 +12,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -27,10 +22,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract.CommonDataKinds.Event;
 import android.speech.RecognizerIntent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.ListFragment;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyCharacterMap;
 import android.view.Menu;
@@ -42,9 +40,15 @@ import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class ST extends Activity implements OnClickListener {
+public class ST extends FragmentActivity implements OnClickListener {
 	Thread listener;
 	EditText ipEt;
 	EditText portEt;
@@ -54,9 +58,6 @@ public class ST extends Activity implements OnClickListener {
 	EditText keyboardEt;
 	Button scan;
 	Button send;
-	Button b1;
-	Button b2;
-	Button b3;
 	Button b4;
 	Button b5;
 	Button b6;
@@ -89,28 +90,15 @@ public class ST extends Activity implements OnClickListener {
 	final static int shortcut=9;
 	final static int commandLine=10;
 	public static final int REQUEST_CODE_LAUNCH_APP = 1234;
-	public static final int REQUEST_CODE_VOICE_INPUT = 12345;
-	private static final int REQUEST_CODE_B1 = 12346;
-	private static final int REQUEST_CODE_B2 = 12347;
-	private static final int REQUEST_CODE_B3 = 12348;
-	private static final int REQUEST_CODE_B4 = 12349;
-	private static final int REQUEST_CODE_B5 = 12350;
-	private static final int REQUEST_CODE_B6 = 12351;
+	public static final int REQUEST_CODE_VOICE_INPUT = 12345;	
 	public static final int REQUEST_CODE_FIRE_FN = 12352;
-	private static final String FN_SAVE_B1 = "fnB1";
-	private static final String FN_SAVE_B2 = "fnB2";
-	private static final String FN_SAVE_B3 = "fnB3";
-	private static final String FN_SAVE_B4 = "fnB4";
-	private static final String FN_SAVE_B5 = "fnB5";
-	private static final String FN_SAVE_B6 = "fnB6";
-	private static final String FN_SAVE_ARGS_B1 = "fnB1args";
-	private static final String FN_SAVE_ARGS_B2 = "fnB2args";
-	private static final String FN_SAVE_ARGS_B3 = "fnB3args";
-	private static final String FN_SAVE_ARGS_B4 = "fnB4args";
-	private static final String FN_SAVE_ARGS_B5 = "fnB5args";
-	private static final String FN_SAVE_ARGS_B6 = "fnB6args";
+	FnButton fnb;	
+	private static final int NUM_PAGES = 3;
+	ScreenSlidePagerAdapter topPagerAdapter;
+	private ViewPager topPager;	
+	ScreenSlidePagerAdapter botPagerAdapter;
+	private ViewPager botPager;
 	
-	FnButton fnb;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -140,19 +128,10 @@ public class ST extends Activity implements OnClickListener {
 		scan = (Button) findViewById(R.id.bScan);
 		send = (Button) findViewById(R.id.bSend);
 		
-		b1 = (Button) findViewById(R.id.buttonB1);
-		b2 = (Button) findViewById(R.id.buttonB2);
-		b3 = (Button) findViewById(R.id.buttonB3);
-		b4 = (Button) findViewById(R.id.buttonB4);
-		b5 = (Button) findViewById(R.id.button5);
-		b6 = (Button) findViewById(R.id.button6);
-		
 		up = (ImageButton) findViewById(R.id.buttonUp);
 		down = (ImageButton) findViewById(R.id.buttonDown);
 		left = (ImageButton) findViewById(R.id.buttonLeft);
 		right = (ImageButton) findViewById(R.id.buttonRight);
-		
-		
 		
 		ll = (LinearLayout) findViewById(R.id.ll);
 		
@@ -192,16 +171,11 @@ public class ST extends Activity implements OnClickListener {
 			}
 			
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				// TODO Auto-generated method stub
-				
+			public void beforeTextChanged(CharSequence s, int start, int count,	int after) {				
 			}
 			
 			@Override
-			public void afterTextChanged(Editable s) {
-			
-				
+			public void afterTextChanged(Editable s) {				
 			}
 		});
 		
@@ -237,97 +211,7 @@ public class ST extends Activity implements OnClickListener {
 		});
 		
 		
-		OnLongClickListener olclFn = new OnLongClickListener() {
-			
-			@Override
-			public boolean onLongClick(View v) {
-				int reqToSend=0;
-				switch (v.getId()) {
-				case R.id.buttonB1:
-					reqToSend = REQUEST_CODE_B1;
-					break;					
-				
-				case R.id.buttonB2:
-					reqToSend = REQUEST_CODE_B2;
-					break;					
-				
-				case R.id.buttonB3:
-					reqToSend = REQUEST_CODE_B3;
-					break;					
-				
-				case R.id.buttonB4:
-					reqToSend = REQUEST_CODE_B4;
-					break;	
-					
-				case R.id.button5:
-					reqToSend = REQUEST_CODE_B5;
-					break;	
-					
-				case R.id.button6:
-					reqToSend = REQUEST_CODE_B6;
-					break;	
-			}
-				Intent intent = new Intent(getBaseContext(), FnBind.class);
-				startActivityForResult(intent, reqToSend);
-				return false;
-			}
-		};
 		
-		b1.setOnClickListener(this);
-		b1.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION)));		
-		b1.setOnLongClickListener(olclFn);
-		b2.setOnClickListener(this);
-		b2.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B2, fnb.NO_FUNCTION)));
-		b2.setOnLongClickListener(olclFn);
-		b3.setOnClickListener(this);
-		b3.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B3, fnb.NO_FUNCTION)));
-		b3.setOnLongClickListener(olclFn);
-		b4.setOnClickListener(this);
-		b4.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION)));
-		b4.setOnLongClickListener(olclFn);
-		b5.setOnClickListener(this);
-		b5.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B5, fnb.NO_FUNCTION)));
-		b5.setOnLongClickListener(olclFn);
-		b6.setOnClickListener(this);
-		b6.setText(fnb.fnMap.get(shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION)));
-		b6.setOnLongClickListener(olclFn);
-		
-		if(shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION)==fnb.FN_CUSTOM||shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION)==fnb.FN_COMMAND_LINE){
-			b1.setText(shp.getString(FN_SAVE_ARGS_B1, ""));
-		}
-		if(shp.getInt(FN_SAVE_B2, fnb.NO_FUNCTION)==fnb.FN_CUSTOM||shp.getInt(FN_SAVE_B2, fnb.NO_FUNCTION)==fnb.FN_COMMAND_LINE){
-			b2.setText(shp.getString(FN_SAVE_ARGS_B2, ""));
-		}
-		if(shp.getInt(FN_SAVE_B3, fnb.NO_FUNCTION)==fnb.FN_CUSTOM||shp.getInt(FN_SAVE_B3, fnb.NO_FUNCTION)==fnb.FN_COMMAND_LINE){
-			b3.setText(shp.getString(FN_SAVE_ARGS_B3, ""));
-		}
-		if(shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION)==fnb.FN_CUSTOM||shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION)==fnb.FN_COMMAND_LINE){
-			b4.setText(shp.getString(FN_SAVE_ARGS_B4, ""));
-		}
-		if(shp.getInt(FN_SAVE_B5, fnb.NO_FUNCTION)==fnb.FN_CUSTOM||shp.getInt(FN_SAVE_B5, fnb.NO_FUNCTION)==fnb.FN_COMMAND_LINE){
-			b5.setText(shp.getString(FN_SAVE_ARGS_B5, ""));
-		}
-		if(shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION)==fnb.FN_CUSTOM||shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION)==fnb.FN_COMMAND_LINE){
-			b6.setText(shp.getString(FN_SAVE_ARGS_B6, ""));
-		}
-		
-		if(shp.getBoolean("showFnButtons",true)){
-			b1.setVisibility(View.VISIBLE);
-			b2.setVisibility(View.VISIBLE);
-			b3.setVisibility(View.VISIBLE);
-			b4.setVisibility(View.VISIBLE);
-			b5.setVisibility(View.VISIBLE);
-			b6.setVisibility(View.VISIBLE);
-			
-		}else{
-			b1.setVisibility(View.GONE);
-			b2.setVisibility(View.GONE);
-			b3.setVisibility(View.GONE);
-			b4.setVisibility(View.GONE);
-			b5.setVisibility(View.GONE);
-			b6.setVisibility(View.GONE);
-			
-		}
 		
 		scan.setOnClickListener(this);
 		send.setOnClickListener(this);
@@ -515,6 +399,28 @@ public class ST extends Activity implements OnClickListener {
 		};
 		
 		ll.setOnTouchListener(otl);
+		
+		//Pagers...
+		// Instantiate a ViewPager and a PagerAdapter.
+        topPager = (ViewPager) findViewById(R.id.pagerTop);
+		topPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), "top");		
+		topPager.setAdapter(topPagerAdapter);		
+		topPager.setCurrentItem(1);
+		
+		botPager = (ViewPager) findViewById(R.id.pagerBot);
+		botPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), "bot");		
+		botPager.setAdapter(botPagerAdapter);		
+		botPager.setCurrentItem(1);
+		
+		if(shp.getBoolean("showFnButtons",true)){
+			topPager.setVisibility(View.VISIBLE);
+			botPager.setVisibility(View.VISIBLE);
+			
+		}else{
+			topPager.setVisibility(View.GONE);
+			botPager.setVisibility(View.GONE);			
+			
+		}
 	}
 	
 	
@@ -560,20 +466,16 @@ public class ST extends Activity implements OnClickListener {
 		case R.id.showFnButtons:
 			if(shp.getBoolean("showFnButtons",true)){
 				item.setChecked(false);
-				b1.setVisibility(View.GONE);
-				b2.setVisibility(View.GONE);
-				b3.setVisibility(View.GONE);
-				b4.setVisibility(View.GONE);
-				b5.setVisibility(View.GONE);
-				b6.setVisibility(View.GONE);
+				
+				topPager.setVisibility(View.GONE);
+				botPager.setVisibility(View.GONE);
+				
 			}else{
 				item.setChecked(true);
-				b1.setVisibility(View.VISIBLE);
-				b2.setVisibility(View.VISIBLE);
-				b3.setVisibility(View.VISIBLE);
-				b4.setVisibility(View.VISIBLE);
-				b5.setVisibility(View.VISIBLE);
-				b6.setVisibility(View.VISIBLE);
+				
+				topPager.setVisibility(View.VISIBLE);
+				botPager.setVisibility(View.VISIBLE);
+				
 			}
 			ed.putBoolean("showFnButtons", item.isChecked());
 			ed.commit();
@@ -671,9 +573,7 @@ public class ST extends Activity implements OnClickListener {
 				send();
 				
 			} catch (IOException e) {
-			//	Toast.makeText(getBaseContext(), e.getMessage(),
-			//			Toast.LENGTH_LONG).show();// TODO Auto-generated catch
-													// block
+			
 				e.printStackTrace();
 				
 			}
@@ -731,7 +631,7 @@ public class ST extends Activity implements OnClickListener {
 							case keyboard:
 								if(chr.equals("\n")){
 									try {
-										Thread.sleep(100);
+										Thread.sleep(200);
 									} catch (InterruptedException e) {
 										e.printStackTrace();
 									}
@@ -768,7 +668,6 @@ public class ST extends Activity implements OnClickListener {
 					//	socket = null;
 					//	Toast.makeText(getBaseContext(), line + "",	Toast.LENGTH_LONG).show();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;
@@ -814,74 +713,12 @@ public class ST extends Activity implements OnClickListener {
 			
 			break;
 			
-		
-		
-		case R.id.buttonB1:
-			int bindedFunction1 = shp.getInt(FN_SAVE_B1, fnb.NO_FUNCTION);
-			if(bindedFunction1 == fnb.NO_FUNCTION){
-				Intent intentB1 = new Intent(this, FnBind.class);
-				startActivityForResult(intentB1, REQUEST_CODE_B1);
-			}else{
-				fnb.press(bindedFunction1, shp.getString(FN_SAVE_ARGS_B1, "Nope"));
-			}
-			break;
-		
-		case R.id.buttonB2:
-			int bindedFunction2 = shp.getInt(FN_SAVE_B2, fnb.NO_FUNCTION);
-			if(bindedFunction2 == fnb.NO_FUNCTION){
-				Intent intentB2 = new Intent(this, FnBind.class);
-				startActivityForResult(intentB2, REQUEST_CODE_B2);
-			}else{
-				fnb.press(bindedFunction2, shp.getString(FN_SAVE_ARGS_B2, "Nope"));
-			}
-			break;
-		
-		case R.id.buttonB3:
-			int bindedFunction3 = shp.getInt(FN_SAVE_B3, fnb.NO_FUNCTION);
-			if(bindedFunction3 == fnb.NO_FUNCTION){
-				Intent intentB3 = new Intent(this, FnBind.class);
-				startActivityForResult(intentB3, REQUEST_CODE_B3);
-			}else{
-				fnb.press(bindedFunction3, shp.getString(FN_SAVE_ARGS_B3, "Nope"));
-			}
-			break;
-			
-		case R.id.buttonB4:
-			int bindedFunction4 = shp.getInt(FN_SAVE_B4, fnb.NO_FUNCTION);
-			if(bindedFunction4 == fnb.NO_FUNCTION){
-				Intent intentB4 = new Intent(this, FnBind.class);
-				startActivityForResult(intentB4, REQUEST_CODE_B4);
-			}else{
-				fnb.press(bindedFunction4, shp.getString(FN_SAVE_ARGS_B4, "Nope"));
-			}
-			break;
-			
-		case R.id.button5:
-			int bindedFunction5 = shp.getInt(FN_SAVE_B5, fnb.NO_FUNCTION);
-			if(bindedFunction5 == fnb.NO_FUNCTION){
-				Intent intentB5 = new Intent(this, FnBind.class);
-				startActivityForResult(intentB5, REQUEST_CODE_B5);
-			}else{
-				fnb.press(bindedFunction5, shp.getString(FN_SAVE_ARGS_B5, "Nope"));
-			}
-			break;
-			
-		case R.id.button6:
-			int bindedFunction6 = shp.getInt(FN_SAVE_B6, fnb.NO_FUNCTION);
-			if(bindedFunction6 == fnb.NO_FUNCTION){
-				Intent intentB6 = new Intent(this, FnBind.class);
-				startActivityForResult(intentB6, REQUEST_CODE_B6);
-			}else{
-				fnb.press(bindedFunction6, shp.getString(FN_SAVE_ARGS_B6, "Nope"));
-			}
-			break;	
-			
-			
 		}
 		
 	}
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		 super.onActivityResult(requestCode, resultCode, intent);
 		 if (requestCode == REQUEST_CODE_LAUNCH_APP && resultCode == RESULT_OK)
 		    {		
 			 ArrayList<String> matches = intent.getStringArrayListExtra(
@@ -932,72 +769,17 @@ public class ST extends Activity implements OnClickListener {
     		}
 		}
 		
-		if(resultCode==RESULT_OK)
+		if(resultCode==RESULT_OK){
+			
+		
 		switch (requestCode) {
 		
 		case REQUEST_CODE_FIRE_FN:
 			fnb.press(intent.getIntExtra("FnResult", fnb.NO_FUNCTION), intent.getStringExtra("FnResultArgs"));
 			break;
 		
-		case REQUEST_CODE_B1:
-			ed.putInt(FN_SAVE_B1, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
-			ed.putString(FN_SAVE_ARGS_B1, intent.getStringExtra("FnResultArgs"));
-			ed.commit();
-			b1.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
-			if(!intent.getStringExtra("FnResultArgs").equals("")){
-				b1.setText(intent.getStringExtra("FnResultArgs"));
-			}
-			break;
-			
-		case REQUEST_CODE_B2:
-			ed.putInt(FN_SAVE_B2, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
-			ed.putString(FN_SAVE_ARGS_B2, intent.getStringExtra("FnResultArgs"));
-			ed.commit();
-			b2.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
-			if(!intent.getStringExtra("FnResultArgs").equals("")){
-				b2.setText(intent.getStringExtra("FnResultArgs"));
-			}
-			break;
-			
-		case REQUEST_CODE_B3:
-			ed.putInt(FN_SAVE_B3, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
-			ed.putString(FN_SAVE_ARGS_B3, intent.getStringExtra("FnResultArgs"));
-			ed.commit();
-			b3.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
-			if(!intent.getStringExtra("FnResultArgs").equals("")){
-				b3.setText(intent.getStringExtra("FnResultArgs"));
-			}
-			break;
-			
-		case REQUEST_CODE_B4:
-			ed.putInt(FN_SAVE_B4, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
-			ed.putString(FN_SAVE_ARGS_B4, intent.getStringExtra("FnResultArgs"));
-			ed.commit();
-			b4.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
-			if(!intent.getStringExtra("FnResultArgs").equals("")){
-				b4.setText(intent.getStringExtra("FnResultArgs"));
-			}
-			break;
-			
-		case REQUEST_CODE_B5:
-			ed.putInt(FN_SAVE_B5, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
-			ed.putString(FN_SAVE_ARGS_B5, intent.getStringExtra("FnResultArgs"));
-			ed.commit();
-			b5.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
-			if(!intent.getStringExtra("FnResultArgs").equals("")){
-				b5.setText(intent.getStringExtra("FnResultArgs"));
-			}
-			break;
-			
-		case REQUEST_CODE_B6:
-			ed.putInt(FN_SAVE_B6, intent.getIntExtra("FnResult", fnb.NO_FUNCTION));
-			ed.putString(FN_SAVE_ARGS_B6, intent.getStringExtra("FnResultArgs"));
-			ed.commit();
-			b6.setText(fnb.fnMap.get(intent.getIntExtra("FnResult", fnb.NO_FUNCTION)));
-			if(!intent.getStringExtra("FnResultArgs").equals("")){
-				b6.setText(intent.getStringExtra("FnResultArgs"));
-			}
-			break;
+		
+		}
 		}
 }
 
@@ -1130,5 +912,59 @@ public class ST extends Activity implements OnClickListener {
 		    
 		    startActivityForResult(intent, requesrCode);
 		}
+		
+		 private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+		    	String topOrBot = "";
+		        public ScreenSlidePagerAdapter(android.support.v4.app.FragmentManager fragmentManager, String topOrBot) {
+		            super(fragmentManager);
+		            this.topOrBot = topOrBot;
+		        }
+
+		       
+
+		        @Override
+		        public android.support.v4.app.Fragment getItem(int position) {
+		        	Fragment fr = null;
+		        	Bundle arguments = new Bundle();
+					arguments.putString(FnButtonsFragment.PAGE_ID_ARG, topOrBot+position);
+					fr = new FnButtonsFragment();
+					fr.setArguments(arguments);
+					return fr;			
+
+
+		        }
+
+		        public int getItemPosition(Object object) {
+		            return POSITION_NONE;
+		        }
+
+		        @Override
+		        public CharSequence getPageTitle(int position) {
+		        	String title = "Oops";
+					switch (position) {
+						case 0:
+							title = "Create shortcut";
+							break;
+
+						case 1:					
+							title = "Choose existing fn";
+							break;
+
+						case 2:
+							title = "Create command line command";
+							break;
+						
+						default:
+							title = "Oops";
+							break;
+					}
+					return title;
+		        }
+
+		        @Override
+		        public int getCount() {
+		            return NUM_PAGES;
+		        }
+		    }
 	
 }
