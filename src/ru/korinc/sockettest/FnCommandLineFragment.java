@@ -118,7 +118,10 @@ public class FnCommandLineFragment extends ListFragment {
 	 
 	  et=(EditText) getActivity().findViewById(R.id.fn_custom_command_et);
 	  etName=(EditText) getActivity().findViewById(R.id.fnCommandLineEtName);
-	
+	  Intent i =getActivity().getIntent();
+	  if(i.getIntExtra("requestCode", -1)!=-1&&i.getIntExtra("requestCode",-1)==ST.REQUEST_CODE_FIRE_FN){
+		  etName.setVisibility(View.GONE);		 
+	  }
 	  getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
          
 		@Override

@@ -135,6 +135,7 @@ public class FnButton {
 		 
 		 case FN_FIRE_FN:
 			 	Intent intent = new Intent(st, FnBind.class);
+			 	intent.putExtra("requestCode", st.REQUEST_CODE_FIRE_FN);
 				st.startActivityForResult(intent, st.REQUEST_CODE_FIRE_FN);		 		
 		 		break;
 		 		

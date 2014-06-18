@@ -132,6 +132,10 @@ public class FnCreateCustomFragment extends ListFragment {
 	  del = (ImageButton) getActivity().findViewById(R.id.fnCustomDelElement);
 	  del.setOnClickListener(ocl);
 	  et = (EditText) getActivity().findViewById(R.id.fnCustomEtName);
+	  Intent i =getActivity().getIntent();
+	  if(i.getIntExtra("requestCode", -1)!=-1&&i.getIntExtra("requestCode",-1)==ST.REQUEST_CODE_FIRE_FN){
+		  et.setVisibility(View.GONE);
+	  }
 	  tv=(TextView) getActivity().findViewById(R.id.fnCustomSelectTV);
 		 tv.setText("Select something");
 	  
