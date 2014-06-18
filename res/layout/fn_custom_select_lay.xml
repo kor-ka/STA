@@ -57,6 +57,13 @@
         android:layout_alignParentLeft="true"
         android:text="That&apos;s what i need!" />
     
+     <EditText
+        android:id="@+id/fnCustomEtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/fnCustomBtnOk"
+        android:hint="Name of button" />
+    
       <TextView
         android:id="@id/android:empty"
         android:layout_width="match_parent"
@@ -70,7 +77,7 @@
         android:id="@id/android:list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" 
-        android:layout_above="@id/fnCustomBtnOk"
+        android:layout_above="@id/fnCustomEtName"
         android:layout_below="@id/rl">
     </ListView>
 

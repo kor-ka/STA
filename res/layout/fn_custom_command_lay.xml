@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-<EditText 
-     android:id="@+id/fn_custom_command_et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
+<EditText
+    android:id="@+id/fn_custom_command_et"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Command to PC" />
     
     <Button
         android:id="@+id/fnCommandLineBtnOk"
@@ -16,6 +18,13 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:text="That&apos;s what i need!" />
+    
+    <EditText
+        android:id="@+id/fnCommandLineEtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/fnCommandLineBtnOk"
+        android:hint="Name of button" />
     
       <TextView
         android:id="@id/android:empty"
@@ -30,7 +39,7 @@
         android:id="@id/android:list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" 
-        android:layout_above="@id/fnCommandLineBtnOk"
+        android:layout_above="@id/fnCommandLineEtName"
         android:layout_below="@id/fn_custom_command_et">
     </ListView>
 

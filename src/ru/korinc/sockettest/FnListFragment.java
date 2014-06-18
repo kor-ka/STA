@@ -55,6 +55,7 @@ public class FnListFragment extends ListFragment {
 					}
 					i++;
 				}
+				intent.putExtra("Name","");
 				intent.putExtra("FnResult",fnKey);
 				intent.putExtra("FnResultArgs","");
 				getActivity().setResult(getActivity().RESULT_OK, intent);

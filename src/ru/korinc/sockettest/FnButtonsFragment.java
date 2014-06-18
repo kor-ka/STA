@@ -30,6 +30,10 @@ public class FnButtonsFragment extends Fragment {
 	private static final String FN_SAVE_ARGS_B2 = "fnB2args";
 	private static final String FN_SAVE_ARGS_B3 = "fnB3args";
 	
+	private static final String FN_SAVE_NAME_B1 = "fnB1name";
+	private static final String FN_SAVE_NAME_B2 = "fnB2name";
+	private static final String FN_SAVE_NAME_B3 = "fnB3name";
+	
 	 View view;
 	 FnButtonsFragment thisFragment;
 	public FnButtonsFragment() {
@@ -135,6 +139,16 @@ public class FnButtonsFragment extends Fragment {
 			if(st.shp.getInt(FN_SAVE_B3+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_CUSTOM||st.shp.getInt(FN_SAVE_B3+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_COMMAND_LINE){
 				b3.setText(st.shp.getString(FN_SAVE_ARGS_B3+""+pageId, ""));
 			}
+			
+			if(!st.shp.getString(FN_SAVE_NAME_B1+""+pageId, "").equals("")){
+				b1.setText(st.shp.getString(FN_SAVE_NAME_B1+""+pageId, ""));
+			}
+			if(!st.shp.getString(FN_SAVE_NAME_B2+""+pageId, "").equals("")){
+				b2.setText(st.shp.getString(FN_SAVE_NAME_B2+""+pageId, ""));
+			}
+			if(!st.shp.getString(FN_SAVE_NAME_B3+""+pageId, "").equals("")){
+				b3.setText(st.shp.getString(FN_SAVE_NAME_B3+""+pageId, ""));
+			}
 	 }
 	 
 	 public void saveFnBindResults (Intent i, int reqestCode){
@@ -143,30 +157,42 @@ public class FnButtonsFragment extends Fragment {
 		case REQUEST_CODE_B1:
 			 	st.ed.putInt(FN_SAVE_B1+""+pageId, i.getIntExtra("FnResult", st.fnb.NO_FUNCTION));
 				st.ed.putString(FN_SAVE_ARGS_B1+""+pageId, i.getStringExtra("FnResultArgs"));
+				st.ed.putString(FN_SAVE_NAME_B1+""+pageId, i.getStringExtra("Name"));
 				st.ed.commit();				
 				b1.setText(st.fnb.fnMap.get(i.getIntExtra("FnResult", st.fnb.NO_FUNCTION)));
 				if(!i.getStringExtra("FnResultArgs").equals("")){
 					b1.setText(i.getStringExtra("FnResultArgs"));
+				}
+				if(!i.getStringExtra("Name").equals("")){
+					b1.setText(i.getStringExtra("Name"));
 				}
 			break;
 			
 		case REQUEST_CODE_B2:
 		 	st.ed.putInt(FN_SAVE_B2+""+pageId, i.getIntExtra("FnResult", st.fnb.NO_FUNCTION));
 			st.ed.putString(FN_SAVE_ARGS_B2+""+pageId, i.getStringExtra("FnResultArgs"));
+			st.ed.putString(FN_SAVE_NAME_B2+""+pageId, i.getStringExtra("Name"));
 			st.ed.commit();
 			b2.setText(st.fnb.fnMap.get(i.getIntExtra("FnResult", st.fnb.NO_FUNCTION)));
 			if(!i.getStringExtra("FnResultArgs").equals("")){
 				b2.setText(i.getStringExtra("FnResultArgs"));
+			}
+			if(!i.getStringExtra("Name").equals("")){
+				b2.setText(i.getStringExtra("Name"));
 			}
 		break;
 		
 		case REQUEST_CODE_B3:
 		 	st.ed.putInt(FN_SAVE_B3+""+pageId, i.getIntExtra("FnResult", st.fnb.NO_FUNCTION));
 			st.ed.putString(FN_SAVE_ARGS_B3+""+pageId, i.getStringExtra("FnResultArgs"));
+			st.ed.putString(FN_SAVE_NAME_B3+""+pageId, i.getStringExtra("Name"));
 			st.ed.commit();
 			b3.setText(st.fnb.fnMap.get(i.getIntExtra("FnResult", st.fnb.NO_FUNCTION)));
 			if(!i.getStringExtra("FnResultArgs").equals("")){
 				b3.setText(i.getStringExtra("FnResultArgs"));
+			}
+			if(!i.getStringExtra("Name").equals("")){
+				b3.setText(i.getStringExtra("Name"));
 			}
 		break;
 		

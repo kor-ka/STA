@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ public class FnCreateCustomFragment extends ListFragment {
 	TextView tv;
 	Button btnOk;
 	ImageButton del;
+	EditText et;
 	 @Override
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	      Bundle savedInstanceState) {
@@ -92,6 +94,7 @@ public class FnCreateCustomFragment extends ListFragment {
 			switch (v.getId()) {
 			case R.id.fnCustomBtnOk:
 				Intent intent = new Intent();
+				intent.putExtra("Name",et.getText().toString());
 				intent.putExtra("FnResult",fnb.FN_CUSTOM);
 				intent.putExtra("FnResultArgs", tv.getText().toString());
 				getActivity().setResult(getActivity().RESULT_OK, intent);
@@ -128,6 +131,7 @@ public class FnCreateCustomFragment extends ListFragment {
 	  btnOk.setOnClickListener(ocl);
 	  del = (ImageButton) getActivity().findViewById(R.id.fnCustomDelElement);
 	  del.setOnClickListener(ocl);
+	  et = (EditText) getActivity().findViewById(R.id.fnCustomEtName);
 	  tv=(TextView) getActivity().findViewById(R.id.fnCustomSelectTV);
 		 tv.setText("Select something");
 	  

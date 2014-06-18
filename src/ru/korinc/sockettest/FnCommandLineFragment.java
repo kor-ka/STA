@@ -42,6 +42,7 @@ public class FnCommandLineFragment extends ListFragment {
 	List<String> fns;
 	FnButton fnb;
 	EditText et;
+	EditText etName;
 	Button btnOk;
 	SharedPreferences shp;
 	Editor ed;
@@ -97,6 +98,7 @@ public class FnCommandLineFragment extends ListFragment {
 				ed.putStringSet(FN_COMMANDS_KEY, commands);
 				ed.commit();
 				Intent intent = new Intent();
+				intent.putExtra("Name", etName.getText().toString());
 				intent.putExtra("FnResult",fnb.FN_COMMAND_LINE);
 				intent.putExtra("FnResultArgs", et.getText().toString());
 				getActivity().setResult(getActivity().RESULT_OK, intent);
@@ -115,6 +117,7 @@ public class FnCommandLineFragment extends ListFragment {
 	  btnOk.setOnClickListener(ocl);
 	 
 	  et=(EditText) getActivity().findViewById(R.id.fn_custom_command_et);
+	  etName=(EditText) getActivity().findViewById(R.id.fnCommandLineEtName);
 	
 	  getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
          
