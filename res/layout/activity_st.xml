@@ -203,51 +203,58 @@
                 android:id="@+id/indicatorTop"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                 android:padding="1dip" />
+                android:padding="1dip" />
         </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/buttonUp"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:src="@drawable/navigation_collapse"
-            android:text="↑"
-            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
             <ImageButton
-                android:id="@+id/buttonLeft"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:src="@drawable/navigation_previous_item"
-                android:text="←"
+                android:id="@+id/buttonUp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:src="@drawable/navigation_collapse"
+                android:text="↑"
                 android:visibility="gone" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/buttonLeft"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/navigation_previous_item"
+                    android:text="←"
+                    android:visibility="gone" />
+
+                <ImageButton
+                    android:id="@+id/buttonRight"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/navigation_next_item"
+                    android:text="→"
+                    android:visibility="gone" />
+            </LinearLayout>
+
             <ImageButton
-                android:id="@+id/buttonRight"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:src="@drawable/navigation_next_item"
-                android:text="→"
+                android:id="@+id/buttonDown"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:src="@drawable/navigation_expand"
+                android:text="↓"
                 android:visibility="gone" />
         </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/buttonDown"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:src="@drawable/navigation_expand"
-            android:text="↓"
-            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -259,7 +266,7 @@
                 android:id="@+id/indicatorBot"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                 android:padding="1dip" />
+                android:padding="1dip" />
 
             <android.support.v4.view.ViewPager
                 xmlns:android="http://schemas.android.com/apk/res/android"

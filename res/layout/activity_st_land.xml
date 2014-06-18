@@ -209,14 +209,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_weight="4"
             android:orientation="horizontal" >
 
             <ImageButton
                 android:id="@+id/buttonLeft"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:src="@drawable/navigation_previous_item"
                 android:text="←"
                 android:visibility="gone" />
@@ -224,7 +224,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:orientation="vertical" >
 
                 <ImageButton
@@ -250,7 +250,7 @@
                 android:id="@+id/buttonRight"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:src="@drawable/navigation_next_item"
                 android:text="→"
                 android:visibility="gone" />
