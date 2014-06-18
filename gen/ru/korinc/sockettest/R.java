@@ -438,10 +438,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_fn_select=0x7f030000;
         public static final int activity_mapping_list=0x7f030001;
         public static final int activity_st=0x7f030002;
-        public static final int fn_buttons_fragment=0x7f030003;
-        public static final int fn_custom_command_lay=0x7f030004;
-        public static final int fn_custom_select_lay=0x7f030005;
-        public static final int fragment_dialog=0x7f030006;
+        public static final int activity_st_land=0x7f030003;
+        public static final int fn_buttons_fragment=0x7f030004;
+        public static final int fn_custom_command_lay=0x7f030005;
+        public static final int fn_custom_select_lay=0x7f030006;
+        public static final int fragment_dialog=0x7f030007;
     }
     public static final class menu {
         public static final int fn_select=0x7f0b0000;

@@ -152,10 +152,11 @@ int integer default_underline_indicator_fade_length 0x7f070004
 int layout activity_fn_select 0x7f030000
 int layout activity_mapping_list 0x7f030001
 int layout activity_st 0x7f030002
-int layout fn_buttons_fragment 0x7f030003
-int layout fn_custom_command_lay 0x7f030004
-int layout fn_custom_select_lay 0x7f030005
-int layout fragment_dialog 0x7f030006
+int layout activity_st_land 0x7f030003
+int layout fn_buttons_fragment 0x7f030004
+int layout fn_custom_command_lay 0x7f030005
+int layout fn_custom_select_lay 0x7f030006
+int layout fragment_dialog 0x7f030007
 int menu fn_select 0x7f0b0000
 int menu mapping_list 0x7f0b0001
 int menu st 0x7f0b0002
