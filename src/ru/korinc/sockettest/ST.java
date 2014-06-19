@@ -37,6 +37,7 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.view.KeyCharacterMap;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,6 +53,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -731,15 +733,34 @@ public class ST extends FragmentActivity implements OnClickListener {
 				// Set up the input
 				final EditText input = new EditText(this);
 				input.setTextColor(Color.WHITE);
+				input.setHint("IP");
+				input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+				input.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
+				input.setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
+				
+				final EditText inputPort = new EditText(this);
+				inputPort.setTextColor(Color.WHITE);
+				inputPort.setHint("Port");
+				inputPort.setInputType(InputType.TYPE_CLASS_NUMBER);
+				inputPort.setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
+				
 				TextView tv = new TextView(this);
 				tv.setText("Ручная настройка:");
 				tv.setPadding(10, 10, 10, 0);
 				tv.setTextSize(15);
 				tv.setTextColor(Color.WHITE);
+				
 				LinearLayout ll = new LinearLayout(this);
 				ll.setOrientation(LinearLayout.VERTICAL);
+				
+				LinearLayout llHorizontal = new LinearLayout(this);
+				llHorizontal.setOrientation(LinearLayout.HORIZONTAL);
+				
+				llHorizontal.addView(input);
+				llHorizontal.addView(inputPort);
+				
 				ll.addView(tv);
-				ll.addView(input);
+				ll.addView(llHorizontal);
 				
 				
 				builder.setView(ll);
@@ -773,9 +794,9 @@ public class ST extends FragmentActivity implements OnClickListener {
 				        public void onClick(View v)
 				        {
 				            
-				            dialogInputText = input.getText().toString();
+				            dialogInputText = input.getText().toString()+":"+inputPort.getText().toString();
 				            
-					    	if(!input.getText().toString().equals("")){
+					    	if(!input.getText().toString().equals("")&&!inputPort.getText().toString().equals("")){
 					    		String[] adressParts = dialogInputText.split(":");
 			        			String IP = adressParts[0];
 			        			String port = adressParts[1];
@@ -788,9 +809,15 @@ public class ST extends FragmentActivity implements OnClickListener {
 			        			ed.commit();	
 			        			
 			        			dialog.cancel();
-					    	}else{
+					    	}else if(!input.getText().toString().equals("")){
 
-					    		Toast.makeText(getBaseContext(), "Вы не ввели настройку :'(", Toast.LENGTH_SHORT).show();
+					    		Toast.makeText(getBaseContext(), "Вы не указали Port :'(", Toast.LENGTH_SHORT).show();
+					    	}else if(!inputPort.getText().toString().equals("")){
+
+					    		Toast.makeText(getBaseContext(), "Вы не указали IP :'(", Toast.LENGTH_SHORT).show();
+					    	}else {
+
+					    		Toast.makeText(getBaseContext(), "Вы не указали IP и Port :'(", Toast.LENGTH_SHORT).show();
 					    	}
 				            
 				        }
