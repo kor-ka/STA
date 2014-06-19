@@ -17,11 +17,14 @@ import java.util.List;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.LinePageIndicator;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -32,6 +35,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyCharacterMap;
 import android.view.Menu;
@@ -96,6 +100,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 	public static final int REQUEST_CODE_VOICE_INPUT = 12345;	
 	public static final int REQUEST_CODE_FIRE_FN = 12352;
 	FnButton fnb;	
+	private String dialogInputText = "";
 	private static final int NUM_PAGES = 3;
 	ScreenSlidePagerAdapter topPagerAdapter;
 	private ViewPager topPager;	
@@ -716,10 +721,81 @@ public class ST extends FragmentActivity implements OnClickListener {
     			
     			
 			startActivityForResult(intent, 0);
-			}else{String url = "https://play.google.com/store/apps/details?id=com.google.zxing.client.android";
-				Intent i = new Intent(Intent.ACTION_VIEW);
-				i.setData(Uri.parse(url));
-				startActivity(i);}
+			}else{
+				
+								
+				AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_DARK);
+				builder.setTitle("Для  настройки через QR необходим Barcode Scanner");
+				
+
+				// Set up the input
+				final EditText input = new EditText(this);
+				input.setTextColor(Color.WHITE);
+				TextView tv = new TextView(this);
+				tv.setText("Ручная настройка:");
+				tv.setPadding(10, 10, 10, 0);
+				tv.setTextSize(15);
+				tv.setTextColor(Color.WHITE);
+				LinearLayout ll = new LinearLayout(this);
+				ll.setOrientation(LinearLayout.VERTICAL);
+				ll.addView(tv);
+				ll.addView(input);
+				
+				
+				builder.setView(ll);
+
+				// Set up the buttons
+				builder.setPositiveButton("Ввести вручную", new DialogInterface.OnClickListener() { 
+				    @Override
+				    public void onClick(DialogInterface dialog, int which) {
+				    	
+				    	
+				    }
+				});
+				builder.setNegativeButton("Скачать Barcode Scanner", new DialogInterface.OnClickListener() {
+				    @Override
+				    public void onClick(DialogInterface dialog, int which) {
+				    	String url = "https://play.google.com/store/apps/details?id=com.google.zxing.client.android";
+						Intent i = new Intent(Intent.ACTION_VIEW);
+						i.setData(Uri.parse(url));
+						startActivity(i);
+				        dialog.cancel();
+				    }
+				});
+
+				final AlertDialog dialog = builder.create();
+				dialog.show();
+				//Overriding the handler immediately after show is probably a better approach than OnShowListener as described below
+				dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
+				    {
+
+				        @Override
+				        public void onClick(View v)
+				        {
+				            
+				            dialogInputText = input.getText().toString();
+				            
+					    	if(!input.getText().toString().equals("")){
+					    		String[] adressParts = dialogInputText.split(":");
+			        			String IP = adressParts[0];
+			        			String port = adressParts[1];
+			        			
+			        			ipEt.setText(IP);
+			        			portEt.setText(port);
+			        			
+			        			ed.putString("ip", IP);
+			        			ed.putString("port", port);
+			        			ed.commit();	
+			        			
+			        			dialog.cancel();
+					    	}else{
+
+					    		Toast.makeText(getBaseContext(), "Вы не ввели настройку :'(", Toast.LENGTH_SHORT).show();
+					    	}
+				            
+				        }
+				    });
+				}
 			
 			break;
 			
