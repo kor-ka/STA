@@ -79,7 +79,7 @@ public class FnButton {
 		 fnMap = new LinkedHashMap<Integer, String>();
 			fnMap.put(NO_FUNCTION, "No function");
 			fnMap.put(FN_FIRE_FN, "Fire Fn");
-			fnMap.put(FN_SCAN, "Scan");
+			fnMap.put(FN_SCAN, "Ñonnect to server");
 			fnMap.put(FN_LAUNCH_APP, "Launch app");
 			fnMap.put(FN_ARROWS, "Arrows");
 			fnMap.put(FN_CLICK, "Left click");

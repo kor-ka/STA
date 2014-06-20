@@ -67,7 +67,7 @@
         android:id="@+id/action_scan"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:title="Scan"/>
+        android:title="Сonnect to server"/>
     
   
     <item
