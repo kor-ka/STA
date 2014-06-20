@@ -9,6 +9,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MappingList" >
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Список для переназначания команд голосового запуска приложений (в случае, если не верно интерпритируется голосовой ввод, например &quot;хром&quot; вместо &quot;chrome&quot;)." />
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >

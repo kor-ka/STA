@@ -43,7 +43,7 @@
 					android:id="@+id/map"
 					android:orderInCategory="100"
 					android:showAsAction="ifRoom"
-					android:title="Launch app map"/>
+					android:title="Fix voice app launch"/>
 				
 			</group>
 		</menu>
