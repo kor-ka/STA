@@ -130,7 +130,12 @@ public class FnButton {
 		 switch (function) {
 		 
 		 case FN_COMMAND_LINE:
-		 		new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.commandLine, args)).start();
+			 	if(args.contains("<input>")){
+			 		st.startVoiceRecognitionActivity(st.REQUEST_CODE_COMMAND_LINE_VOICE_INPUT, args);
+			 	}else{
+			 		new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.commandLine, args)).start();	
+			 	}
+		 		
 		 		break;
 		 
 		 case FN_FIRE_FN:
@@ -163,7 +168,7 @@ public class FnButton {
 				
 				
 			case FN_LAUNCH_APP:
-				 st.startVoiceRecognitionActivity(st.REQUEST_CODE_LAUNCH_APP);
+				 st.startVoiceRecognitionActivity(st.REQUEST_CODE_LAUNCH_APP, null);
 				break;
 				
 				
