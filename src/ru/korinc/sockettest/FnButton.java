@@ -1,5 +1,6 @@
 package ru.korinc.sockettest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -7,6 +8,7 @@ import ru.korinc.sockettest.ST.SocketThread;
 
 import android.content.Context;
 import android.content.Intent;
+import android.speech.RecognizerIntent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ public class FnButton {
 	Context ctx;	
 	ST st;
 	
+	public final static int FN_VOICE_FN=-4;
 	public final static int FN_FIRE_FN=-3;
 	public final static int FN_COMMAND_LINE=-2;
 	public final static int FN_CUSTOM=-1;
@@ -78,6 +81,7 @@ public class FnButton {
 	 public void initiateMap(){
 		 fnMap = new LinkedHashMap<Integer, String>();
 			fnMap.put(NO_FUNCTION, "No function");
+			fnMap.put(FN_VOICE_FN, "Voice Fn");
 			fnMap.put(FN_FIRE_FN, "Fire Fn");
 			fnMap.put(FN_SCAN, "Ñonnect to server");
 			fnMap.put(FN_LAUNCH_APP, "Launch app");
@@ -123,15 +127,27 @@ public class FnButton {
 			fnMap.put(FN_F12, "F12");
 	 }
 	
- public void press(int function, String args){
+ public void press(int function, String args, String voiceInputArgs){
 	 
 	 int port = Integer.parseInt(st.portEt.getText().toString());
 	 if(st!=null){
 		 switch (function) {
 		 
+		 case FN_VOICE_FN:			
+			 
+			 		st.startVoiceRecognitionActivity(st.REQUEST_CODE_VOICE_FN, args); 	
+		 		
+		 		break;
+		 
+		 
 		 case FN_COMMAND_LINE:
 			 	if(args.contains("<input>")){
-			 		st.startVoiceRecognitionActivity(st.REQUEST_CODE_COMMAND_LINE_VOICE_INPUT, args);
+			 		if(!voiceInputArgs.isEmpty()){
+			 			new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.commandLine, args.replace("<input>", voiceInputArgs))).start();
+			 		}else{
+			 			st.startVoiceRecognitionActivity(st.REQUEST_CODE_COMMAND_LINE_VOICE_INPUT, args);
+			 		}
+			 		
 			 	}else{
 			 		new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.commandLine, args)).start();	
 			 	}
@@ -168,7 +184,16 @@ public class FnButton {
 				
 				
 			case FN_LAUNCH_APP:
-				 st.startVoiceRecognitionActivity(st.REQUEST_CODE_LAUNCH_APP, null);
+				if(!voiceInputArgs.isEmpty()){
+					intent = new Intent();
+					ArrayList<String> matches =new ArrayList<String>();
+					matches.add(voiceInputArgs);
+					intent.putExtra(RecognizerIntent.EXTRA_RESULTS, matches);
+					st.onActivityResult(st.REQUEST_CODE_LAUNCH_APP, st.RESULT_OK, intent);
+				}else{
+					st.startVoiceRecognitionActivity(st.REQUEST_CODE_LAUNCH_APP, null);	
+				}
+				 
 				break;
 				
 				

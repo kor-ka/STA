@@ -68,7 +68,7 @@ public class FnButtonsFragment extends Fragment {
 						Intent intentB1 = new Intent(st, FnBind.class);
 						startActivityForResult(intentB1, REQUEST_CODE_B1);
 					}else{
-						st.fnb.press(bindedFunction1, st.shp.getString(FN_SAVE_ARGS_B1+""+pageId, "Nope"));
+						st.fnb.press(bindedFunction1, st.shp.getString(FN_SAVE_ARGS_B1+""+pageId, "Nope"),"");
 					}
 					break;
 				
@@ -78,7 +78,7 @@ public class FnButtonsFragment extends Fragment {
 						Intent intentB2 = new Intent(st, FnBind.class);
 						startActivityForResult(intentB2, REQUEST_CODE_B2);
 					}else{
-						st.fnb.press(bindedFunction2, st.shp.getString(FN_SAVE_ARGS_B2+""+pageId, "Nope"));
+						st.fnb.press(bindedFunction2, st.shp.getString(FN_SAVE_ARGS_B2+""+pageId, "Nope"), "");
 					}
 					break;
 				
@@ -88,7 +88,7 @@ public class FnButtonsFragment extends Fragment {
 						Intent intentB3 = new Intent(st, FnBind.class);
 						startActivityForResult(intentB3, REQUEST_CODE_B3);
 					}else{
-						st.fnb.press(bindedFunction3, st.shp.getString(FN_SAVE_ARGS_B3+""+pageId, "Nope"));
+						st.fnb.press(bindedFunction3, st.shp.getString(FN_SAVE_ARGS_B3+""+pageId, "Nope"), "");
 					}
 					break;
 				}

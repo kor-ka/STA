@@ -45,6 +45,13 @@
 					android:showAsAction="ifRoom"
 					android:title="Fix voice app launch"/>
 				
+				<item
+			        android:id="@+id/voiceFnSettings"
+			        android:orderInCategory="100"
+			        android:showAsAction="ifRoom"
+			        android:title="Voice Fn settings"/>
+       
+				
 			</group>
 		</menu>
 	</item>
@@ -62,7 +69,8 @@
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:title="Fire Fn"/>
-       
+    
+     
     <item
         android:id="@+id/action_scan"
         android:orderInCategory="100"

@@ -12,7 +12,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.LinePageIndicator;
@@ -105,6 +107,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 	public static final int REQUEST_CODE_VOICE_INPUT = 12345;
 	public static final int REQUEST_CODE_FIRE_FN = 12352;
 	public static final int REQUEST_CODE_COMMAND_LINE_VOICE_INPUT  = 12353;
+	public static final int REQUEST_CODE_VOICE_FN  = 12354;
 	FnButton fnb;
 	private String dialogInputText = "";
 	private static final int NUM_PAGES = 3;
@@ -523,9 +526,14 @@ public class ST extends FragmentActivity implements OnClickListener {
 			Intent intent = new Intent(this, MappingList.class);
 			startActivity(intent);
 			break;
+			
+		case R.id.voiceFnSettings:
+			Intent intent1 = new Intent(this, VoiceFnMappingList.class);
+			startActivity(intent1);
+			break;
 
 		case R.id.fireFN:
-			fnb.press(FnButton.FN_FIRE_FN, "");
+			fnb.press(FnButton.FN_FIRE_FN, "", "");
 			break;
 
 		case R.id.arrows:
@@ -920,13 +928,101 @@ public class ST extends FragmentActivity implements OnClickListener {
 					}
 		
 		
+		if (requestCode == REQUEST_CODE_VOICE_FN) {
+			String m_Text="";			
+			switch (resultCode) {
+			case RESULT_OK:
+				ArrayList<String> matches = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+				m_Text = matches.get(0);
+				
+				Set<String> keys  = shp.getStringSet("VoiceFnMap", new HashSet<String>());
+				
+				if(keys != null){
+					for (String key:keys) {
+						if(m_Text.contains(key)){
+							String args= "";
+							
+							if (m_Text.equals(key)){
+								args="";
+							}else{
+								args = m_Text.replaceFirst(key+" ", "");
+							}
+							fnb.press(shp.getInt("VoiceFn:"+key, 0), shp.getString("VoiceFnArg:"+key, "null"), args);
+						}
+					}
+				}
+				
+				break;
+
+			
+			case RESULT_CANCELED:
+				AlertDialog.Builder builder = new AlertDialog.Builder(this,
+						AlertDialog.THEME_HOLO_DARK);
+				builder.setTitle("Keyboard input");
+
+				// Set up the input
+				final EditText input = new EditText(this);
+				input.setTextColor(Color.WHITE);
+				input.setHint("What Fn to fire? Input?");
+								
+				builder.setView(input);
+
+				// Set up the buttons
+				builder.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,	int which) {
+
+								String m_Text = input.getText().toString();
+								
+								Set<String> keys  = shp.getStringSet("VoiceFnMap", new HashSet<String>());
+								
+								if(keys != null){
+									for (String key:keys) {
+										if(m_Text.contains(key)){
+											String args= "";
+											
+											if (m_Text.equals(key)){
+												args="";
+											}else{
+												args = m_Text.replaceFirst(key+" ", "");
+											}
+											fnb.press(shp.getInt("VoiceFn:"+key, 0), shp.getString("VoiceFnArg:"+key, "null"), args);
+										}
+									}
+								}
+								
+							}
+						});
+				builder.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								
+								dialog.cancel();
+							}
+						});
+
+				final AlertDialog dialog = builder.create();
+				dialog.show();
+				
+				break;
+				
+			}
+			
+					}
+		
+		
+		
 		if (requestCode == REQUEST_CODE_COMMAND_LINE_VOICE_INPUT) {
 			String m_Text="";			
 			switch (resultCode) {
 			case RESULT_OK:
 				ArrayList<String> matches = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-				fnb.press(FnButton.FN_COMMAND_LINE, currentCommandLineaArgs.replace("<input>", matches.get(0)));
+				fnb.press(FnButton.FN_COMMAND_LINE, currentCommandLineaArgs.replace("<input>", matches.get(0)),"");
 				
 				break;
 
@@ -948,7 +1044,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 							@Override
 							public void onClick(DialogInterface dialog,	int which) {
 
-								fnb.press(FnButton.FN_COMMAND_LINE, currentCommandLineaArgs.replace("<input>", input.getText().toString()));								
+								fnb.press(FnButton.FN_COMMAND_LINE, currentCommandLineaArgs.replace("<input>", input.getText().toString()),"");								
 								
 							}
 						});
@@ -1017,7 +1113,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 
 			case REQUEST_CODE_FIRE_FN:
 				fnb.press(intent.getIntExtra("FnResult", fnb.NO_FUNCTION),
-						intent.getStringExtra("FnResultArgs"));
+						intent.getStringExtra("FnResultArgs"),"");
 				break;
 
 			}
@@ -1148,8 +1244,12 @@ public class ST extends FragmentActivity implements OnClickListener {
 			break;
 			
 		case REQUEST_CODE_COMMAND_LINE_VOICE_INPUT:
-			intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak...");
+			intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Input...");
 			currentCommandLineaArgs = args;
+			break;
+			
+		case REQUEST_CODE_VOICE_FN:
+			intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "What Fn to fire? Input?");			
 			break;
 		}
 
