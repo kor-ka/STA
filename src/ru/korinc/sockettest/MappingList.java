@@ -1,6 +1,8 @@
 package ru.korinc.sockettest;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Spannable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -60,7 +63,14 @@ public class MappingList extends Activity implements OnClickListener{
 			}
 		}
 		
-		
+		Collections.sort(map, new Comparator<String>() {
+	        @Override
+	        public int compare(String  s1, String  s2)
+	        {
+
+	            return  s1.compareTo(s2);
+	        }
+	    });
 		
 		lv= (ListView) findViewById(R.id.listViewMap);
 		// ������� �������

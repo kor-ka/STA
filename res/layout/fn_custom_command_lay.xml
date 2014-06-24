@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:src="@drawable/ic_open_mic_plus" 
-        android:background="@android:color/transparent" />
+        android:background="@android:color/transparent"
+        android:padding="5dip"/>
     
 <EditText
     android:layout_toLeftOf="@id/add_mic"

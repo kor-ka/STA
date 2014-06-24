@@ -36,7 +36,7 @@
         
         <activity
             android:name="ru.korinc.sockettest.VoiceFnMappingList"
-            android:label="@string/title_activity_mapping_list"
+            android:label="@string/title_activity_voice_fn_mapping_list"
             android:theme="@android:style/Theme.Holo.Dialog" >
         </activity>
         

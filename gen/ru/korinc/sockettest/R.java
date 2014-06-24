@@ -461,8 +461,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int action_settings=0x7f0a0001;
         public static final int app_name=0x7f0a0000;
         public static final int hello_world=0x7f0a0002;
-        public static final int title_activity_fn_select=0x7f0a0004;
+        public static final int title_activity_fn_select=0x7f0a0005;
         public static final int title_activity_mapping_list=0x7f0a0003;
+        public static final int title_activity_voice_fn_mapping_list=0x7f0a0004;
     }
     public static final class style {
         /** 

@@ -1,6 +1,8 @@
 package ru.korinc.sockettest;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -73,8 +75,11 @@ public class FnCommandLineFragment extends ListFragment {
 		
 		commands  = shp.getStringSet(FN_COMMANDS_KEY, new LinkedHashSet<String>());
 		if (commands.isEmpty()){
-			commands.add("start chrome");
-			commands.add("start chrome \"google.ru/saerch?q=lol\"");
+			commands.add("start chrome \"<input>\"");
+			commands.add("start chrome \"google.ru/search?q=<input>\"");
+			commands.add("sndvol");
+			commands.add("explorer");
+			commands.add("explorer shell:downloads");
 			commands.add("start notepad");
 			commands.add("shutdown -s");		
 			commands.add("shutdown -r");	
@@ -90,6 +95,15 @@ public class FnCommandLineFragment extends ListFragment {
 			}
 		}
 				
+		Collections.sort(fns, new Comparator<Spannable>() {
+	        @Override
+	        public int compare(Spannable  s1, Spannable  s2)
+	        {
+
+	            return  s1.toString().compareTo(s2.toString());
+	        }
+	    });
+		
 	  adapter = new ArrayAdapter<Spannable>(getActivity(), android.R.layout.simple_list_item_1, fns);
 	  
 	  setListAdapter(adapter);
@@ -168,7 +182,7 @@ public class FnCommandLineFragment extends ListFragment {
          
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View v,	int position, long id) {
-			commands.remove(fns.get(position));
+			commands.remove(fns.get(position).toString());
 			ed.clear();
 			ed.putStringSet(FN_COMMANDS_KEY, commands);
 			ed.commit();

@@ -171,8 +171,9 @@ int menu st 0x7f0b0002
 int string action_settings 0x7f0a0001
 int string app_name 0x7f0a0000
 int string hello_world 0x7f0a0002
-int string title_activity_fn_select 0x7f0a0004
+int string title_activity_fn_select 0x7f0a0005
 int string title_activity_mapping_list 0x7f0a0003
+int string title_activity_voice_fn_mapping_list 0x7f0a0004
 int style AppBaseTheme 0x7f090005
 int style AppTheme 0x7f090006
 int style TextAppearance_TabPageIndicator 0x7f090003
