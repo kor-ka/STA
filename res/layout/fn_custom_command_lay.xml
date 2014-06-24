@@ -4,11 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <ImageButton
+    	android:id="@+id/add_mic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_open_mic_plus" 
+        android:background="@android:color/transparent" />
+    
 <EditText
+    android:layout_toLeftOf="@id/add_mic"
     android:id="@+id/fn_custom_command_et"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:hint="Command to PC" />
+
+
     
     <Button
         android:id="@+id/fnCommandLineBtnOk"
