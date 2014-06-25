@@ -468,43 +468,6 @@ public class ST extends FragmentActivity implements OnClickListener {
 		}
 		
 		//init voice tables
-		Set<String> keys  = shp.getStringSet("VoiceFnMap", new HashSet<String>());
-		if (keys.isEmpty()){
-			
-			keys.add("поиск");
-			ed.putString("VoiceFnArg:"+"поиск", "start www.google.com/search?q=<input>");
-			ed.putInt("VoiceFn:"+"поиск", FnButton.FN_COMMAND_LINE);
-			
-			keys.add("хром");
-			ed.putString("VoiceFnArg:"+"хром", "start chrome");
-			ed.putInt("VoiceFn:"+"хром", FnButton.FN_COMMAND_LINE);
-			
-			keys.add("запустить");
-			ed.putString("VoiceFnArg:"+"запустить", "Launch app");
-			ed.putInt("VoiceFn:"+"запустить", FnButton.FN_LAUNCH_APP);
-			
-			ed.putStringSet("VoiceFnMap", keys);
-			ed.commit();
-		}
-		
-		keyoVoiceInputFix  = shp.getStringSet("map", new HashSet<String>());
-		if (keyoVoiceInputFix.isEmpty()){
-			
-			keyoVoiceInputFix.add("хром");
-			ed.putString("хром", "chrome");
-			
-			keyoVoiceInputFix.add("дропбокс");
-			ed.putString("дропбокс", "dropbox");
-			
-			keyoVoiceInputFix.add("ворд");
-			ed.putString("ворд", "word");
-			
-			keyoVoiceInputFix.add("эксель");
-			ed.putString("эксель", "excel");
-			
-			ed.putStringSet("map", keyoVoiceInputFix);
-			ed.commit();
-		}
 		
 		
 		
