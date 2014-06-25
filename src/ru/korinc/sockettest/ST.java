@@ -115,6 +115,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 	private ViewPager topPager;
 	ScreenSlidePagerAdapter botPagerAdapter;
 	private ViewPager botPager;
+	Set<String> keyoVoiceInputFix;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -465,6 +466,48 @@ public class ST extends FragmentActivity implements OnClickListener {
 			botPager.setVisibility(View.GONE);
 
 		}
+		
+		//init voice tables
+		Set<String> keys  = shp.getStringSet("VoiceFnMap", new HashSet<String>());
+		if (keys.isEmpty()){
+			
+			keys.add("поиск");
+			ed.putString("VoiceFnArg:"+"поиск", "start www.google.com/search?q=<input>");
+			ed.putInt("VoiceFn:"+"поиск", FnButton.FN_COMMAND_LINE);
+			
+			keys.add("хром");
+			ed.putString("VoiceFnArg:"+"хром", "start chrome");
+			ed.putInt("VoiceFn:"+"хром", FnButton.FN_COMMAND_LINE);
+			
+			keys.add("запустить");
+			ed.putString("VoiceFnArg:"+"запустить", "Launch app");
+			ed.putInt("VoiceFn:"+"запустить", FnButton.FN_LAUNCH_APP);
+			
+			ed.putStringSet("VoiceFnMap", keys);
+			ed.commit();
+		}
+		
+		keyoVoiceInputFix  = shp.getStringSet("map", new HashSet<String>());
+		if (keyoVoiceInputFix.isEmpty()){
+			
+			keyoVoiceInputFix.add("хром");
+			ed.putString("хром", "chrome");
+			
+			keyoVoiceInputFix.add("дропбокс");
+			ed.putString("дропбокс", "dropbox");
+			
+			keyoVoiceInputFix.add("ворд");
+			ed.putString("ворд", "word");
+			
+			keyoVoiceInputFix.add("эксель");
+			ed.putString("эксель", "excel");
+			
+			ed.putStringSet("map", keyoVoiceInputFix);
+			ed.commit();
+		}
+		
+		
+		
 	}
 
 	@Override
@@ -868,15 +911,46 @@ public class ST extends FragmentActivity implements OnClickListener {
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
+		
+		
+		if (resultCode == RESULT_OK) {
+			ArrayList<String> matchesToFix = intent
+					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+			if (matchesToFix != null && matchesToFix.size() > 0) {
+				String m_Text = "";
+				String m_Text_old = "";
+				m_Text_old = matchesToFix.get(0);
+				m_Text = matchesToFix.get(0);
+				for(String s:keyoVoiceInputFix){
+					
+					if(m_Text.contains(s)){
+						m_Text = m_Text.replace(s, shp.getString(s, s));
+						
+					}
+				}				
+				
+				matchesToFix.add(0, m_Text);
+				intent.putExtra(RecognizerIntent.EXTRA_RESULTS, matchesToFix);
+				if (m_Text.equals(m_Text_old)) {
+					Toast.makeText(getBaseContext(), "Voice input: " + m_Text,
+							Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(getBaseContext(),
+							"Voice input fix: " + m_Text_old + "\u2192" + m_Text,
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+		}
 		if (requestCode == REQUEST_CODE_LAUNCH_APP) {
-			String m_Text="";			
+						
 			switch (resultCode) {
 			case RESULT_OK:
+				String m_Text="";
 				ArrayList<String> matches = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
 				m_Text = matches.get(0);
 
-				m_Text = shp.getString(m_Text, m_Text);
+	//			m_Text = shp.getString(m_Text, m_Text);
 
 				int port = Integer.parseInt(portEt.getText().toString());
 				new Thread(new SocketThread(ipEt.getText().toString(), port, launch, m_Text)).start();
@@ -940,7 +1014,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 				
 				if(keys != null){
 					for (String key:keys) {
-						if(m_Text.contains(key)){
+						if(m_Text.startsWith(key)){
 							String args= "";
 							
 							if (m_Text.equals(key)){
@@ -973,6 +1047,8 @@ public class ST extends FragmentActivity implements OnClickListener {
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog,	int which) {
+								
+								String m_Text_old= input.getText().toString();
 
 								String m_Text = input.getText().toString();
 								
@@ -980,7 +1056,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 								
 								if(keys != null){
 									for (String key:keys) {
-										if(m_Text.contains(key)){
+										if(m_Text.startsWith(key)){
 											String args= "";
 											
 											if (m_Text.equals(key)){
@@ -1076,7 +1152,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 
 			String m_Text = matches.get(0);
 
-			m_Text = shp.getString(m_Text, m_Text);
+//			m_Text = shp.getString(m_Text, m_Text);
 
 			int port = Integer.parseInt(portEt.getText().toString());
 			new Thread(new SocketThread(ipEt.getText().toString(), port,

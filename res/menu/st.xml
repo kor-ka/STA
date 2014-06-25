@@ -43,7 +43,7 @@
 					android:id="@+id/map"
 					android:orderInCategory="100"
 					android:showAsAction="ifRoom"
-					android:title="Fix voice app launch"/>
+					android:title="Fix voice input"/>
 				
 				<item
 			        android:id="@+id/voiceFnSettings"
