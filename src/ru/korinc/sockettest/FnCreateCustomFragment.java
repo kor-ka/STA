@@ -18,7 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.graphics.PorterDuff;
 
 /**
  * A fragment representing a single Task detail screen. This fragment is either
@@ -129,8 +129,11 @@ public class FnCreateCustomFragment extends ListFragment {
 	  
 	  btnOk = (Button) getActivity().findViewById(R.id.fnCustomBtnOk);
 	  btnOk.setOnClickListener(ocl);
+	  
 	  del = (ImageButton) getActivity().findViewById(R.id.fnCustomDelElement);
 	  del.setOnClickListener(ocl);
+	  del.getBackground().setColorFilter(0x555555, PorterDuff.Mode.SRC_ATOP);
+	  
 	  et = (EditText) getActivity().findViewById(R.id.fnCustomEtName);
 	  Intent i =getActivity().getIntent();
 	  if(i.getIntExtra("requestCode", -1)!=-1&&i.getIntExtra("requestCode",-1)==ST.REQUEST_CODE_FIRE_FN){

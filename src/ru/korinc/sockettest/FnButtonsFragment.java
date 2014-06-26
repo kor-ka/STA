@@ -121,7 +121,8 @@ public class FnButtonsFragment extends Fragment {
 			};
 			
 			b1.setOnClickListener(ocl);
-			b1.setText(st.fnb.fnMap.get(st.shp.getInt(FN_SAVE_B1+""+pageId, st.fnb.NO_FUNCTION)));		
+			b1.setText(st.fnb.fnMap.get(st.shp.getInt(FN_SAVE_B1+""+pageId, st.fnb.NO_FUNCTION)));
+			
 			b1.setOnLongClickListener(olclFn);
 			b2.setOnClickListener(ocl);
 			b2.setText(st.fnb.fnMap.get(st.shp.getInt(FN_SAVE_B2+""+pageId, st.fnb.NO_FUNCTION)));
@@ -130,6 +131,16 @@ public class FnButtonsFragment extends Fragment {
 			b3.setText(st.fnb.fnMap.get(st.shp.getInt(FN_SAVE_B3+""+pageId, st.fnb.NO_FUNCTION)));
 			b3.setOnLongClickListener(olclFn);
 			
+			if(st.shp.getInt(FN_SAVE_B1+""+pageId, st.fnb.NO_FUNCTION)==FnButton.NO_FUNCTION){
+				b1.setBackgroundDrawable(getResources().getDrawable(R.drawable.no_fn_btn_seelctor));
+			}
+			if(st.shp.getInt(FN_SAVE_B2+""+pageId, st.fnb.NO_FUNCTION)==FnButton.NO_FUNCTION){
+				b2.setBackgroundDrawable(getResources().getDrawable(R.drawable.no_fn_btn_seelctor));
+			}
+			if(st.shp.getInt(FN_SAVE_B3+""+pageId, st.fnb.NO_FUNCTION)==FnButton.NO_FUNCTION){
+				b3.setBackgroundDrawable(getResources().getDrawable(R.drawable.no_fn_btn_seelctor));
+			}
+						
 			if(st.shp.getInt(FN_SAVE_B1+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_CUSTOM||st.shp.getInt(FN_SAVE_B1+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_COMMAND_LINE){
 				b1.setText(st.shp.getString(FN_SAVE_ARGS_B1+""+pageId, ""));
 			}
@@ -166,6 +177,13 @@ public class FnButtonsFragment extends Fragment {
 				if(!i.getStringExtra("Name").equals("")){
 					b1.setText(i.getStringExtra("Name"));
 				}
+				
+				if(st.shp.getInt(FN_SAVE_B1+""+pageId, st.fnb.NO_FUNCTION)==FnButton.NO_FUNCTION){
+					b1.setBackgroundDrawable(getResources().getDrawable(R.drawable.no_fn_btn_seelctor));
+				}else{
+					b1.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_seelctor));
+				}
+				
 			break;
 			
 		case REQUEST_CODE_B2:
@@ -180,6 +198,13 @@ public class FnButtonsFragment extends Fragment {
 			if(!i.getStringExtra("Name").equals("")){
 				b2.setText(i.getStringExtra("Name"));
 			}
+			
+			if(st.shp.getInt(FN_SAVE_B2+""+pageId, st.fnb.NO_FUNCTION)==FnButton.NO_FUNCTION){
+				b2.setBackgroundDrawable(getResources().getDrawable(R.drawable.no_fn_btn_seelctor));
+			}else{
+				b2.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_seelctor));
+			}
+			
 		break;
 		
 		case REQUEST_CODE_B3:
@@ -194,7 +219,14 @@ public class FnButtonsFragment extends Fragment {
 			if(!i.getStringExtra("Name").equals("")){
 				b3.setText(i.getStringExtra("Name"));
 			}
-		break;
+			
+			if(st.shp.getInt(FN_SAVE_B3+""+pageId, st.fnb.NO_FUNCTION)==FnButton.NO_FUNCTION){
+				b3.setBackgroundDrawable(getResources().getDrawable(R.drawable.no_fn_btn_seelctor));
+			}else{
+				b3.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_seelctor));
+			}
+			
+		break;		
 		
 		}
 		
