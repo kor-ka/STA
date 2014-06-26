@@ -11,6 +11,8 @@
 			    android:layout_weight="1"
 			    android:text="B1"
 			    android:textColor="#FFFFFF"
+			    android:background="@drawable/btn_seelctor"
+			    android:layout_margin="5dp"
 			    android:visibility="visible" />
 
 			<Button
@@ -20,6 +22,8 @@
 			    android:layout_weight="1"
 			    android:text="B2"
 			    android:textColor="#FFFFFF"
+			    android:background="@drawable/btn_seelctor"
+			    android:layout_margin="5dp"
 			    android:visibility="visible" />
 			
 			<Button
@@ -29,6 +33,8 @@
 			    android:layout_weight="1"
 			    android:text="B3"
 			    android:textColor="#FFFFFF"
+			    android:background="@drawable/btn_seelctor"
+			    android:layout_margin="5dp"
 			    android:visibility="visible" />
 
 </LinearLayout>

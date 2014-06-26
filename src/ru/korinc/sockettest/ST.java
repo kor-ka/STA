@@ -453,9 +453,13 @@ public class ST extends FragmentActivity implements OnClickListener {
 		// Bind the title indicator to the adapter
 		CirclePageIndicator topTitleIndicator = (CirclePageIndicator) findViewById(R.id.indicatorTop);
 		topTitleIndicator.setViewPager(topPager);
+		topTitleIndicator.setStrokeColor(getResources().getColor(android.R.color.holo_blue_light));
+		topTitleIndicator.setFillColor(getResources().getColor(android.R.color.holo_blue_light));
 
 		CirclePageIndicator botTitleIndicator = (CirclePageIndicator) findViewById(R.id.indicatorBot);
 		botTitleIndicator.setViewPager(botPager);
+		botTitleIndicator.setStrokeColor(getResources().getColor(android.R.color.holo_blue_light));
+		botTitleIndicator.setFillColor(getResources().getColor(android.R.color.holo_blue_light));
 
 		if (shp.getBoolean("showFnButtons", true)) {
 			topPager.setVisibility(View.VISIBLE);
@@ -788,12 +792,12 @@ public class ST extends FragmentActivity implements OnClickListener {
 			} else {
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(this,
-						AlertDialog.THEME_HOLO_DARK);
+						AlertDialog.THEME_HOLO_LIGHT);
 				builder.setTitle("Для  настройки через QR необходим Barcode Scanner");
 
 				// Set up the input
 				final EditText input = new EditText(this);
-				input.setTextColor(Color.WHITE);
+				
 				input.setHint("IP");
 				input.setInputType(InputType.TYPE_CLASS_NUMBER
 						| InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -959,7 +963,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 
 			case RESULT_CANCELED:
 				AlertDialog.Builder builder = new AlertDialog.Builder(this,
-						AlertDialog.THEME_HOLO_DARK);
+						AlertDialog.THEME_HOLO_LIGHT);
 				builder.setTitle("Keyboard input");
 
 				// Set up the input
@@ -1032,12 +1036,12 @@ public class ST extends FragmentActivity implements OnClickListener {
 			
 			case RESULT_CANCELED:
 				AlertDialog.Builder builder = new AlertDialog.Builder(this,
-						AlertDialog.THEME_HOLO_DARK);
+						AlertDialog.THEME_HOLO_LIGHT);
 				builder.setTitle("Keyboard input");
 
 				// Set up the input
 				final EditText input = new EditText(this);
-				input.setTextColor(Color.WHITE);
+				
 				input.setHint("What Fn to fire? Input?");
 								
 				builder.setView(input);
@@ -1104,12 +1108,12 @@ public class ST extends FragmentActivity implements OnClickListener {
 
 			case RESULT_CANCELED:
 				AlertDialog.Builder builder = new AlertDialog.Builder(this,
-						AlertDialog.THEME_HOLO_DARK);
+						AlertDialog.THEME_HOLO_LIGHT);
 				builder.setTitle("Keyboard input");
 
 				// Set up the input
 				final EditText input = new EditText(this);
-				input.setTextColor(Color.WHITE);
+				
 				input.setHint("input");
 								
 				builder.setView(input);

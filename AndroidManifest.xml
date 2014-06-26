@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="12"
+        android:minSdkVersion="14"
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -31,24 +31,24 @@
         <activity
             android:name="ru.korinc.sockettest.MappingList"
             android:label="@string/title_activity_mapping_list"
-            android:theme="@android:style/Theme.Holo.Dialog" >
+            android:theme="@android:style/Theme.Holo.Light.Dialog" >
         </activity>
         
         <activity
             android:name="ru.korinc.sockettest.VoiceFnMappingList"
             android:label="@string/title_activity_voice_fn_mapping_list"
-            android:theme="@android:style/Theme.Holo.Dialog" >
+            android:theme="@android:style/Theme.Holo.Light.Dialog" >
         </activity>
         
         <activity
             android:name="ru.korinc.sockettest.FnSelect"
             android:label="@string/title_activity_fn_select"
-             android:theme="@android:style/Theme.Holo.Dialog" >
+             android:theme="@android:style/Theme.Holo.Light.Dialog" >
         </activity>
         <activity
             android:name="ru.korinc.sockettest.FnBind"
             android:label="@string/title_activity_fn_select"
-             android:theme="@android:style/Theme.Holo.Dialog" >
+             android:theme="@android:style/Theme.Holo.Light.Dialog" >
         </activity>
     </application>
 
