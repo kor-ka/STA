@@ -143,12 +143,33 @@ public class FnButtonsFragment extends Fragment {
 						
 			if(st.shp.getInt(FN_SAVE_B1+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_CUSTOM||st.shp.getInt(FN_SAVE_B1+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_COMMAND_LINE){
 				b1.setText(st.shp.getString(FN_SAVE_ARGS_B1+""+pageId, ""));
+				if(st.shp.getString(FN_SAVE_ARGS_B1+""+pageId, "").contains("chrome")){
+					b1.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_chrome), null, null, null);
+				}else{
+					b1.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+				}
+			}else{
+				b1.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 			}
 			if(st.shp.getInt(FN_SAVE_B2+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_CUSTOM||st.shp.getInt(FN_SAVE_B2+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_COMMAND_LINE){
 				b2.setText(st.shp.getString(FN_SAVE_ARGS_B2+""+pageId, ""));
+				if(st.shp.getString(FN_SAVE_ARGS_B2+""+pageId, "").contains("chrome")){
+					b2.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_chrome), null, null, null);
+				}else{
+					b2.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+				}
+			}else{
+				b2.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 			}
 			if(st.shp.getInt(FN_SAVE_B3+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_CUSTOM||st.shp.getInt(FN_SAVE_B3+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_COMMAND_LINE){
 				b3.setText(st.shp.getString(FN_SAVE_ARGS_B3+""+pageId, ""));
+				if(st.shp.getString(FN_SAVE_ARGS_B3+""+pageId, "").contains("chrome")){
+					b3.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_chrome), null, null, null);
+				}else{
+					b3.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+				}
+			}else{
+				b3.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 			}
 			
 			if(!st.shp.getString(FN_SAVE_NAME_B1+""+pageId, "").equals("")){
@@ -183,7 +204,16 @@ public class FnButtonsFragment extends Fragment {
 				}else{
 					b1.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_seelctor));
 				}
-				
+				if(st.shp.getInt(FN_SAVE_B1+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_CUSTOM||st.shp.getInt(FN_SAVE_B1+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_COMMAND_LINE){
+					
+					if(st.shp.getString(FN_SAVE_ARGS_B1+""+pageId, "").contains("chrome")){
+						b1.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_chrome), null, null, null);
+					}else{
+						b1.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+					}
+				}else{
+					b1.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+				}
 			break;
 			
 		case REQUEST_CODE_B2:
@@ -203,6 +233,16 @@ public class FnButtonsFragment extends Fragment {
 				b2.setBackgroundDrawable(getResources().getDrawable(R.drawable.no_fn_btn_seelctor));
 			}else{
 				b2.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_seelctor));
+			}
+			if(st.shp.getInt(FN_SAVE_B2+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_CUSTOM||st.shp.getInt(FN_SAVE_B2+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_COMMAND_LINE){
+				
+				if(st.shp.getString(FN_SAVE_ARGS_B3+""+pageId, "").contains("chrome")){
+					b2.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_chrome), null, null, null);
+				}else{
+					b2.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+				}
+			}else{
+				b2.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 			}
 			
 		break;
@@ -224,6 +264,16 @@ public class FnButtonsFragment extends Fragment {
 				b3.setBackgroundDrawable(getResources().getDrawable(R.drawable.no_fn_btn_seelctor));
 			}else{
 				b3.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_seelctor));
+			}
+			if(st.shp.getInt(FN_SAVE_B3+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_CUSTOM||st.shp.getInt(FN_SAVE_B3+""+pageId, st.fnb.NO_FUNCTION)==st.fnb.FN_COMMAND_LINE){
+				
+				if(st.shp.getString(FN_SAVE_ARGS_B3+""+pageId, "").contains("chrome")){
+					b3.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_chrome), null, null, null);
+				}else{
+					b3.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+				}
+			}else{
+				b3.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 			}
 			
 		break;		
