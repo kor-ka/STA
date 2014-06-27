@@ -915,8 +915,8 @@ public class ST extends FragmentActivity implements OnClickListener {
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		
-		
+		boolean needReinvokeVoiceFn = false;
+		//Fixing voice input 
 		if (resultCode == RESULT_OK) {
 			ArrayList<String> matchesToFix = intent
 					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
@@ -943,8 +943,16 @@ public class ST extends FragmentActivity implements OnClickListener {
 							"Voice input fix: " + m_Text_old + "\u2192" + m_Text,
 							Toast.LENGTH_SHORT).show();
 				}
+				
+				//Reinvoke?
+				if (m_Text.endsWith(" è")){
+					m_Text = m_Text.substring(0, m_Text.length()-2);
+					needReinvokeVoiceFn = true;
+				}
+		
 			}
 		}
+		
 		if (requestCode == REQUEST_CODE_LAUNCH_APP) {
 						
 			switch (resultCode) {
@@ -976,13 +984,23 @@ public class ST extends FragmentActivity implements OnClickListener {
 				// Set up the buttons
 				builder.setPositiveButton("Ok",
 						new DialogInterface.OnClickListener() {
+						boolean needReinvokeVoiceFn = false;
 							@Override
 							public void onClick(DialogInterface dialog,	int which) {
 
 								int port = Integer.parseInt(portEt.getText().toString());
-								new Thread(new SocketThread(ipEt.getText().toString(), port, launch, input.getText().toString())).start();
-								
-								
+								String m_Text = input.getText().toString();
+								//Check for Reinvoke
+								if (m_Text.endsWith(" è")){
+									m_Text = m_Text.substring(0, m_Text.length()-2);
+									needReinvokeVoiceFn = true;
+								}
+								new Thread(new SocketThread(ipEt.getText().toString(), port, launch, m_Text)).start();
+								//Reinvoke
+								if(needReinvokeVoiceFn){
+									fnb.press(fnb.FN_VOICE_FN, "", "");
+									needReinvokeVoiceFn = false;
+								}
 							}
 						});
 				builder.setNegativeButton("Cancel",
@@ -1007,7 +1025,8 @@ public class ST extends FragmentActivity implements OnClickListener {
 		
 		
 		if (requestCode == REQUEST_CODE_VOICE_FN) {
-			String m_Text="";			
+			String m_Text="";	
+			
 			switch (resultCode) {
 			case RESULT_OK:
 				ArrayList<String> matches = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
@@ -1026,7 +1045,9 @@ public class ST extends FragmentActivity implements OnClickListener {
 							}else{
 								args = m_Text.replaceFirst(key+" ", "");
 							}
+							
 							fnb.press(shp.getInt("VoiceFn:"+key, 0), shp.getString("VoiceFnArg:"+key, "null"), args);
+
 						}
 					}
 				}
@@ -1049,6 +1070,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 				// Set up the buttons
 				builder.setPositiveButton("Ok",
 						new DialogInterface.OnClickListener() {
+						boolean needReinvokeVoiceFn = false;
 							@Override
 							public void onClick(DialogInterface dialog,	int which) {
 								
@@ -1057,7 +1079,11 @@ public class ST extends FragmentActivity implements OnClickListener {
 								String m_Text = input.getText().toString();
 								
 								Set<String> keys  = shp.getStringSet("VoiceFnMap", new HashSet<String>());
-								
+								//Check for Reinvoke
+								if (m_Text.endsWith(" è")){
+									m_Text = m_Text.substring(0, m_Text.length()-2);
+									needReinvokeVoiceFn = true;
+								}
 								if(keys != null){
 									for (String key:keys) {
 										if(m_Text.startsWith(key)){
@@ -1068,9 +1094,16 @@ public class ST extends FragmentActivity implements OnClickListener {
 											}else{
 												args = m_Text.replaceFirst(key+" ", "");
 											}
+											
 											fnb.press(shp.getInt("VoiceFn:"+key, 0), shp.getString("VoiceFnArg:"+key, "null"), args);
+											
 										}
 									}
+								}
+								//Reinvoke
+								if(needReinvokeVoiceFn){
+									fnb.press(fnb.FN_VOICE_FN, "", "");
+									needReinvokeVoiceFn = false;
 								}
 								
 							}
@@ -1121,11 +1154,21 @@ public class ST extends FragmentActivity implements OnClickListener {
 				// Set up the buttons
 				builder.setPositiveButton("Ok",
 						new DialogInterface.OnClickListener() {
+							boolean needReinvokeVoiceFn = false;
 							@Override
 							public void onClick(DialogInterface dialog,	int which) {
-
-								fnb.press(FnButton.FN_COMMAND_LINE, currentCommandLineaArgs.replace("<input>", input.getText().toString()),"");								
-								
+								//Check for Reinvoke
+								String m_Text = input.getText().toString();
+								if (m_Text.endsWith(" è")){
+									m_Text = m_Text.substring(0, m_Text.length()-2);
+									needReinvokeVoiceFn = true;
+								}
+								fnb.press(FnButton.FN_COMMAND_LINE, currentCommandLineaArgs.replace("<input>", m_Text),"");								
+								//Reinvoke
+								if(needReinvokeVoiceFn){
+									fnb.press(fnb.FN_VOICE_FN, "", "");
+									needReinvokeVoiceFn = false;
+								}
 							}
 						});
 				builder.setNegativeButton("Cancel",
@@ -1197,6 +1240,11 @@ public class ST extends FragmentActivity implements OnClickListener {
 				break;
 
 			}
+		}
+		//Reinvoke voiceInput if needed
+		if(needReinvokeVoiceFn){
+			fnb.press(fnb.FN_VOICE_FN, "", "");
+			needReinvokeVoiceFn = false;
 		}
 	}
 
