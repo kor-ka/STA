@@ -807,7 +807,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 						LayoutParams.WRAP_CONTENT, 1f));
 
 				final EditText inputPort = new EditText(this);
-				inputPort.setTextColor(Color.WHITE);
+				
 				inputPort.setHint("Port");
 				inputPort.setInputType(InputType.TYPE_CLASS_NUMBER);
 				inputPort.setLayoutParams(new LinearLayout.LayoutParams(0,
@@ -817,7 +817,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 				tv.setText("Ручная настройка:");
 				tv.setPadding(10, 10, 10, 0);
 				tv.setTextSize(15);
-				tv.setTextColor(Color.WHITE);
+				
 
 				LinearLayout ll = new LinearLayout(this);
 				ll.setOrientation(LinearLayout.VERTICAL);
@@ -923,8 +923,14 @@ public class ST extends FragmentActivity implements OnClickListener {
 			if (matchesToFix != null && matchesToFix.size() > 0) {
 				String m_Text = "";
 				String m_Text_old = "";
-				m_Text_old = matchesToFix.get(0);
+				
 				m_Text = matchesToFix.get(0);
+				//Reinvoke?
+				if (m_Text.endsWith(" потом")){
+					m_Text = m_Text.substring(0, m_Text.length()-6);
+					needReinvokeVoiceFn = true;
+				}
+				m_Text_old=m_Text;
 				for(String s:keyoVoiceInputFix){
 					
 					if(m_Text.contains(s)){
@@ -944,11 +950,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 							Toast.LENGTH_SHORT).show();
 				}
 				
-				//Reinvoke?
-				if (m_Text.endsWith(" и")){
-					m_Text = m_Text.substring(0, m_Text.length()-2);
-					needReinvokeVoiceFn = true;
-				}
+				
 		
 			}
 		}
@@ -976,7 +978,7 @@ public class ST extends FragmentActivity implements OnClickListener {
 
 				// Set up the input
 				final EditText input = new EditText(this);
-				input.setTextColor(Color.WHITE);
+				
 				input.setHint("App to launch");
 								
 				builder.setView(input);
@@ -991,8 +993,8 @@ public class ST extends FragmentActivity implements OnClickListener {
 								int port = Integer.parseInt(portEt.getText().toString());
 								String m_Text = input.getText().toString();
 								//Check for Reinvoke
-								if (m_Text.endsWith(" и")){
-									m_Text = m_Text.substring(0, m_Text.length()-2);
+								if (m_Text.endsWith(" потом")){
+									m_Text = m_Text.substring(0, m_Text.length()-6);
 									needReinvokeVoiceFn = true;
 								}
 								new Thread(new SocketThread(ipEt.getText().toString(), port, launch, m_Text)).start();
@@ -1080,8 +1082,8 @@ public class ST extends FragmentActivity implements OnClickListener {
 								
 								Set<String> keys  = shp.getStringSet("VoiceFnMap", new HashSet<String>());
 								//Check for Reinvoke
-								if (m_Text.endsWith(" и")){
-									m_Text = m_Text.substring(0, m_Text.length()-2);
+								if (m_Text.endsWith(" потом")){
+									m_Text = m_Text.substring(0, m_Text.length()-6);
 									needReinvokeVoiceFn = true;
 								}
 								if(keys != null){
@@ -1159,8 +1161,8 @@ public class ST extends FragmentActivity implements OnClickListener {
 							public void onClick(DialogInterface dialog,	int which) {
 								//Check for Reinvoke
 								String m_Text = input.getText().toString();
-								if (m_Text.endsWith(" и")){
-									m_Text = m_Text.substring(0, m_Text.length()-2);
+								if (m_Text.endsWith(" потом")){
+									m_Text = m_Text.substring(0, m_Text.length()-6);
 									needReinvokeVoiceFn = true;
 								}
 								fnb.press(FnButton.FN_COMMAND_LINE, currentCommandLineaArgs.replace("<input>", m_Text),"");								

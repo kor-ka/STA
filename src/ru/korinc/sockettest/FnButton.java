@@ -17,7 +17,7 @@ public class FnButton {
 	
 	Context ctx;	
 	ST st;
-	
+	public final static int FN_VOICE_INPUT=-5;
 	public final static int FN_VOICE_FN=-4;
 	public final static int FN_FIRE_FN=-3;
 	public final static int FN_COMMAND_LINE=-2;
@@ -82,6 +82,7 @@ public class FnButton {
 		 fnMap = new LinkedHashMap<Integer, String>();
 			fnMap.put(NO_FUNCTION, "No function");
 			fnMap.put(FN_VOICE_FN, "Voice Fn");
+			fnMap.put(FN_VOICE_INPUT, "Voice input");
 			fnMap.put(FN_FIRE_FN, "Fire Fn");
 			fnMap.put(FN_SCAN, "Ñonnect to server");
 			fnMap.put(FN_LAUNCH_APP, "Launch app");
@@ -133,6 +134,19 @@ public class FnButton {
 	 if(st!=null){
 		 switch (function) {
 		 
+		 case FN_VOICE_INPUT:
+			 if(!voiceInputArgs.isEmpty()){
+				new Thread(st.new SocketThread(st.ipEt.getText().toString(), port,
+							st.keyboard, voiceInputArgs)).start();
+					if (st.shp.getBoolean("enterOnVoiceInput", true)) {
+						new Thread(st.new SocketThread(st.ipEt.getText().toString(), port,
+								st.keyboard, "\n")).start();
+					}
+		 		}else{
+		 			st.startVoiceRecognitionActivity(st.REQUEST_CODE_VOICE_INPUT, args);
+		 		}
+			 break;
+			 
 		 case FN_VOICE_FN:			
 			 
 			 		st.startVoiceRecognitionActivity(st.REQUEST_CODE_VOICE_FN, args); 	
@@ -185,11 +199,9 @@ public class FnButton {
 				
 			case FN_LAUNCH_APP:
 				if(!voiceInputArgs.isEmpty()){
-					intent = new Intent();
-					ArrayList<String> matches =new ArrayList<String>();
-					matches.add(voiceInputArgs);
-					intent.putExtra(RecognizerIntent.EXTRA_RESULTS, matches);
-					st.onActivityResult(st.REQUEST_CODE_LAUNCH_APP, st.RESULT_OK, intent);
+				
+					new Thread(st.new SocketThread(st.ipEt.getText().toString(), port, st.launch, voiceInputArgs)).start();
+					
 				}else{
 					st.startVoiceRecognitionActivity(st.REQUEST_CODE_LAUNCH_APP, null);	
 				}
