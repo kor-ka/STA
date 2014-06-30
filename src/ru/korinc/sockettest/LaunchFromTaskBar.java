@@ -16,9 +16,13 @@ import java.util.List;
 import javax.print.attribute.standard.Finishings;
 
 import ru.korinc.sockettest.ST.SocketThread;
-
+import android.R.drawable;
 import android.os.Bundle;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,9 +35,11 @@ public class LaunchFromTaskBar extends Activity {
 	ListView lv;
 	ArrayAdapter<String> adapter ;
 	List<String> map;
+	ArrayList<Bitmap> bitmaps = new ArrayList<Bitmap>();
 	FnButton fbn;
 	final int GET_TASKBAR_APPS = 1;
 	final int OPEN_TASKBAR_APP = 2;
+	final int GET_TASKBAR_ICONS = 3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -136,15 +142,28 @@ public class LaunchFromTaskBar extends Activity {
 									String line2 = line.substring(0,line.length()-1);
 									
 									map = Arrays.asList(line2.split(":"));
+									getIcons();
 									 adapter = new ArrayAdapter<String>(getBaseContext(),
 										        android.R.layout.simple_list_item_1, map);
 										  lv.setAdapter(adapter);
+										  
 									//adapter.notifyDataSetInvalidated();
 								}
 							});	
 							
 							break;
 
+						case GET_TASKBAR_ICONS:
+							//TODO fix positions of drowables to matcj map (no maching while async)
+							out.writeUTF("getTaskBarIcons::"+appToLaunch+".lnk");
+							Bitmap bitmap = BitmapFactory.decodeStream(in);
+							bitmaps.add(bitmap);
+							if(map.size()==bitmaps.size()){
+								drawIcons();
+							}
+							break;
+						
+							
 						case OPEN_TASKBAR_APP:
 							out.writeUTF("commandLine::" + "start \"\" " +"\"%userprofile%/AppData/Roaming/Microsoft/Internet Explorer/Quick Launch/User Pinned/TaskBar/"+appToLaunch+".lnk\"");
 							
@@ -168,4 +187,22 @@ public class LaunchFromTaskBar extends Activity {
 
 	}
 
+	public void getIcons(){
+		for(String s:map){
+			new Thread(new SocketThread(getIntent().getStringExtra("ip"), getIntent().getIntExtra("port",4444), GET_TASKBAR_ICONS, s)).start();
+		}
+	}
+	
+	public void drawIcons(){
+		//TODO 
+		runOnUiThread(new Runnable() {
+			public void run() {
+				Toast.makeText(getBaseContext(), "ok", Toast.LENGTH_SHORT).show();
+				Drawable d = new BitmapDrawable(getResources(),bitmaps.get(bitmaps.size()-1));
+				lv.setBackgroundDrawable(d);
+			}
+		});	
+		
+	}
+	
 }
