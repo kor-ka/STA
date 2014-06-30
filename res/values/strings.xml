@@ -5,7 +5,8 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_mapping_list">Fix voice input</string>
-     <string name="title_activity_voice_fn_mapping_list">Voice Fn commands</string>
+    <string name="title_activity_voice_fn_mapping_list">Voice Fn commands</string>
     <string name="title_activity_fn_select">Fn Select</string>
+    <string name="title_activity_launch_from_task_bar">Launch from taskbar</string>
 
 </resources>

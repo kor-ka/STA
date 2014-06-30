@@ -17,6 +17,7 @@ public class FnButton {
 	
 	Context ctx;	
 	ST st;
+	public final static int FN_LAUNCHFROM_TASKBAR=-6;
 	public final static int FN_VOICE_INPUT=-5;
 	public final static int FN_VOICE_FN=-4;
 	public final static int FN_FIRE_FN=-3;
@@ -86,6 +87,7 @@ public class FnButton {
 			fnMap.put(FN_FIRE_FN, "Fire Fn");
 			fnMap.put(FN_SCAN, "Ñonnect to server");
 			fnMap.put(FN_LAUNCH_APP, "Launch app");
+			fnMap.put(FN_LAUNCHFROM_TASKBAR, "Launch app from taskbar");
 			fnMap.put(FN_ARROWS, "Arrows");
 			fnMap.put(FN_CLICK, "Left click");
 			fnMap.put(FN_R_CLICK, "Right click");
@@ -153,6 +155,14 @@ public class FnButton {
 		 		
 		 		break;
 		 
+		 case FN_LAUNCHFROM_TASKBAR:			
+			 
+			 Intent intent1 = new Intent(st, LaunchFromTaskBar.class);
+			 intent1.putExtra("ip", st.ipEt.getText().toString());
+			 intent1.putExtra("port", port);
+	 		 st.startActivity(intent1);
+			 
+	 		break;
 		 
 		 case FN_COMMAND_LINE:
 			 	if(args.contains("<input>")){
