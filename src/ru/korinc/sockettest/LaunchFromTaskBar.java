@@ -66,7 +66,7 @@ public class LaunchFromTaskBar extends Activity {
 	  //����������� ������
 		  lv.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-					new Thread(new SocketThread(getIntent().getStringExtra("ip"), getIntent().getIntExtra("port",4444), OPEN_TASKBAR_APP, map.get(position).toString().substring(1),0)).start();
+					new Thread(new SocketThread(getIntent().getStringExtra("ip"), getIntent().getIntExtra("port",4444), OPEN_TASKBAR_APP, map.get(position).toString().substring(3),0)).start();
 					finish();
 				}
 				
@@ -176,7 +176,7 @@ public class LaunchFromTaskBar extends Activity {
 								public void run() {
 									
 									
-									Spannable spannable =spannableFactory.newSpannable("1"+map.get(bitMapPlace).toString());
+									Spannable spannable =spannableFactory.newSpannable("1  "+map.get(bitMapPlace).toString());
 									
 									spannable.setSpan(new ImageSpan(getBaseContext(), bitmap),
 					                        0, 1,
