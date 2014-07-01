@@ -21,8 +21,14 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.text.Spannable;
+import android.text.Spannable.Factory;
+import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,8 +39,8 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class LaunchFromTaskBar extends Activity {
 	ListView lv;
-	ArrayAdapter<String> adapter ;
-	List<String> map;
+	ArrayAdapter<Spannable> adapter ;
+	List<Spannable> map;
 	ArrayList<Bitmap> bitmaps = new ArrayList<Bitmap>();
 	FnButton fbn;
 	final int GET_TASKBAR_APPS = 1;
@@ -47,11 +53,11 @@ public class LaunchFromTaskBar extends Activity {
 		setContentView(R.layout.activity_launch_from_task_bar);
 		new Thread(new SocketThread(getIntent().getStringExtra("ip"), getIntent().getIntExtra("port",4444), GET_TASKBAR_APPS)).start();
 		
-		map = new ArrayList<String>();
-		map.add("...");
+		map = new ArrayList<Spannable>();
+		map.add(spannableFactory.newSpannable("..."));
 		lv= (ListView) findViewById(R.id.launchFromTaskBarLv);
 		// ������� �������
-	  adapter = new ArrayAdapter<String>(this,
+	  adapter = new ArrayAdapter<Spannable>(this,
 	        android.R.layout.simple_list_item_1, map);
 	  
 	    // ����������� ������� ������
@@ -60,7 +66,7 @@ public class LaunchFromTaskBar extends Activity {
 	  //����������� ������
 		  lv.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-					new Thread(new SocketThread(getIntent().getStringExtra("ip"), getIntent().getIntExtra("port",4444), OPEN_TASKBAR_APP, map.get(position))).start();
+					new Thread(new SocketThread(getIntent().getStringExtra("ip"), getIntent().getIntExtra("port",4444), OPEN_TASKBAR_APP, map.get(position).toString().substring(1),0)).start();
 					finish();
 				}
 				
@@ -81,6 +87,7 @@ public class LaunchFromTaskBar extends Activity {
 		Socket socket;
 		int mode;
 		String appToLaunch;
+		int bitMapPlace;
 
 		public SocketThread(String ip, int port, int mode) {
 			this.ip = ip;
@@ -88,11 +95,12 @@ public class LaunchFromTaskBar extends Activity {
 			this.mode = mode;
 		}
 
-		public SocketThread(String ip, int port, int mode, String appToLaunch) {
+		public SocketThread(String ip, int port, int mode, String appToLaunch, int bitMapPlace) {
 			this.ip = ip;
 			this.port = port;
 			this.mode = mode;
 			this.appToLaunch = appToLaunch;
+			this.bitMapPlace = bitMapPlace;
 		}
 		
 
@@ -125,7 +133,7 @@ public class LaunchFromTaskBar extends Activity {
 						InputStream sin = socket.getInputStream();
 						OutputStream sout = socket.getOutputStream();
 
-						DataInputStream in = new DataInputStream(sin);
+						final DataInputStream in = new DataInputStream(sin);
 						DataOutputStream out = new DataOutputStream(sout);
 						
 						switch (mode) {
@@ -140,14 +148,17 @@ public class LaunchFromTaskBar extends Activity {
 							runOnUiThread(new Runnable() {
 								public void run() {
 									String line2 = line.substring(0,line.length()-1);
+									map = new ArrayList<Spannable>();
+									List<String> mapStrings =  Arrays.asList(line2.split(":"));
+									for(String s:mapStrings){
+										
+										map.add(spannableFactory.newSpannable(s));
+									}
 									
-									map = Arrays.asList(line2.split(":"));
 									getIcons();
-									 adapter = new ArrayAdapter<String>(getBaseContext(),
-										        android.R.layout.simple_list_item_1, map);
-										  lv.setAdapter(adapter);
-										  
-									//adapter.notifyDataSetInvalidated();
+									
+										//  lv.setAdapter(adapter);
+									
 								}
 							});	
 							
@@ -156,8 +167,26 @@ public class LaunchFromTaskBar extends Activity {
 						case GET_TASKBAR_ICONS:
 							//TODO fix positions of drowables to matcj map (no maching while async)
 							out.writeUTF("getTaskBarIcons::"+appToLaunch+".lnk");
-							Bitmap bitmap = BitmapFactory.decodeStream(in);
-							bitmaps.add(bitmap);
+							final Bitmap bitmap = BitmapFactory.decodeStream(in);
+							
+							
+							
+							
+							runOnUiThread(new Runnable() {
+								public void run() {
+									
+									
+									Spannable spannable =spannableFactory.newSpannable("1"+map.get(bitMapPlace).toString());
+									
+									spannable.setSpan(new ImageSpan(getBaseContext(), bitmap),
+					                        0, 1,
+					                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+									
+									map.set(bitMapPlace,spannable);
+									
+									
+								}
+							});	
 							if(map.size()==bitmaps.size()){
 								drawIcons();
 							}
@@ -188,8 +217,11 @@ public class LaunchFromTaskBar extends Activity {
 	}
 
 	public void getIcons(){
-		for(String s:map){
-			new Thread(new SocketThread(getIntent().getStringExtra("ip"), getIntent().getIntExtra("port",4444), GET_TASKBAR_ICONS, s)).start();
+		for(int i=0; i<map.size(); i++){
+			bitmaps.add(Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565));
+		}
+		for(int i=0; i<map.size(); i++){
+			new Thread(new SocketThread(getIntent().getStringExtra("ip"), getIntent().getIntExtra("port",4444), GET_TASKBAR_ICONS, map.get(i).toString(),i)).start();
 		}
 	}
 	
@@ -197,12 +229,15 @@ public class LaunchFromTaskBar extends Activity {
 		//TODO 
 		runOnUiThread(new Runnable() {
 			public void run() {
-				Toast.makeText(getBaseContext(), "ok", Toast.LENGTH_SHORT).show();
-				Drawable d = new BitmapDrawable(getResources(),bitmaps.get(bitmaps.size()-1));
-				lv.setBackgroundDrawable(d);
+				 adapter = new ArrayAdapter<Spannable>(getBaseContext(),
+					        android.R.layout.simple_list_item_1, map);
+				 lv.setAdapter(adapter);
 			}
 		});	
 		
 	}
+	
+	 private static final Factory spannableFactory = Spannable.Factory
+		        .getInstance();
 	
 }
