@@ -1034,12 +1034,13 @@ public class ST extends FragmentActivity implements OnClickListener {
 				ArrayList<String> matches = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
 				m_Text = matches.get(0);
+				m_Text += " ";
 				
 				Set<String> keys  = shp.getStringSet("VoiceFnMap", new HashSet<String>());
 				
 				if(keys != null){
 					for (String key:keys) {
-						if(m_Text.startsWith(key)){
+						if(m_Text.startsWith(key+" ")){
 							String args= "";
 							
 							if (m_Text.equals(key)){
